@@ -19,13 +19,23 @@ AMP: true
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
+# Abstracts
+	# mixins
+	# variables
+		-typography
 # Elements
 	- body
+	footer
+# Layouts
+	- home
+# Modales
+	- contact
 
 --------------------------------------------------------------*/
 
 // Import variables and mixins.
 
+@import "abstracts/abstracts";
 
 /*--------------------------------------------------------------
 

@@ -19,10 +19,53 @@ AMP: true
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
+# Abstracts
+	# mixins
+	# variables
+		-typography
 # Elements
 	- body
+	footer
+# Layouts
+	- home
+# Modales
+	- contact
 
 --------------------------------------------------------------*/
+/* Mes Google fonts locales */
+@font-face {
+  font-family: "SpaceMono-Bold";
+  src: url("fonts/SpaceMono-Bold.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "SpaceMono-BoldItalic";
+  src: url("fonts/SpaceMono-BoldItalic.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "SpaceMono-Italic";
+  src: url("fonts/SpaceMono-Italic.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "SpaceMono-Regular";
+  src: url("fonts/SpaceMono-Regular.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+/* Mes polices desktop */
+/* Mes polices Mobile */
+/* pour récupérer ensuite mes polices dans mon code ...
+.selector {
+    font-family: map-get($font__main, family);
+    font-size: map-get($font__main, size);
+    color: map-get($font__main, color);
+}
+*/
 /*--------------------------------------------------------------
 
 
@@ -106,4 +149,4 @@ main {
   font-weight: bold;
   margin-top: 20px;
   margin-bottom: 10px;
-}
+}/*# sourceMappingURL=style.css.map */
