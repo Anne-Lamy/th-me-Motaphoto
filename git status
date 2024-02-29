@@ -1,0 +1,17 @@
+[33mcommit 699ed5672e0fc0079df0816114ecb09c173dee3b[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Anne Lamy <138774642+Anne-Lamy@users.noreply.github.com>
+Date:   Thu Feb 29 12:05:52 2024 +0100
+
+    Première architecture du site
+
+[33mcommit 56f753a3d4a8f2639a7ef7df4b080460764cf3d8[m
+Author: Anne Lamy <138774642+Anne-Lamy@users.noreply.github.com>
+Date:   Wed Feb 28 18:20:57 2024 +0100
+
+    Ajout du lien Admin de Motaphoto dans le menu de Wordpress.
+
+[33mcommit 7fa240124f928d186bb095f104609d6efaf55ca5[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Anne Lamy <138774642+Anne-Lamy@users.noreply.github.com>
+Date:   Wed Feb 28 17:45:07 2024 +0100
+
+    Premier commit : Ajout du thème motaphoto
