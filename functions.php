@@ -39,9 +39,86 @@ function motaphoto_theme_settings()
 
 
 
+// On créer notre function de lots de réglages.
+function motaphoto_settings_register()
+{
+    // Déclare à WordPress l’existence d’un lot de réglages.
+    register_setting('motaphoto_settings_fields', 'motaphoto_settings_fields', 'motaphoto_settings_fields_validate');
+
+    //On créer une section Paramètres où le premier paramètre sera rangé.
+    add_settings_section('motaphoto_settings_section', __('Paramètres', 'motaphoto'), 'motaphoto_settings_section_description', 'motaphoto_settings_section');
+
+    // On créer nos paramètres de champs.
+    add_settings_field('motaphoto_settings_field_description', __('Description', 'motaphoto'), 'motaphoto_settings_field_description_output', 'motaphoto_settings_section', 'motaphoto_settings_section');
+    add_settings_field('motaphoto_settings_field_phone_number', __('Numéro de téléphone', 'motaphoto'), 'motaphoto_settings_field_phone_number_output', 'motaphoto_settings_section', 'motaphoto_settings_section');
+    add_settings_field('motaphoto_settings_field_email', __('Email', 'motaphoto'), 'motaphoto_settings_field_email_output', 'motaphoto_settings_section', 'motaphoto_settings_section');
+}
+
+function motaphoto_settings_section_description()
+{
+    echo __('Paramètrez les différentes options du thème Motaphoto.', 'motaphoto');
+}
 
 
+
+
+// On créer une function pour nettoyer et adapter les valeurs de nos réglages.
+function motaphoto_settings_fields_validate($inputs)
+{
+    // On enregistre le champ quand il est modifié.
+    if (isset($_POST) && !empty($_POST)) {
+        //Si le champ est défini et non vide dans les données POST.
+        if (isset($_POST['motaphoto_settings_field_description']) && !empty($_POST['motaphoto_settings_field_description'])) {
+            // On met à jour cette option avec la valeur correspondante.
+            update_option('motaphoto_settings_field_description', $_POST['motaphoto_settings_field_description']);
+        }
+        if (isset($_POST['motaphoto_settings_field_phone_number']) && !empty($_POST['motaphoto_settings_field_phone_number'])) {
+            update_option('motaphoto_settings_field_phone_number', $_POST['motaphoto_settings_field_phone_number']);
+        }
+        if (isset($_POST['motaphoto_settings_field_email']) && !empty($_POST['motaphoto_settings_field_email'])) {
+            update_option('motaphoto_settings_field_email', $_POST['motaphoto_settings_field_email']);
+        }
+    }
+    return $inputs;
+}
+
+
+
+
+
+// On paramètres les champs après récupération.
+function motaphoto_settings_field_description_output()
+{
+    // On récupère la valeur de l'option et la clef du champ description.
+    $value = get_option('motaphoto_settings_field_description');
+    // On affiche le champ.
+    echo '<input name="motaphoto_settings_field_description" type="text" value="' . $value . '" />';
+}
+
+function motaphoto_settings_field_phone_number_output()
+{
+    $value = get_option('motaphoto_settings_field_phone_number');
+    echo '<input name="motaphoto_settings_field_phone_number" type="text" value="' . $value . '" />';
+}
+
+function motaphoto_settings_field_email_output()
+{
+    $value = get_option('motaphoto_settings_field_email');
+    echo '<input name="motaphoto_settings_field_email" type="text" value="' . $value . '" />';
+}
+
+
+
+
+
+// _________________________________________________________________
+
+
+
+
+//Appelle les styles et les sripts.
 add_action('wp_enqueue_scripts', 'enqueue_custom_scripts_styles');
-
 // Appelle le lien Motaphoto dans le menu de Wordpress.
 add_action('admin_menu', 'motaphoto_add_admin_pages', 10);
+// Appelle la fonction d’un lot de réglages.
+add_action('admin_init', 'motaphoto_settings_register');
