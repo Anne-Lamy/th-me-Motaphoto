@@ -6,3 +6,4 @@
     <title>Motaphoto</title>
 </head>
 <body>
+    <main id="main" class="site-main" role="main">
