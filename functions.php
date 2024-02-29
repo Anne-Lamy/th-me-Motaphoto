@@ -5,11 +5,11 @@ function enqueue_custom_scripts_styles()
     // Style du thème parent en file d'attente
     wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
 
-    // Tous les styles du thème parent en file d'attente
-    wp_enqueue_style('parent-style', get_template_directory_uri() . '/styles/style.css');
+    // Style du thème enfant en file d'attente
+    wp_enqueue_style('sass-style', get_template_directory_uri() . '/sass/style.css', array('parent-style'));
 
     // Script de la modale en file d'attente
-    wp_enqueue_script('child-script', get_template_directory_uri() . '/js/modale.js', array(), true );
+    wp_enqueue_script('parent-script', get_template_directory_uri() . '/js/modale.js', array(), true );
 }
 
 
