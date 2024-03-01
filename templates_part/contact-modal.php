@@ -1,14 +1,10 @@
-<!-- Déclencher/Ouvrir le modale -->
-<button id="myBtn">Open Modal</button>
-
 <!-- La Modale -->
 <div id="myModal" class="modal">
 
     <!-- Contenu de la modale -->
     <div class="modal-content">
         <div class="modal-header">
-            <span class="close">X</span>
-            <h2>Header</h2>
+            <span class="close">&times;</span>
         </div>
         <div class="modal-body">
             <?php
@@ -17,7 +13,6 @@
             ?>
         </div>
         <div class="modal-footer">
-            <h3>Footer</h3>
         </div>
     </div>
 

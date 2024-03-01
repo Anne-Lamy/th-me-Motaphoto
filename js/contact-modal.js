@@ -1,18 +1,15 @@
 // Récupérer la modale
 var modal = document.getElementById('myModal');
 
-// Récupérer le bouton qui ouvre la modale
-var btn = document.getElementById("myBtn");
-
 // Récupérer l'élément <span> qui ferme la modale
 var span = document.getElementsByClassName("close")[0];
 
-// Lorsque l'utilisateur clique sur le bouton, ouvrir la modale
-btn.onclick = function() {
+// Afficher la modale dès que la page se charge
+window.onload = function() {
     modal.style.display = "block";
 }
 
-// Lorsque l'utilisateur clique sur <span> (x), fermer la modale
+// Lorsque l'utilisateur clique sur <span> (x), faire disparaître la modale
 span.onclick = function() {
     modal.style.display = "none";
 }

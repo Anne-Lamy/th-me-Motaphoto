@@ -19,42 +19,51 @@
 }
 
 .modal-header {
+    background-image: url(wp-content/themes/motaphoto/assets/images/contact-header.png);
+    background-size: 120%;
+    background-repeat: no-repeat;
+    background-position-y: 1rem;
+    background-position-x: -2rem;
     padding: 2px 16px;
-    background-color: $color_red_average;
-    color: $color_grey_light;
+    color: $color_black_strong;
+    height: 106px;
 }
 
 .modal-body {
-    padding: 2px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
 }
 
 .modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 2px 16px;
-    background-color: $color_red_average;
-    color: $color_grey_light;
+    background-color: $color_grey_light;
+    color: $color_black_strong;
 }
 
 /* Contenu de la modale */
 .modal-content {
     position: relative;
-    background-image: url(/wp-content/themes/motaphoto/assets/images/contact-header.png);
     background-color: $color_grey_light;
     margin: auto;
     padding: 0;
-    border: 1px solid $color_grey_strong;
-    width: 80%;
+    border: 5px solid $color_black_strong;
+    top: 100px;
+    width: 597px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
-    animation-duration: 0.4s
+    -webkit-animation: anim-modal 1500ms 1s;
+    animation: anim-modal 1500ms 1s;
 }
 
 /* Le bouton de fermeture */
 .close {
-    color: $color_grey_average;
+    color: $color_black_strong;
     float: right;
-    font-size: 28px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -66,26 +75,30 @@
 }
 
 /* Ajouter les animations */
-@-webkit-keyframes animatetop {
-    from {
-        top: -300px;
-        opacity: 0
+@-webkit-keyframes anim-modal {
+    0% {
+        transform: scale(0);
     }
 
-    to {
-        top: 0;
-        opacity: 1
+    50% {
+        transform: scale(0.8);
+    }
+
+    100% {
+        transform: scale(1);
     }
 }
 
-@keyframes animatetop {
-    from {
-        top: -300px;
-        opacity: 0
+@keyframes anim-modal {
+    0% {
+        transform: scale(0);
     }
 
-    to {
-        top: 0;
-        opacity: 1
+    50% {
+        transform: scale(0.8);
+    }
+
+    100% {
+        transform: scale(1);
     }
 }
