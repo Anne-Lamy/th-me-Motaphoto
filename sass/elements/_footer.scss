@@ -3,3 +3,28 @@
     justify-content: center;
     align-items: center;
 }
+
+.nav-footer {
+    font-family: map-get($font_desk_h3, family);
+    font-size: map-get($font_desk_h3, size);
+    color: map-get($font_desk_h3, color);
+    font-size: 1em;
+    height: 40px;
+    border-top: 1px #000000;
+    display: inline-block;
+}
+
+.footer-menu li {
+    display: inline-block;
+    margin-right: 20px;
+    list-style: none;    /* Supprime les puces */
+}
+
+.footer-menu li a {
+    text-decoration: none;
+    color: ($color_black-strong);
+}
+
+.footer-menu li a:hover {
+        color: ($color_black_average);
+}

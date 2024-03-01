@@ -30,50 +30,7 @@
 
 /* Mes polices desktop */
 
-$font_desk_main: (
-    family: 'SpaceMono-Regular',
-    size: 0.87em,
-    color: #000000
-);
-
-$font_desk_h1: (
-    family: 'SpaceMono-BoldItalic',
-    size: 6em,
-    color: #000000
-);
-
-$font_desk_h2: (
-    family: 'SpaceMono-Italic',
-    size: 4.12em,
-    color: #000000
-);
-
-$font_desk_h3: (
-    family: 'SpaceMono-Regular',
-    size: 1.12em,
-    color: #000000
-);
-
-/* Mes polices Mobile */
-
-$font_mob_h1: (
-    family: 'SpaceMono-BoldItalic',
-    size: 1.72em,
-    color: #000000
-);
-
-$font_mob_h2: (
-    family: 'SpaceMono-Italic',
-    size: 2.87em,
-    color: #000000
-);
-
-
-
-/* pour récupérer ensuite mes polices dans mon code ...
-.selector {
-    font-family: map-get($font__main, family);
-    font-size: map-get($font__main, size);
-    color: map-get($font__main, color);
-}
-*/
+$font_desk_main: 'SpaceMono-Regular';
+$font_desk_h1: 'SpaceMono-BoldItalic';
+$font_desk_h2: 'SpaceMono-Italic';
+$font_desk_h3: 'SpaceMono-Regular';

@@ -1,16 +1,32 @@
 <?php
 
-function enqueue_custom_scripts_styles()
-{
-    // Style du thème parent en file d'attente
+function enqueue_custom_scripts_styles() {
+    // Style principal du thème
     wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
 
-    // Style du thème enfant en file d'attente
+    // Style Sass du thème
     wp_enqueue_style('sass-style', get_template_directory_uri() . '/sass/style.css', array('parent-style'));
 
-    // Script de la modale en file d'attente
-    wp_enqueue_script('parent-script', get_template_directory_uri() . '/js/modale.js', array(), true );
+    // Script de la modale
+    wp_enqueue_script('parent-script', get_template_directory_uri() . '/js/modale.js', array(), true);
 }
+add_action('wp_enqueue_scripts', 'enqueue_custom_scripts_styles');
+
+
+
+
+// MENUS :
+function register_my_menus() {
+    register_nav_menus(
+        array(
+            'principal-menu' => __( 'Menu Principal' ),
+            'footer-menu' => __( 'Menu Footer' ),
+        )
+    );
+}
+add_action( 'init', 'register_my_menus' );
+
+
 
 
 
@@ -115,9 +131,6 @@ function motaphoto_settings_field_email_output()
 
 
 
-
-//Appelle les styles et les sripts.
-add_action('wp_enqueue_scripts', 'enqueue_custom_scripts_styles');
 // Appelle le lien Motaphoto dans le menu de Wordpress.
 add_action('admin_menu', 'motaphoto_add_admin_pages', 10);
 // Appelle la fonction d’un lot de réglages.
