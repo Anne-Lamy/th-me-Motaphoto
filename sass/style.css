@@ -4,7 +4,6 @@ Theme Name: Motaphoto
 Theme URI: https: //motaphoto.com
 Author: Anne Lamy
 Author URI: https: //annelamy.fr/
-Template: Motaphoto
 Description: Site d'exercice de projet d'étude : Créez un site WordPress sur mesure complexe pour une photographe freelance.
 Version: 1.0.0
 Requires at least: 5.3
@@ -29,8 +28,6 @@ AMP: true
 	footer
 # Layouts
 	- home
-# Modales
-	- contact
 
 --------------------------------------------------------------*/
 /* Mes Google fonts locales */
@@ -59,14 +56,6 @@ AMP: true
   font-style: normal;
 }
 /* Mes polices desktop */
-/* Mes polices Mobile */
-/* pour récupérer ensuite mes polices dans mon code ...
-.selector {
-    font-family: map-get($font__main, family);
-    font-size: map-get($font__main, size);
-    color: map-get($font__main, color);
-}
-*/
 /*--------------------------------------------------------------
 
 
@@ -103,45 +92,14 @@ p {
   color: #000000;
 }
 
-.footer-contact {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@media all and (max-width: 700px) {
+  h1 {
+    font-size: 1.72em;
+  }
+  h2 {
+    font-size: 2.87em;
+  }
 }
-
-.nav-footer {
-  font-family: "SpaceMono-Regular";
-  font-size: 1.12em;
-  color: #000000;
-  font-size: 1em;
-  height: 40px;
-  border-top: 1px #000000;
-  display: inline-block;
-}
-
-.footer-menu li {
-  display: inline-block;
-  margin-right: 20px;
-  list-style: none; /* Supprime les puces */
-}
-
-.footer-menu li a {
-  text-decoration: none;
-  color: #000000;
-}
-
-.footer-menu li a:hover {
-  color: #313144;
-}
-
-/* Layouts
---------------------------------------------- */
-main {
-  position: relative;
-}
-
-/* Modales
---------------------------------------------- */
 .popup-overlay {
   position: fixed;
   width: 100%;
@@ -199,4 +157,39 @@ main {
   font-weight: bold;
   margin-top: 20px;
   margin-bottom: 10px;
+}
+
+.footer-contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-footer {
+  font-family: "SpaceMono-Regular";
+  font-size: 1em;
+  height: 40px;
+  border-top: 1px #000000;
+  display: inline-block;
+}
+
+.footer-menu li {
+  display: inline-block;
+  margin-right: 20px;
+  list-style: none; /* Supprime les puces */
+}
+
+.footer-menu li a {
+  text-decoration: none;
+  color: #000000;
+}
+
+.footer-menu li a:hover {
+  color: #313144;
+}
+
+/* Layouts
+--------------------------------------------- */
+main {
+  position: relative;
 }/*# sourceMappingURL=style.css.map */

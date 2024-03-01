@@ -1,0 +1,91 @@
+/* Le fond de la modale */
+.modal {
+    display: none;
+    /* Masqué par défaut */
+    position: fixed;
+    /* Reste en place */
+    z-index: 1;
+    /* position dessus */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* Activer le défilement si nécessaire */
+    background-color: rgb(0, 0, 0);
+    /* Couleur de repli */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Noir avec opacité */
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: $color_red_average;
+    color: $color_grey_light;
+}
+
+.modal-body {
+    padding: 2px 16px;
+}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: $color_red_average;
+    color: $color_grey_light;
+}
+
+/* Contenu de la modale */
+.modal-content {
+    position: relative;
+    background-image: url(/wp-content/themes/motaphoto/assets/images/contact-header.png);
+    background-color: $color_grey_light;
+    margin: auto;
+    padding: 0;
+    border: 1px solid $color_grey_strong;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Le bouton de fermeture */
+.close {
+    color: $color_grey_average;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: $color_black_strong;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Ajouter les animations */
+@-webkit-keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}

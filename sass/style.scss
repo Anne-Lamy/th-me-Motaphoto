@@ -29,8 +29,6 @@ AMP: true
 	footer
 # Layouts
 	- home
-# Modales
-	- contact
 
 --------------------------------------------------------------*/
 
@@ -44,12 +42,10 @@ AMP: true
 /* Elements
 --------------------------------------------- */
 @import "elements/body";
+@import "elements/contact";
 @import "elements/footer";
 
 /* Layouts
 --------------------------------------------- */
 @import "layouts/home";
 
-/* Modales
---------------------------------------------- */
-@import "modales/contact";

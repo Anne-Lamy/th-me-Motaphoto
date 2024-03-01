@@ -8,7 +8,7 @@ function enqueue_custom_scripts_styles() {
     wp_enqueue_style('sass-style', get_template_directory_uri() . '/sass/style.css', array('parent-style'));
 
     // Script de la modale
-    wp_enqueue_script('parent-script', get_template_directory_uri() . '/js/modale.js', array(), true);
+    wp_enqueue_script('parent-script', get_template_directory_uri() . '/js/contact-modal.js', array(), true);
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_scripts_styles');
 
