@@ -13,6 +13,7 @@ function enqueue_custom_scripts_styles() {
 add_action('wp_enqueue_scripts', 'enqueue_custom_scripts_styles');
 
 
+// _______________________________________________________________
 
 
 // MENUS :
@@ -37,9 +38,7 @@ function add_custom_nav_menu_items($items, $args) {
 add_filter('wp_nav_menu_items', 'add_custom_nav_menu_items', 10, 2);
 
 
-
-
-
+// _______________________________________________________________
 
 
 // On créer notre lien Motaphto dans le menu de Wordpress.
@@ -64,8 +63,6 @@ function motaphoto_theme_settings()
 }
 
 
-
-
 // On créer notre function de lots de réglages.
 function motaphoto_settings_register()
 {
@@ -76,6 +73,7 @@ function motaphoto_settings_register()
     add_settings_section('motaphoto_settings_section', __('Paramètres', 'motaphoto'), 'motaphoto_settings_section_description', 'motaphoto_settings_section');
 
     // On créer nos paramètres de champs.
+                        // 1- Clef unique du champ 2- Nom dans l'interface 3- fonction a appeller pour générer le champ 4- la page ou on veut afficher ce champ 5- la section souhaité.
     add_settings_field('motaphoto_settings_field_description', __('Description', 'motaphoto'), 'motaphoto_settings_field_description_output', 'motaphoto_settings_section', 'motaphoto_settings_section');
     add_settings_field('motaphoto_settings_field_phone_number', __('Numéro de téléphone', 'motaphoto'), 'motaphoto_settings_field_phone_number_output', 'motaphoto_settings_section', 'motaphoto_settings_section');
     add_settings_field('motaphoto_settings_field_email', __('Email', 'motaphoto'), 'motaphoto_settings_field_email_output', 'motaphoto_settings_section', 'motaphoto_settings_section');
@@ -85,8 +83,6 @@ function motaphoto_settings_section_description()
 {
     echo __('Paramètrez les différentes options du thème Motaphoto.', 'motaphoto');
 }
-
-
 
 
 // On créer une function pour nettoyer et adapter les valeurs de nos réglages.
@@ -108,9 +104,6 @@ function motaphoto_settings_fields_validate($inputs)
     }
     return $inputs;
 }
-
-
-
 
 
 // On paramètres les champs après récupération.
@@ -136,13 +129,9 @@ function motaphoto_settings_field_email_output()
 
 
 
-
-
-// _________________________________________________________________
-
-
-
 // Appelle le lien Motaphoto dans le menu de Wordpress.
 add_action('admin_menu', 'motaphoto_add_admin_pages', 10);
 // Appelle la fonction d’un lot de réglages.
 add_action('admin_init', 'motaphoto_settings_register');
+
+

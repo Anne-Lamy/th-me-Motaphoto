@@ -30,7 +30,10 @@ AMP: true
 	- footer
 # Layouts
 	- home
-
+# Templates
+	- contact-modal
+	- content-single
+	- photo-block
 --------------------------------------------------------------*/
 
 // Import variables and mixins.
@@ -43,11 +46,16 @@ AMP: true
 /* Elements
 --------------------------------------------- */
 @import "elements/body";
-@import "elements/contact-modal";
 @import "elements/header";
 @import "elements/footer";
 
 /* Layouts
 --------------------------------------------- */
 @import "layouts/home";
+
+
+/* Templates
+--------------------------------------------- */
+@import "templates/contact-modal";
+@import "templates/content-single";
 

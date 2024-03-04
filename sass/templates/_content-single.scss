@@ -1,0 +1,23 @@
+.content-single {
+    background-color: $color_grey_light;
+    display: flex;
+    align-items: end;
+    justify-content: start;
+    width: 100%;
+}
+
+.photo-infos {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 50%;
+    margin-left: 50px;
+}
+
+.photo {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 50%;
+    margin-right: 50px;
+}

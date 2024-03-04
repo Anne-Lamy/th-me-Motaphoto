@@ -29,7 +29,10 @@ AMP: true
 	- footer
 # Layouts
 	- home
-
+# Templates
+	- contact-modal
+	- content-single
+	- photo-block
 --------------------------------------------------------------*/
 /* Mes Google fonts locales */
 @font-face {
@@ -99,93 +102,6 @@ p {
   }
   h2 {
     font-size: 2.87em;
-  }
-}
-/* Le fond de la modale */
-.modal {
-  display: none;
-  /* Masqué par défaut */
-  position: fixed;
-  /* Reste en place */
-  z-index: 1;
-  /* position dessus */
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  /* Activer le défilement si nécessaire */
-  background-color: rgb(0, 0, 0);
-  /* Couleur de repli */
-  background-color: rgba(0, 0, 0, 0.4);
-  /* Noir avec opacité */
-}
-
-.modal-header {
-  background-image: url(wp-content/themes/motaphoto/assets/images/contact-header.png);
-  background-size: 120%;
-  background-repeat: no-repeat;
-  background-position-y: 1rem;
-  background-position-x: -2rem;
-  padding: 2px 16px;
-  color: #000000;
-  height: 106px;
-}
-
-.modal-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2em;
-}
-
-.modal-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 16px;
-  background-color: #ffffff;
-  color: #000000;
-}
-
-/* Contenu de la modale */
-.modal-content {
-  position: relative;
-  background-color: #ffffff;
-  margin: auto;
-  padding: 0;
-  border: 5px solid #000000;
-  top: 100px;
-  width: 597px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  animation: anim-modal 1500ms 1s;
-}
-
-/* Le bouton de fermeture */
-.close {
-  color: #000000;
-  float: right;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* Ajouter les animations */
-@keyframes anim-modal {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(0.8);
-  }
-  100% {
-    transform: scale(1);
   }
 }
 .header {
@@ -309,4 +225,117 @@ main {
   letter-spacing: 0em;
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 2px #ffffff;
+}
+
+/* Templates
+--------------------------------------------- */
+/* Le fond de la modale */
+.modal {
+  display: none;
+  /* Masqué par défaut */
+  position: fixed;
+  /* Reste en place */
+  z-index: 1;
+  /* position dessus */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  /* Activer le défilement si nécessaire */
+  background-color: rgb(0, 0, 0);
+  /* Couleur de repli */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Noir avec opacité */
+}
+
+.modal-header {
+  background-image: url(wp-content/themes/motaphoto/assets/images/contact-header.png);
+  background-size: 120%;
+  background-repeat: no-repeat;
+  background-position-y: 1rem;
+  background-position-x: -2rem;
+  padding: 2px 16px;
+  color: #000000;
+  height: 106px;
+}
+
+.modal-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 16px;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Contenu de la modale */
+.modal-content {
+  position: relative;
+  background-color: #ffffff;
+  margin: auto;
+  padding: 0;
+  border: 5px solid #000000;
+  top: 100px;
+  width: 597px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  animation: anim-modal 1500ms 1s;
+}
+
+/* Le bouton de fermeture */
+.close {
+  color: #000000;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Ajouter les animations */
+@keyframes anim-modal {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.content-single {
+  background-color: #ffffff;
+  display: flex;
+  align-items: end;
+  justify-content: start;
+  width: 100%;
+}
+
+.photo-infos {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 50%;
+  margin-left: 50px;
+}
+
+.photo {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 50%;
+  margin-right: 50px;
 }/*# sourceMappingURL=style.css.map */

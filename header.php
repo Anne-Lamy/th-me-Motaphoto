@@ -20,5 +20,6 @@
                         'theme_location' => 'principal-menu',
                     ]);
                 ?>
+                </h3>
             </div>
         </div>
