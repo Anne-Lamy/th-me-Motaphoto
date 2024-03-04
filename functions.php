@@ -26,6 +26,17 @@ function register_my_menus() {
 }
 add_action( 'init', 'register_my_menus' );
 
+// Ajouter un filtre pour ajouter un lien de contact au menu principal uniquement.
+function add_custom_nav_menu_items($items, $args) {
+    if ($args->theme_location == 'principal-menu') {
+        // enregistrer un identifiant personnalisé pour le lien de contact.
+        $items .= '<a href="#" id="contact-link">Contact</a>';
+    }
+    return $items;
+}
+add_filter('wp_nav_menu_items', 'add_custom_nav_menu_items', 10, 2);
+
+
 
 
 

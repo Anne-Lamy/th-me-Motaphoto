@@ -26,7 +26,8 @@ AMP: true
 		-typography
 # Elements
 	- body
-	footer
+	- header
+	- footer
 # Layouts
 	- home
 
@@ -43,6 +44,7 @@ AMP: true
 --------------------------------------------- */
 @import "elements/body";
 @import "elements/contact-modal";
+@import "elements/header";
 @import "elements/footer";
 
 /* Layouts

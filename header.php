@@ -7,3 +7,18 @@
 </head>
 <body>
     <main id="main" class="site-main" role="main">
+
+        <div class="header">
+            <div class="motaphoto-logo">
+                <a href="<?= site_url() ?>">
+                <img src="wp-content/themes/motaphoto/assets/images/Logo.png">
+                </a>
+            </div>
+            <div class="nav-header">
+                <h3>
+                <?php wp_nav_menu([
+                        'theme_location' => 'principal-menu',
+                    ]);
+                ?>
+            </div>
+        </div>

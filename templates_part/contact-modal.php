@@ -1,5 +1,5 @@
 <!-- La Modale -->
-<div id="myModal" class="modal">
+<div id="contactModal" class="modal">
 
     <!-- Contenu de la modale -->
     <div class="modal-content">
