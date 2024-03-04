@@ -135,3 +135,31 @@ add_action('admin_menu', 'motaphoto_add_admin_pages', 10);
 add_action('admin_init', 'motaphoto_settings_register');
 
 
+// _______________________________________________________________
+
+
+//Récupération des posts PHOTOS pour l'affichage sur la page d'accueil.
+
+function motaphoto_request_photos () {
+
+    $args = array(
+        'post_type' => 'photos',   // on récupère uniquement les projets.
+    );
+
+    $query = new WP_Query($args);   // Effectue une requette auprés de la base de données.
+
+    // On vérifie si on obtient des résultats.
+    if ($query->have_posts()) {     // Si on récupère des résultats ...
+        $response = $query;         // On envois les résultats au script (sous forme de données JSON) ...
+    } else {
+        $response = false;          // sinon on renvois faux.
+    }
+
+    wp_send_json($response);      // Les données JSON sont stokées dans $reponse.
+    wp_die();                     // On tue la requette afin de s’assurer que la fonction s’arrêtera bien.
+}
+
+// Appelle la function de la requette et indique à WP qu'elle est à utiliser via un appel Ajax.
+add_action('wp_ajax_request_photos', 'motaphoto_request_photos');
+// Rend également la function accessible pour les utilisateurs non connectés.
+add_action('wp_ajax_nopriv_request_photos', 'motaphoto_request_photos');
