@@ -1,5 +1,5 @@
         <div class="content-single">
-            <div class="photo-infos">
+            <div id="ajax_call" class="photo-infos">
             </div>
             <div class="photo">            
             </div>

@@ -3,12 +3,14 @@
 function enqueue_custom_scripts_styles() {
     // Style principal du thème
     wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
-
     // Style Sass du thème
     wp_enqueue_style('sass-style', get_template_directory_uri() . '/sass/style.css', array('parent-style'));
-
     // Script de la modale
-    wp_enqueue_script('parent-script', get_template_directory_uri() . '/js/contact-modal.js', array(), true);
+    wp_enqueue_script('modal-script', get_template_directory_uri() . '/js/contact-modal.js', array(), true);
+    // Script du contenu du single photo.
+    wp_enqueue_script('single-script', get_template_directory_uri() . '/js/content-single.js', array('jquery'), true);
+    // Permet de partager et de passer des données de PHP vers JavaScript de manière sécurisée.
+    wp_localize_script('single-script', 'single_script_js', array('ajax_url' => admin_url('admin-ajax.php')));
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_scripts_styles');
 
@@ -143,7 +145,7 @@ add_action('admin_init', 'motaphoto_settings_register');
 function motaphoto_request_photos () {
 
     $args = array(
-        'post_type' => 'photos',   // on récupère uniquement les projets.
+        'post_type' => 'photos',   // on récupère uniquement les photos.
     );
 
     $query = new WP_Query($args);   // Effectue une requette auprés de la base de données.
