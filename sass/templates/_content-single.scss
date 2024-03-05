@@ -6,7 +6,7 @@
     width: 100%;
 }
 
-.photo-infos {
+.single-left {
     display: flex;
     align-items: center;
     justify-content: start;
@@ -14,10 +14,19 @@
     margin-left: 50px;
 }
 
-.photo {
+.single-right {
     display: flex;
     align-items: center;
     justify-content: end;
     width: 50%;
     margin-right: 50px;
+}
+
+.content-interaction {
+    height: 118px;
+    border-bottom: 1px $color_black_strong;
+}
+
+.single-contact {
+    border-top: 1px $color_black_strong;
 }

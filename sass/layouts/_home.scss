@@ -41,7 +41,7 @@ main {
 }
 
 .first-img {
-    background-image: url(/wp-content/themes/motaphoto/assets/images/first-img.jpeg);
+    background-image: url("../assets/images/first-img.jpeg");
     height: 962px;
     display: flex;
     align-items: center;

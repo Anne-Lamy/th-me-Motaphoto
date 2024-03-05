@@ -133,7 +133,7 @@ p {
 }
 
 .nathalie-mota {
-  width: 60%;
+  width: 50%;
 }
 
 .footer-contact {
@@ -209,7 +209,7 @@ main {
 }
 
 .first-img {
-  background-image: url(/wp-content/themes/motaphoto/assets/images/first-img.jpeg);
+  background-image: url("../assets/images/first-img.jpeg");
   height: 962px;
   display: flex;
   align-items: center;
@@ -324,7 +324,7 @@ main {
   width: 100%;
 }
 
-.photo-infos {
+.single-left {
   display: flex;
   align-items: center;
   justify-content: start;
@@ -332,10 +332,19 @@ main {
   margin-left: 50px;
 }
 
-.photo {
+.single-right {
   display: flex;
   align-items: center;
   justify-content: end;
   width: 50%;
   margin-right: 50px;
+}
+
+.content-interaction {
+  height: 118px;
+  border-bottom: 1px #000000;
+}
+
+.single-contact {
+  border-top: 1px #000000;
 }/*# sourceMappingURL=style.css.map */
