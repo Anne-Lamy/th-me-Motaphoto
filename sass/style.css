@@ -183,13 +183,15 @@ p {
   width: auto;
 }
 
-.footer {
+.motaphoto-footer {
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
+  border-top: 2px #000000 !important;
+  height: 40px;
 }
 
 .footer-contact {
@@ -202,8 +204,6 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 2px #000000;
-  height: 40px;
 }
 
 .nav-footer ul {
@@ -286,13 +286,11 @@ main {
 /* Le fond de la modale */
 .modal {
   display: none;
-  /* Masqué par défaut */
   position: fixed;
-  /* Reste en place */
-  z-index: 1;
-  /* position dessus */
-  left: 0;
-  top: 0;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Utiliser translate pour centrer le modal exactement au milieu */
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -304,7 +302,7 @@ main {
 }
 
 .modal-header {
-  background-image: url(wp-content/themes/motaphoto/assets/images/contact-header.png);
+  background-image: url(../assets/images/contact-header.png);
   background-size: 120%;
   background-repeat: no-repeat;
   background-position-y: 1rem;
@@ -358,15 +356,44 @@ main {
   cursor: pointer;
 }
 
-/* Ajouter les animations */
+/* Formulaire */
+.wpcf7 input[type=text],
+.wpcf7 input[type=email],
+.wpcf7 input[type=number],
+.wpcf7 textarea {
+  border-radius: 8px;
+  border: 1px solid #B8BBC2;
+  padding: 8px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Boutons */
+.wpcf7 input[type=submit] {
+  border: none;
+  padding: 10px 20px;
+  background-color: #D8D8D8;
+  color: #000000;
+  cursor: pointer;
+  height: 50px;
+  width: 100%;
+}
+
+.wpcf7 input[type=submit]:hover {
+  background-color: #FFD6D6;
+}
+
+/* Animations */
 @keyframes anim-modal {
   0% {
+    opacity: 0;
     transform: scale(0);
   }
   50% {
     transform: scale(0.8);
   }
   100% {
+    opacity: 1;
     transform: scale(1);
   }
 }

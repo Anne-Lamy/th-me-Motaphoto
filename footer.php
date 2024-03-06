@@ -12,10 +12,12 @@
 <footer class="motaphoto-footer">
             
     <div class="footer">
+
         <div class="footer-contact">
-        <?php 
-        // Ajout de la POPUP de contact.
-        get_template_part('templates_part/contact_modal'); ?>
+            <!-- Ajout de la POPUP de contact. -->
+            <div id="contact-modal" class="modal">
+                <?php get_template_part('templates_part/contact-modal'); ?>
+            </div>
         </div>
         <div class="nav-footer motaphoto-menu">
             <h3>
@@ -25,6 +27,7 @@
             ?>
             </h3>
         </div>
+
     </div>
         
 </footer>

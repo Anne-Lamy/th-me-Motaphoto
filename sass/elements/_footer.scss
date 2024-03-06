@@ -1,10 +1,12 @@
-.footer {
+.motaphoto-footer {
     background-color: $color_grey_light;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
+    border-top: 2px $color_black_strong !important;
+    height: 40px;
 }
 
 .footer-contact {
@@ -17,8 +19,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-top: 2px $color_black_strong;
-    height: 40px;
 }
 
 .nav-footer ul {
