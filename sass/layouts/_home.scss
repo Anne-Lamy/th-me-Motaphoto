@@ -42,10 +42,12 @@ main {
 
 .first-img {
     background-image: url("../assets/images/first-img.jpeg");
+    position: relative;
     height: 962px;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 }
 
 .first-img h1 {
@@ -53,8 +55,8 @@ main {
     font-weight: 700;
     font-size: 96px;
     font-style: italic;
-    font-weight: 700;
     letter-spacing: 0em;
     -webkit-text-fill-color: transparent;
     -webkit-text-stroke: 2px $color_grey_light;
+    z-index: 2;
 }

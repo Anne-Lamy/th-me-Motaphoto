@@ -9,14 +9,15 @@
 
 ?>
 
-<footer class="site-footer">
+<footer class="motaphoto-footer">
             
     <div class="footer">
+        <div class="footer-contact">
         <?php 
         // Ajout de la POPUP de contact.
         get_template_part('templates_part/contact_modal'); ?>
-
-        <div class="nav-footer">
+        </div>
+        <div class="nav-footer motaphoto-menu">
             <h3>
             <?php wp_nav_menu([
                     'theme_location' => 'footer-menu',

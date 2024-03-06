@@ -21,15 +21,15 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<header class="site-header">
+<header class="motaphoto-header">
 
     <div class="header">
         <div class="motaphoto-logo">
             <a href="<?= site_url() ?>">
-            <img src="<?= site_url() ?>/wp-content/themes/motaphoto/assets/images/Logo.png">
+            <img class="nathalie-mota" id="ajax_call" src="<?= site_url() ?>/wp-content/themes/motaphoto/assets/images/Logo.png">
             </a>
         </div>
-        <div class="nav-header">
+        <div class="nav-header motaphoto-menu">
             <h3>
             <?php wp_nav_menu([
                     'theme_location' => 'principal-menu',

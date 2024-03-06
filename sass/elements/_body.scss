@@ -1,3 +1,33 @@
+/* Mes Google fonts locales */
+
+@font-face {
+    font-family: 'SpaceMono-Bold';
+    src: url('/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Bold.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SpaceMono-BoldItalic';
+    src: url('/wp-content/themes/motaphoto/assets/fonts/SpaceMono-BoldItalic.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SpaceMono-Italic';
+    src: url('/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Italic.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SpaceMono-Regular';
+    src: url('/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html,
 body {
     height: 100%;
@@ -6,27 +36,50 @@ body {
 }
 
 h1 {
-    font-family: $font_desk_h1;
+    font-family: $font_desk_h1,
+        sans-serif;
     font-size: 6em;
     color: $color_black_strong;
 }
 
 h2 {
-    font-family: $font_desk_h2;
+    font-family: $font_desk_h2,
+        sans-serif;
     font-size: 4.12em;
     color: $color_black_strong;
 }
 
-h3 {
-    font-family: $font_desk_h3;
+h3 li {
+    font-family: $font_desk_h3,
+        sans-serif;
     font-size: 1.12em;
     color: $color_black_strong;
 }
 
 p {
-    font-family: $font_desk_main;
+    font-family: $font_desk_main,
+        sans-serif;
     font-size: 0.87em;
     color: $color_black_strong;
+}
+
+.motaphoto-menu h3 {
+    font-family: $font_desk_h3,
+        sans-serif;
+    font-size: 1em;
+}
+
+.motaphoto-menu li {
+    list-style: none;
+}
+
+.motaphoto-menu li a {
+    text-decoration: none;
+    color: $color_black-strong;
+}
+
+.motaphoto-menu li a:hover {
+    color: $color_black_average;
 }
 
 

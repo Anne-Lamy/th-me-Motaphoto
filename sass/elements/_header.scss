@@ -1,31 +1,60 @@
-.header {
-    background-color: $color_grey_light;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.motaphoto-header {
     height: 80px;
     width: 100%;
     position: sticky;
     top: 0px;
     z-index: 9999;
+    background-color: $color_grey_light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .motaphoto-logo {
     display: flex;
     align-items: center;
     justify-content: start;
+    height: 80px;
     width: 50%;
-    margin-left: 50px;
+    margin-left: 200px !important;
 }
 
 .nav-header {
+    font-family: $font_desk_h3;
+    font-size: 1em;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: center;
+    height: 80px;
     width: 50%;
-    margin-right: 50px;
+    margin-right: 200px !important;
 }
 
-.nathalie-mota {
-    width: 50%;
+.nav-header ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-header li {
+    display: inline-block;
+    margin-left: 2em;
+}
+
+#contact-link {
+    text-decoration: none;
+    color: $color_black-strong;
+    font-family: $font_desk_h3, sans-serif;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2em;
+}
+
+.motaphoto-logo img {
+    height: 14px;
+    width: auto;
 }

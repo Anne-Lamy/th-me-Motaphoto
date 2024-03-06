@@ -1,3 +1,12 @@
+.footer {
+    background-color: $color_grey_light;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
 .footer-contact {
     display: flex;
     justify-content: center;
@@ -5,24 +14,20 @@
 }
 
 .nav-footer {
-    font-family: $font_desk_h3;
-    font-size: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 2px $color_black_strong;
     height: 40px;
-    border-top: 1px $color_black_strong;
+}
+
+.nav-footer ul {
+    margin: 0;
+    padding: 0;
+}
+
+.nav-footer li {
     display: inline-block;
-}
-
-.footer-menu li {
-    display: inline-block;
-    margin-right: 20px;
-    list-style: none;    /* Supprime les puces */
-}
-
-.footer-menu li a {
-    text-decoration: none;
-    color: $color_black-strong;
-}
-
-.footer-menu li a:hover {
-        color: $color_black_average;
+    margin-left: 2em;
+    margin-right: 2em;
 }
