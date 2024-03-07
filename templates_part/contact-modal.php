@@ -1,7 +1,6 @@
 <!-- Contenu de la modale -->
 <div class="modal-content">
     <div class="modal-header">
-        <span class="close">&times;</span>
     </div>
     <div class="modal-body">
         <?php
@@ -10,5 +9,6 @@
         ?>
     </div>
     <div class="modal-footer">
+        <span class="close">&times;</span>
     </div>
 </div>
