@@ -1,6 +1,6 @@
 <?php
 /**
-* Le modèle pour afficher une page unique.
+* Le fichier modèle principal de la page d'accueil du site.
  *
  * @package Motaphoto
  */
@@ -12,12 +12,9 @@ get_header();
 
 <?php if (have_posts()) : while (have_posts()) : the_post();?>
 
-<div class="page">
-    <div class="content-page">
-        <!-- Affichage du contenu -->
-        <?php the_content(); ?>
+    <div class="first-img">
+        <h1>PHOTOGRAPHE EVENT</h1>
     </div>
-</div>
 
 </main>
 
@@ -26,3 +23,4 @@ get_header();
 endwhile; endif;
 
 get_footer() ?>
+

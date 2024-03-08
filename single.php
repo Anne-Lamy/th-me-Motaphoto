@@ -1,50 +1,72 @@
 <?php
 /**
- * Le modèle pour afficher tous les messages uniques.
+ * Le modèle pour afficher une publication unique.
  *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
- *
- * @package WordPress
- * @subpackage Twenty_Twenty_One
- * @since Twenty Twenty-One 1.0
+ * @package Motaphoto
  */
 
 get_header();
 
-/* Début de la boucle */
-while ( have_posts() ) :
-	the_post();
+/* Démarre la boucle. */
+if (have_posts()) : while (have_posts()) : the_post();?>
 
-	get_template_part( 'template-parts/content-single' );
+<article class="single">
+    <div class="content-single">
+        <div id="" class="single-left"> 
+            <!-- Affichage du titre -->
+            <h2><?php the_title(); ?></h2>
+            <!-- Affichage de la référence -->
+            <h3>Référence : <?php echo get_post_meta(get_the_ID(), 'ref', true); ?></h3>
+            <!-- Affichage des catégories -->
+            <h3>Catégories : 
+            <?php
+                $categories = get_the_terms(get_the_ID(), 'categories');
+                if ($categories) {
+                    foreach ($categories as $category) {
+                        echo '<a href="' . get_term_link($category->term_id) . '">' . $category->name . '</a>, ';
+                    }
+                }
+            ?>
+            </h3>
+            <!-- Affichage des formats -->
+            <h3>Formats : 
+            <?php
+                $formats = get_the_terms(get_the_ID(), 'formats');
+                if ($formats) {
+                    foreach ($formats as $format) {
+                        echo '<a href="' . get_term_link($format->term_id) . '">' . $format->name . '</a>, ';
+                    }
+                }
+            ?>
+            </h3>
+            <!-- Affichage du type -->
+            <h3>Type : <?php echo get_post_meta(get_the_ID(), 'type', true); ?></h3>
+            <!-- Affichage de l'année -->
+            <h3>Année : <?php echo get_the_date('Y'); ?></h3>
+        </div>
+        <div class="single-right">
+            <!-- Affichage de la photo -->            
+            <?php the_post_thumbnail('large', array('class' => 'single-thumbnail')); ?>
+        </div>
+    </div>
 
-	if ( is_attachment() ) {
-		// Navigation des publications parentes.
-		the_post_navigation(
-			array(
-				/* traducteurs : %s : lien vers la publication parente. */
-				'prev_text' => sprintf( __( '<span class="meta-nav">Publié dans</span><span class="post-title">%s</span>', 'motaphoto' ), '%title' ),
-			)
-		);
-	}
+    <div class="content-interaction">
+        <div class="single-left-bottom">
+            <p>Cette photo vous intéresse ?</p>
+        </div>
+        <div class="single-right-bottom">     
+            <p>image</p>
+        </div>
+    </div>
 
-	// Si les commentaires sont ouverts ou s'il y a au moins un commentaire, chargez le modèle de commentaire.
-	if ( comments_open() || get_comments_number() ) {
-		comments_template();
-	}
+    <div class="content-presentation">
+            <h3>VOUS AIMEREZ AUSSI</h3>
+    </div>
+</article>
 
-	// Navigation dans les articles précédent/suivant.
-	$motaphoto_next = is_rtl() ? motaphoto_get_icon_svg( 'ui', 'arrow_left' ) : motaphoto_get_icon_svg( 'ui', 'arrow_right' );
-	$motaphoto_prev = is_rtl() ? motaphoto_get_icon_svg( 'ui', 'arrow_right' ) : motaphoto_get_icon_svg( 'ui', 'arrow_left' );
-
-	$motaphoto_next_label     = esc_html__( 'Next post', 'motaphoto' );
-	$motaphoto_previous_label = esc_html__( 'Previous post', 'motaphoto' );
-
-	the_post_navigation(
-		array(
-			'next_text' => '<p class="meta-nav">' . $motaphoto_next_label . $motaphoto_next . '</p><p class="post-title">%title</p>',
-			'prev_text' => '<p class="meta-nav">' . $motaphoto_prev . $motaphoto_previous_label . '</p><p class="post-title">%title</p>',
-		)
-	);
-endwhile; // Fin de la boucle.
+<?php 
+/* Termine la boucle */
+endwhile; endif;
 
 get_footer();
+

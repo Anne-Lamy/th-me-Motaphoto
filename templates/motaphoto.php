@@ -1,16 +1,14 @@
 <?php
-/**
-* Le modèle pour afficher une page unique.
- *
- * @package Motaphoto
- */
+/*
+Template Name: Motaphoto
+Template Post Type: post, page, product
+*/
+
 
 get_header();
-?>
 
-<main id="main" class="site-main" role="main">
 
-<?php if (have_posts()) : while (have_posts()) : the_post();?>
+if (have_posts()) : while (have_posts()) : the_post();?>
 
 <div class="page">
     <div class="content-page">
@@ -18,8 +16,6 @@ get_header();
         <?php the_content(); ?>
     </div>
 </div>
-
-</main>
 
 <?php
 /* Termine la boucle */

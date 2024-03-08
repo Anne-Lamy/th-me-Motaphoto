@@ -16,9 +16,9 @@ add_action('wp_enqueue_scripts', 'enqueue_custom_scripts_styles');
 
 
 // _______________________________________________________________
-
-
 // MENUS :
+
+
 function register_my_menus() {
     register_nav_menus(
         array(
@@ -41,6 +41,7 @@ add_filter('wp_nav_menu_items', 'add_custom_nav_menu_items', 10, 2);
 
 
 // _______________________________________________________________
+// THEME "Motaphoto" :
 
 
 // On créer notre lien Motaphto dans le menu de Wordpress.
@@ -138,10 +139,10 @@ add_action('admin_init', 'motaphoto_settings_register');
 
 
 // _______________________________________________________________
+// PUPLICATION "Mes Photos" :
 
 
 //Récupération des posts PHOTOS pour l'affichage sur la page d'accueil.
-
 function motaphoto_request_photos () {
 
     $args = array(

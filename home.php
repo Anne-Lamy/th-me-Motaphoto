@@ -1,20 +1,23 @@
 <?php
 /**
-* Le fichier modèle principal
+ * Le modèle pour afficher la page d'accueil des publications.
  *
  * @package Motaphoto
  */
 
-get_header();
-?>
+if (have_posts()) : while (have_posts()) : the_post();?>
 
-<main id="main" class="site-main" role="main">
-
-    <div class="first-img">
-        <h1>PHOTOGRAPHE EVENT</h1>
+<article class="portfolio">
+    <div class="post">
+        <div class="post-content">
+        <!-- Affichage du contenu -->
+        <?php get_template_part( 'archive' ); ?>
+        </div>  
     </div>
+</article>
 
-</main>
+<?php 
+/* Termine la boucle */
+endwhile; endif;
 
-<?php get_footer() ?>
-
+get_footer();

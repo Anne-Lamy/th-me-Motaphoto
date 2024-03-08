@@ -30,6 +30,7 @@ AMP: true
 	- footer
 # Layouts
 	- home
+	- archive
 # Templates
 	- contact-modal
 	- content-single
@@ -58,4 +59,5 @@ AMP: true
 --------------------------------------------- */
 @import "templates/contact-modal";
 @import "templates/content-single";
+@import "templates/archives";
 
