@@ -44,25 +44,25 @@ AMP: true
 /* Mes Google fonts locales */
 @font-face {
   font-family: "SpaceMono-Bold";
-  src: url("/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Bold.ttf") format("ttf");
+  src: url("/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Bold.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "SpaceMono-BoldItalic";
-  src: url("/wp-content/themes/motaphoto/assets/fonts/SpaceMono-BoldItalic.ttf") format("ttf");
+  src: url("/wp-content/themes/motaphoto/assets/fonts/SpaceMono-BoldItalic.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "SpaceMono-Italic";
-  src: url("/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Italic.ttf") format("ttf");
+  src: url("/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Italic.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "SpaceMono-Regular";
-  src: url("/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Regular.ttf") format("ttf");
+  src: url("/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
@@ -221,6 +221,8 @@ p {
 /* Layouts
 --------------------------------------------- */
 main {
+  display: flex;
+  justify-content: center;
   position: relative;
 }
 
@@ -257,10 +259,6 @@ main {
 }
 
 /* Page d'accueil */
-main {
-  position: relative;
-}
-
 .first-img {
   background-image: url("../assets/images/first-img.jpeg");
   position: relative;
@@ -400,7 +398,7 @@ main {
 }
 .content-single {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   width: 100%;
 }
@@ -410,8 +408,9 @@ main {
   text-align: start;
   flex-direction: column;
   width: 50%;
-  margin-left: 50px;
-  border-bottom: 1px #000000;
+  margin-right: 10px;
+  height: auto;
+  border-bottom: 2px solid #000000;
 }
 
 .single-right {
@@ -419,11 +418,8 @@ main {
   align-items: center;
   justify-content: center;
   width: 50%;
+  margin-left: 10px;
   height: 844px;
-  padding: 10px;
-  box-sizing: border-box;
-  margin-right: 50px;
-  position: relative;
   overflow: hidden;
 }
 
@@ -440,7 +436,7 @@ main {
   flex-direction: row;
   width: 100%;
   height: 118px;
-  border-bottom: 1px #000000;
+  border-bottom: 2px solid #000000;
 }
 
 .single-left-bottom {
@@ -448,8 +444,6 @@ main {
   align-items: center;
   justify-content: start;
   width: 50%;
-  margin-left: 50px;
-  border-bottom: 1px #000000;
 }
 
 .single-right-bottom {
@@ -457,40 +451,51 @@ main {
   align-items: center;
   justify-content: end;
   width: 50%;
-  margin-right: 50px;
 }
 
 .content-presentation {
   display: flex;
   align-items: center;
   justify-content: start;
-  width: 1000%;
-  margin-left: 50px;
-}
-
-.portfolio {
-  display: flex;
-  flex-wrap: wrap;
+  width: 100%;
 }
 
 .post {
-  width: 50%;
-  padding: 10px;
-  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
+.portfolio-container {
+  width: 1148px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.portfolio-item {
+  flex: 0 0 calc(50% - 10px);
+  /* 2 éléments par ligne avec un espace de 10px entre eux */
+  margin-bottom: 20px;
 }
 
 .post-content {
   position: relative;
   overflow: hidden;
-  padding-bottom: 100%;
+  flex: 1 1 564px;
+  height: 495px;
 }
 
 .post-content img {
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.page.framed-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }/*# sourceMappingURL=style.css.map */

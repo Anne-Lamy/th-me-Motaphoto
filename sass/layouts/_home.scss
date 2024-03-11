@@ -1,4 +1,6 @@
 main {
+    display: flex;
+    justify-content: center;
     position: relative;
 }
 
@@ -35,10 +37,6 @@ main {
 }
 
 /* Page d'accueil */
-
-main {
-    position: relative;
-}
 
 .first-img {
     background-image: url("../assets/images/first-img.jpeg");

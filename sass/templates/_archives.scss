@@ -1,22 +1,29 @@
-.portfolio {
+.post {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.post {
-    width: 50%;
-    padding: 10px;
-    box-sizing: border-box;
+.portfolio-container {
+    width: 1148px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.portfolio-item {
+    flex: 0 0 calc(50% - 10px);
+    /* 2 éléments par ligne avec un espace de 10px entre eux */
+    margin-bottom: 20px;
 }
 
 .post-content {
     position: relative;
     overflow: hidden;
-    padding-bottom: 100%;
+    flex: 1 1 564px;
+    height: 495px;
 }
 
 .post-content img {
-    position: absolute;
     top: 0;
     left: 0;
     width: 100%;

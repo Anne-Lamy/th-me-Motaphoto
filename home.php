@@ -5,19 +5,26 @@
  * @package Motaphoto
  */
 
-if (have_posts()) : while (have_posts()) : the_post();?>
+get_header(); ?>
 
-<article class="portfolio">
-    <div class="post">
-        <div class="post-content">
-        <!-- Affichage du contenu -->
-        <?php get_template_part( 'archive' ); ?>
-        </div>  
+<div class="post">
+    <div class="portfolio-container">
+
+        <?php 
+        /* Démarre la boucle */
+        if (have_posts()) : while (have_posts()) : the_post();?>
+
+        <article class="portfolio-item">
+            <div class="post-content">
+                <?php get_template_part( 'archive' ); ?>         
+            </div>  
+        </article>
+
+        <?php 
+        /* Termine la boucle */
+        endwhile; endif;?>
+
     </div>
-</article>
+</div>
 
-<?php 
-/* Termine la boucle */
-endwhile; endif;
-
-get_footer();
+<?php get_footer(); ?>

@@ -1,11 +1,5 @@
-.page {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.content-page {
-    width: 100%;
-    margin-left: 50px;
-    margin-right: 50px;
+.page.framed-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
