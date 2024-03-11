@@ -8,10 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
     postData.append("action", "request_photos");
 
 
-
-
     // Effectue une requête HTTP POST à l'URL définie dans single_script_js.ajax_url, en envoyant les données du formulaire.
-    fetch(single_script_js.ajax_url, {
+    fetch(photo_filter_js.ajax_url, {
         method: "POST", // Utilise la méthode POST pour envoyer les données.
         body: postData, // Utilise les données du post photos comme corps de la requête.
     })
@@ -25,11 +23,12 @@ document.addEventListener("DOMContentLoaded", function () {
         return response.json();
         })
 
-        .then(function (data) {
         // Traite les données JSON retournées.
-        data.posts.forEach(function (post) { // Pour chaque élément dans le tableau data.posts
+        .then(function (data) {
+        // Pour chaque élément dans le tableau data.posts
+        data.posts.forEach(function (post) { 
             // Insère du HTML à la fin de l'élément avec l'ID "ajax_return" contenant le titre du message
-            document.querySelector("#ajax_return").insertAdjacentHTML("beforeend",'<div class="col-12 mb-5">' + post.post_title + "</div>"
+            document.querySelector("#ajax_return").insertAdjacentHTML("beforeend",'<div class="post-content">' + post.post_title + "</div>"
             );
         });
         })

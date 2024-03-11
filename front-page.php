@@ -10,21 +10,15 @@ get_header();
 
 <main id="main" class="site-main" role="main">
 
-<?php if (have_posts()) : while (have_posts()) : the_post();?>
-
+    <?php if (have_posts()) : while (have_posts()) : the_post();?>
     <div class="first-img">
         <h1>PHOTOGRAPHE EVENT</h1>
     </div>
-
-    <div>
-        
-    </div>
+    <?php endwhile; endif;?>
+    
+    <?php get_template_part('templates_part/photo_block'); ?>
 
 </main>
 
-<?php
-/* Termine la boucle */
-endwhile; endif;
-
-get_footer() ?>
+<?php get_footer() ?>
 

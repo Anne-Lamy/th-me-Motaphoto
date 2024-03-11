@@ -8,9 +8,9 @@ function enqueue_custom_scripts_styles() {
     // Script de la modale
     wp_enqueue_script('modal-script', get_template_directory_uri() . '/js/contact-modal.js', array(), true);
     // Script du contenu du single photo.
-    wp_enqueue_script('single-script', get_template_directory_uri() . '/js/content-single.js', array('jquery'), true);
+    wp_enqueue_script('photo-filter', get_template_directory_uri() . '/js/photo-filter.js', array('jquery'), true);
     // Permet de partager et de passer des données de PHP vers JavaScript de manière sécurisée.
-    wp_localize_script('single-script', 'single_script_js', array('ajax_url' => admin_url('admin-ajax.php')));
+    wp_localize_script('photo-filter', 'photo_filter_js', array('ajax_url' => admin_url('admin-ajax.php')));
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_scripts_styles');
 
@@ -146,7 +146,8 @@ add_action('admin_init', 'motaphoto_settings_register');
 function motaphoto_request_photos () {
 
     $args = array(
-        'post_type' => 'photos',   // on récupère uniquement les photos.
+        'post' => 'photos',   // on récupère uniquement les photos.
+        'posts_per_page' => -1,    // Affiche toutes les photos.
     );
 
     $query = new WP_Query($args);   // Effectue une requette auprés de la base de données.

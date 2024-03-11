@@ -7,7 +7,8 @@
 
 get_header(); ?>
 
-<div class="post">
+<div class="center-container">
+
     <div class="portfolio-container">
 
         <?php 
@@ -16,15 +17,15 @@ get_header(); ?>
 
         <article class="portfolio-item">
             <div class="post-content">
-                <a href="<?php the_permalink(); ?>" class=""><?php the_post_thumbnail(); ?></a>            
+                <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail(); ?></a>            
             </div>  
         </article>
 
         <?php 
         /* Termine la boucle */
         endwhile; endif;?>
-
     </div>
+
 </div>
 
 <?php get_footer(); ?>

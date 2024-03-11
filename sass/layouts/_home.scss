@@ -1,7 +1,10 @@
 main {
+    position: relative;
+}
+
+.center-container {
     display: flex;
     justify-content: center;
-    position: relative;
 }
 
 .header {
@@ -58,3 +61,4 @@ main {
     -webkit-text-stroke: 2px $color_grey_light;
     z-index: 2;
 }
+
