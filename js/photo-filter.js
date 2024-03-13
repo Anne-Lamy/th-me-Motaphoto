@@ -1,44 +1,29 @@
-document.addEventListener("DOMContentLoaded", function () {
+jQuery(document).ready(function($) {
+    // Lorsque l'élément avec l'ID "ajax_call" change (dans option) ...
+    $('#ajax_call').on('change', function() {
 
-    // Ajoute un écouteur d'événement au clic sur l'élément avec l'ID "ajax_call".
-    document.querySelector("#ajax_call").addEventListener("click", function () {
-    // Crée un nouvel objet postData pour stocker les données du formulaire.
-    let postData = new postData();
-    // Ajoute une paire clé-valeur à l'objet postData, avec "action" comme clé et "request_photos" comme valeur.
-    postData.append("action", "request_photos");
+        var data = $(this).serialize(); // encode dans une chaîne de requête URL.
 
+        console.log(data); // Affiche les données envoyées dans la console
 
-    // Effectue une requête HTTP POST à l'URL définie dans single_script_js.ajax_url, en envoyant les données du formulaire.
-    fetch(photo_filter_js.ajax_url, {
-        method: "POST", // Utilise la méthode POST pour envoyer les données.
-        body: postData, // Utilise les données du post photos comme corps de la requête.
-    })
-
-        .then(function (response) {
-        // Gère la réponse de la requête.
-        if (!response.ok) { // Si la réponse n'est pas OK (statut HTTP 200).
-            throw new Error("Erreur de réponse du réseau."); // Lève une erreur avec un message approprié.
-        }
-        // Si la réponse est OK, retourne les données JSON de la réponse.
-        return response.json();
-        })
-
-        // Traite les données JSON retournées.
-        .then(function (data) {
-        // Pour chaque élément dans le tableau data.posts
-        data.posts.forEach(function (post) { 
-            // Insère du HTML à la fin de l'élément avec l'ID "ajax_return" contenant le titre du message
-            document.querySelector("#ajax_return").insertAdjacentHTML("beforeend",'<div class="post-content">' + post.post_title + "</div>"
-            );
+        // Effectue une requête AJAX.
+        $.ajax({
+            // Utilise l'URL définie par WordPress pour les requêtes AJAX.
+            url: ajaxurl,
+            // Utilise la méthode POST pour envoyer les données.
+            type: 'POST',
+            // Les données à envoyer, y compris l'action à exécuter dans le fichier PHP.
+            data: data + '&action=motaphoto_request_photos',
+            // Fonction exécutée en cas de succès de la requête AJAX.
+            
+            success: function(response) {
+                // Met à jour le contenu de l'élément avec l'ID "ajax_return" avec la réponse reçue du serveur PHP.
+                $('#ajax_return').html(response);
+                }
         });
-        })
 
-        .catch(function (error) {
-        // Gère les erreurs survenues lors de la requête ou du traitement des données
-        console.error(
-            "Il y a eu un problème avec l'opération de récupération: ",
-            error
-        );
-        });
+
+        // Empêche le formulaire de se soumettre normalement.
+        return false;
     });
 });

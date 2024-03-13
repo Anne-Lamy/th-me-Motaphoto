@@ -1,5 +1,6 @@
 .portfolio-container {
-    width: 1148px;
+    max-width: 1148px;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;

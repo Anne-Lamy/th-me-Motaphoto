@@ -53,7 +53,7 @@ if (have_posts()) : while (have_posts()) : the_post();?>
             </div>
         </div>
     
-        <div class="content-interaction">
+        <div class="content-interaction interest">
             <div class="single-left-bottom">
                 <p>Cette photo vous intéresse ?</p>
             </div>
@@ -63,8 +63,17 @@ if (have_posts()) : while (have_posts()) : the_post();?>
         </div>
 
         <div class="content-presentation">
-                <h3>VOUS AIMEREZ AUSSI</h3>
+            <h3>VOUS AIMEREZ AUSSI</h3>
         </div>
+        <div class="center-container">
+            <div class="portfolio-container">
+                <article class="portfolio-item">
+                    <div class="post-content" id="ajax_return">
+                        
+                    </div>  
+                </article>
+            </div>
+    </div>
     </article>
 
 </div>    

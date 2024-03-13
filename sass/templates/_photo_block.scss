@@ -1,5 +1,46 @@
-.form-content {
-    position: relative;
-    overflow: hidden;
-    flex: 1 1 564px;
+/* Filtres des photos */
+.select-post {
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid #B8BBC2;
+    padding: 8px;
+    margin: 10px;
+    width: 40%;
+    background-position: calc(100% - 40px) center;
+    cursor: pointer;
+        &:hover {
+            border: 1px solid $color_red_strong;
+            }
+}
+
+.select-post option {
+    box-sizing: content-box;
+    padding: 8px;
+    margin: 10px;
+    background-color: $color_grey_light;
+    color: $color_black_strong;
+    font-size: 16px;
+        &:hover {
+            background-color: $color_red_average;
+            color: $color_grey_light;
+        }
+}
+
+.select-post option.hidden-option {
+    display: none;
+}
+
+button {
+    border: none;
+    padding: 10px 20px;
+    background-color: $color_grey_strong;
+    color: $color_black_strong;
+    cursor: pointer;
+    height: 50px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: $color_red_average;
+    color: $color_grey_light;
 }

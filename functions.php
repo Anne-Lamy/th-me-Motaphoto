@@ -142,28 +142,47 @@ add_action('admin_init', 'motaphoto_settings_register');
 // PUPLICATION "Mes Photos" :
 
 
-//Récupération des posts PHOTOS pour l'affichage sur la page d'accueil.
-function motaphoto_request_photos () {
+// Récupération des posts PHOTOS depuis le formulaire.
+function motaphoto_request_photos() {
+    $category = $_POST['category'];
+    $format = $_POST['format'];
+    $date = $_POST['date'];
 
+    // vérification des valeurs.
+    error_log('Category: ' . $category);
+    error_log('Format: ' . $format);
+    error_log('Date: ' . $date);
+
+    // Configuration des arguments pour la requête WP_Query.
     $args = array(
-        'post' => 'photos',   // on récupère uniquement les photos.
-        'posts_per_page' => -1,    // Affiche toutes les photos.
+        'post_type' => 'photos',
+        'posts_per_page' => 8,
+        'category' => $category, // Filtre par catégorie.
+        'format' => $format, // Filtre par format.
+        'date_query' => array( // Filtre par date (année).
+            array(
+                'year' => $date,
+            ),
+        ),
     );
 
-    $query = new WP_Query($args);   // Effectue une requette auprés de la base de données.
+    $query = new WP_Query($args);  // Effectue une requette auprés de la base de données.
 
     // On vérifie si on obtient des résultats.
-    if ($query->have_posts()) {     // Si on récupère des résultats ...
-        $response = $query;         // On envois les résultats au script (sous forme de données JSON) ...
+    if ($query->have_posts()) {    // Si on récupère des résultats ...
+        while ($query->have_posts()) {
+            $query->the_post();    // On envois les résultats au script (sous forme de données JSON) ...
+            echo '<div>' . get_the_post_thumbnail() . '</div>'; // Affiche la/les photos.
+        }
     } else {
-        $response = false;          // sinon on renvois faux.
+        echo 'Aucune photo trouvée !';
     }
 
-    wp_send_json($response);      // Les données JSON sont stokées dans $reponse.
-    wp_die();                     // On tue la requette afin de s’assurer que la fonction s’arrêtera bien.
+    wp_die(); // Termine la requête Ajax.
 }
 
 // Appelle la function de la requette et indique à WP qu'elle est à utiliser via un appel Ajax.
 add_action('wp_ajax_request_photos', 'motaphoto_request_photos');
 // Rend également la function accessible pour les utilisateurs non connectés.
 add_action('wp_ajax_nopriv_request_photos', 'motaphoto_request_photos');
+
