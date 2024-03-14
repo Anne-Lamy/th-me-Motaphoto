@@ -3,7 +3,7 @@
     <div class="singles">
         <form action="<?php echo admin_url( 'admin-ajax.php' ); ?>" method="post" id="ajax_call">   
             <div class="content-interaction">
-                <div class="single-left-bottom">
+                <div class="single-left-bottom mini">
                     <select name="category" id="category" class="select-post">
                         <option value="" class="hidden-option">CATEGORIES</option>
                         <option value=""> </option>

@@ -3,17 +3,21 @@ document.addEventListener("DOMContentLoaded", function() {
     // Récupérer la modale
     var modal = document.getElementById('contact-modal');
     // Récupérer l'élément "Contact" du menu.
-    var contactLink = document.getElementById("contact-link");
+    var contactLinks = document.querySelectorAll("#contact-link, #btnContact");
     // Récupérer l'élément <span> qui ferme la modale
     var span = document.getElementsByClassName("close")[0];
 
     // Afficher la modale dès que la page se charge
     modal.style.display = "block";
 
-    // Lorsque l'utilisateur clique sur "Contact" du menu, la modale s'ouvre.
-    contactLink.onclick = function() {
-        modal.style.display = "block";
-    }
+    // Lorsque l'utilisateur clique sur les liens "Contact", la modale s'ouvre.
+    contactLinks = Array.from(contactLinks); // Conversion en tableau
+    contactLinks.forEach(function(link) {
+        link.onclick = function() {
+            modal.style.display = "block";
+        };
+    });
+
     // Lorsque l'utilisateur clique sur <span> (x), la modale disparait.
     span.onclick = function() {
         modal.style.display = "none";

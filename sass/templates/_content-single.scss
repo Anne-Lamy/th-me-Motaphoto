@@ -27,7 +27,6 @@
 }
 
 .single-thumbnail {
-    max-width: 1148px;
     width: 100%;
     height: auto;
     display: block;
@@ -38,9 +37,7 @@
     align-items: center;
     justify-content: start;
     flex-direction: row;
-    max-width: 1148px;
-    width: 100%;
-    height: 118px;
+    min-height: 118px;
 }
 
 .content-interaction.interest {
@@ -51,7 +48,11 @@
     display: flex;
     align-items: center;
     justify-content: start;
+    margin-right: 10px;
     width: 50%;
+    p {
+        font-family: $font_desk_poppins;
+    }
     }
 
 .single-right-bottom {
@@ -65,6 +66,97 @@
     display: flex;
     align-items: center;
     justify-content: start;
-    max-width: 1148px;
-    width: 100%;
+}
+
+.half-content {
+    width: 50%;
+}
+
+/* Responsive */
+
+@media all and (max-width: #{$breakpoint__large_phone}) {
+
+    .single {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            max-width: 100%;
+            width: 100%;
+        }
+
+    .content-single {
+        max-width: 100%;
+        width: 100%;
+        margin-top: 20px;
+        align-items: center;
+        flex-direction: column;
+        }
+        
+    .single-left {
+        width: 265px;
+        margin-right: 0px;
+        height: auto;
+        order: 2;
+        border-bottom: 0;
+    }
+
+    .single-right {
+        width: 100%;
+        margin-left: 0px;
+        height: auto;
+        order: 1;
+    }
+
+    .single-thumbnail {
+        width: 265px;
+        height: 397px;
+        display: flex;
+    }
+
+    .single-left-bottom {
+        justify-content: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-right: 0;
+        width: 100%;
+        margin-top: 20px;
+        border-top: 2px solid $color_black_strong;
+    }
+
+    .mini {
+        margin-top: 20px;
+        border-top: none;
+    }
+
+    .content-interaction {
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .single-right-bottom {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .single-right-bottom.none {
+            display: none;
+            width: 0;
+    }
+
+    .half-content {
+        display: flex;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        width: 265px;
+    }
+
+    button {
+        margin-bottom: 20px;
+    }
+
+        .content-presentation {
+            justify-content: center;
+            margin-top: 20px;
+        }
+
 }

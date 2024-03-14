@@ -11,7 +11,7 @@
 
 <footer class="motaphoto-footer">
             
-    <div class="footer">
+    <div class="content">
 
         <div class="footer-contact">
             <!-- Ajout de la POPUP de contact. -->

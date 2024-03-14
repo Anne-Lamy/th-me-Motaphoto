@@ -25,3 +25,21 @@
         object-fit: cover;
         }
 }
+
+@media all and (max-width: #{$breakpoint__large_phone}) {
+
+    .portfolio-container {
+            max-width: 318px;
+        }
+
+    .portfolio-item {
+        flex: 0 0 calc(100% - 0px);
+        /* 1 élément par ligne */
+        margin-bottom: 0;
+    }
+
+        .post-content {
+            height: 279px;
+            margin-top: 20px;
+        }
+}

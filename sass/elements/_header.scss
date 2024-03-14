@@ -1,3 +1,15 @@
+.header {
+    background-color: $color_grey_light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 100%;
+    position: sticky;
+    top: 0px;
+    z-index: 9999;
+}
+
 .motaphoto-header {
     height: 80px;
     width: 100%;
@@ -5,6 +17,7 @@
     top: 0px;
     z-index: 9999;
     background-color: $color_grey_light;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -16,7 +29,6 @@
     justify-content: start;
     height: 80px;
     width: 50%;
-    margin-left: 200px !important;
 }
 
 .nav-header {
@@ -24,10 +36,13 @@
     font-size: 1em;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: end;
     height: 80px;
     width: 50%;
-    margin-right: 200px !important;
+}
+
+.nathalie-mota {
+    width: 60%;
 }
 
 .nav-header ul {

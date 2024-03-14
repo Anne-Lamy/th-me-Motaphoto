@@ -2,28 +2,35 @@
 
 @font-face {
     font-family: 'SpaceMono-Bold';
-    src: url('/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Bold.woff2') format('woff2');
+    src: url('../assets/fonts/SpaceMono-Bold.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'SpaceMono-BoldItalic';
-    src: url('/wp-content/themes/motaphoto/assets/fonts/SpaceMono-BoldItalic.woff2') format('woff2');
+    src: url('../assets/fonts/SpaceMono-BoldItalic.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'SpaceMono-Italic';
-    src: url('/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Italic.woff2') format('woff2');
+    src: url('../assets/fonts/SpaceMono-Italic.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'SpaceMono-Regular';
-    src: url('/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Regular.woff2') format('woff2');
+    src: url('../assets/fonts/SpaceMono-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Poppins-Medium';
+    src: url('../assets/fonts/Poppins-Medium.ttf') format('ttf');
     font-weight: normal;
     font-style: normal;
 }
@@ -35,38 +42,56 @@ body {
     padding: 0;
 }
 
+.uppercase-text {
+    text-transform: uppercase;
+}
+
 h1 {
-    font-family: $font_desk_h1,
-        sans-serif;
+    font-family: $font_desk_h1;
     font-size: 6em;
+    font-weight: 700;
+    letter-spacing: 0em;
     color: $color_black_strong;
 }
 
 h2 {
-    font-family: $font_desk_h2,
-        sans-serif;
+    font-family: $font_desk_h2;
     font-size: 4.12em;
+    font-weight: 400;
+    letter-spacing: 0em;
     color: $color_black_strong;
 }
 
 h3 li {
-    font-family: $font_desk_h3,
-        sans-serif;
+    font-family: $font_desk_h3;
     font-size: 1.12em;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: $color_black_strong;
+}
+
+h3 {
+    font-family: $font_desk_h3;
+    font-size: 1.12em;
+    font-weight: 400;
+    letter-spacing: 0.1em;
     color: $color_black_strong;
 }
 
 p {
-    font-family: $font_desk_main,
-        sans-serif;
+    font-family: $font_desk_main;
     font-size: 0.87em;
+    font-weight: 300;
+    letter-spacing: 0em;
     color: $color_black_strong;
 }
 
 .motaphoto-menu h3 {
-    font-family: $font_desk_h3,
-        sans-serif;
+    font-family: $font_desk_h3;
     font-size: 1em;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: $color_black_strong;
 }
 
 .motaphoto-menu li {
@@ -82,7 +107,29 @@ p {
     color: $color_black_average;
 }
 
+/* Boutons */
+button {
+    border: none;
+    padding: 10px 20px;
+    background-color: $color_grey_strong;
+    font-family: $font_desk_main;
+    color: $color_black_strong;
+    cursor: pointer;
+    height: 50px;
+    width: 100%;
+        &:hover {
+            background-color: $color_red_average;
+            color: $color_grey_light;
+        }
+}
 
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 1148px;
+    width: 100%;
+}
 
 @media all and (max-width: #{$breakpoint__large_phone}) {
     h1 {
@@ -91,5 +138,13 @@ p {
 
     h2 {
         font-size: 2.87em;
+    }
+
+    h3 {
+        font-size: 1em;
+    }
+
+    .content {
+        max-width: 100%;
     }
 }

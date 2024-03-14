@@ -9,10 +9,17 @@ function enqueue_custom_scripts_styles() {
     wp_enqueue_script('modal-script', get_template_directory_uri() . '/js/contact-modal.js', array(), true);
     // Script du contenu du single photo.
     wp_enqueue_script('photo-filter', get_template_directory_uri() . '/js/photo-filter.js', array('jquery'), true);
-    // Permet de partager et de passer des données de PHP vers JavaScript de manière sécurisée.
-    wp_localize_script('photo-filter', 'photo_filter_js', array('ajax_url' => admin_url('admin-ajax.php')));
+
+    // Création et ajout du nonce pour le script 'photo-filter'
+    $nonce = wp_create_nonce('photo_filter_nonce');
+
+    wp_localize_script('photo-filter', 'photo_filter_js', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => $nonce, // Ajout du nonce à l'objet JavaScript.
+    ));
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_scripts_styles');
+
 
 
 // _______________________________________________________________
@@ -33,7 +40,7 @@ add_action( 'init', 'register_my_menus' );
 function add_custom_nav_menu_items($items, $args) {
     if ($args->theme_location == 'principal-menu') {
         // enregistrer un identifiant personnalisé pour le lien de contact.
-        $items .= '<a href="#" id="contact-link">Contact</a>';
+        $items .= '<a href="#" id="contact-link" class="motaphoto-menu">Contact</a>';
     }
     return $items;
 }
@@ -142,16 +149,21 @@ add_action('admin_init', 'motaphoto_settings_register');
 // PUPLICATION "Mes Photos" :
 
 
-// Récupération des posts PHOTOS depuis le formulaire.
+// Récupération des posts PHOTOS depuis le formulaire de selection.
+
 function motaphoto_request_photos() {
+
+    var_dump("La requête a bien été traitée par WordPress.");
+
+    // Vérification du nonce
+    $nonce = $_POST['nonce'];
+    if (!wp_verify_nonce($nonce, 'photo_filter_nonce')) {
+        wp_send_json_error('Invalid nonce'); // Arrête la requête si le nonce est invalide
+    }
+
     $category = $_POST['category'];
     $format = $_POST['format'];
     $date = $_POST['date'];
-
-    // vérification des valeurs.
-    error_log('Category: ' . $category);
-    error_log('Format: ' . $format);
-    error_log('Date: ' . $date);
 
     // Configuration des arguments pour la requête WP_Query.
     $args = array(

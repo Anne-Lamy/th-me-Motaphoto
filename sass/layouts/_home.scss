@@ -7,38 +7,6 @@ main {
     justify-content: center;
 }
 
-.header {
-    background-color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 80px;
-    width: 100%;
-    position: sticky;
-    top: 0px;
-    z-index: 9999;
-}
-
-.motaphoto-logo {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    width: 50%;
-    margin-left: 50px;
-}
-
-.nav-header {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    width: 50%;
-    margin-right: 50px;
-}
-
-.nathalie-mota {
-    width: 60%;
-}
-
 /* Page d'accueil */
 
 .first-img {
@@ -62,3 +30,16 @@ main {
     z-index: 2;
 }
 
+@media all and (max-width: #{$breakpoint__large_phone}) {
+
+    .first-img {
+        width: 100%;
+        height: 250px;
+        background-size: contain;
+    }
+    .first-img h1 {
+        font-weight: 700;
+        font-size: 30px;
+        -webkit-text-stroke: 1px $color_grey_light;
+    }
+}

@@ -4,3 +4,11 @@
     margin: 0 auto;
     padding: 20px;
 }
+
+@media all and (max-width: #{$breakpoint__large_phone}) {
+
+    .page.framed-layout {
+            max-width: 100%;
+            padding: 0px;
+        }
+}

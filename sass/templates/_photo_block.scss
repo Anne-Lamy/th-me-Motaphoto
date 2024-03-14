@@ -44,3 +44,13 @@ button:hover {
     background-color: $color_red_average;
     color: $color_grey_light;
 }
+
+@media all and (max-width: #{$breakpoint__large_phone}) {
+
+.select-post {
+    padding: 10px;
+    margin: 5px;
+    width: 70%;
+}
+
+}

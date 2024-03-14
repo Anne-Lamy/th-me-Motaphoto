@@ -55,9 +55,15 @@ if (have_posts()) : while (have_posts()) : the_post();?>
     
         <div class="content-interaction interest">
             <div class="single-left-bottom">
-                <p>Cette photo vous intéresse ?</p>
+                <div class="half-content">
+                    <p>Cette photo vous intéresse ?</p>
+                </div>
+                <div class="half-content">
+                    <button id="btnContact">Contact</button>
+                </div>
+
             </div>
-            <div class="single-right-bottom">     
+            <div class="single-right-bottom none">     
                 <p>image</p>
             </div>
         </div>
@@ -73,7 +79,7 @@ if (have_posts()) : while (have_posts()) : the_post();?>
                     </div>  
                 </article>
             </div>
-    </div>
+        </div>
     </article>
 
 </div>    

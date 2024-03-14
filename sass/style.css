@@ -44,25 +44,31 @@ AMP: true
 /* Mes Google fonts locales */
 @font-face {
   font-family: "SpaceMono-Bold";
-  src: url("/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Bold.woff2") format("woff2");
+  src: url("../assets/fonts/SpaceMono-Bold.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "SpaceMono-BoldItalic";
-  src: url("/wp-content/themes/motaphoto/assets/fonts/SpaceMono-BoldItalic.woff2") format("woff2");
+  src: url("../assets/fonts/SpaceMono-BoldItalic.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "SpaceMono-Italic";
-  src: url("/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Italic.woff2") format("woff2");
+  src: url("../assets/fonts/SpaceMono-Italic.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "SpaceMono-Regular";
-  src: url("/wp-content/themes/motaphoto/assets/fonts/SpaceMono-Regular.woff2") format("woff2");
+  src: url("../assets/fonts/SpaceMono-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Poppins-Medium";
+  src: url("../assets/fonts/Poppins-Medium.ttf") format("ttf");
   font-weight: normal;
   font-style: normal;
 }
@@ -73,33 +79,56 @@ body {
   padding: 0;
 }
 
+.uppercase-text {
+  text-transform: uppercase;
+}
+
 h1 {
-  font-family: "SpaceMono-BoldItalic", sans-serif;
+  font-family: "SpaceMono-BoldItalic";
   font-size: 6em;
+  font-weight: 700;
+  letter-spacing: 0em;
   color: #000000;
 }
 
 h2 {
-  font-family: "SpaceMono-Italic", sans-serif;
+  font-family: "SpaceMono-Italic";
   font-size: 4.12em;
+  font-weight: 400;
+  letter-spacing: 0em;
   color: #000000;
 }
 
 h3 li {
-  font-family: "SpaceMono-Regular", sans-serif;
+  font-family: "SpaceMono-Regular";
   font-size: 1.12em;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: #000000;
+}
+
+h3 {
+  font-family: "SpaceMono-Regular";
+  font-size: 1.12em;
+  font-weight: 400;
+  letter-spacing: 0.1em;
   color: #000000;
 }
 
 p {
-  font-family: "SpaceMono-Regular", sans-serif;
+  font-family: "SpaceMono-Regular";
   font-size: 0.87em;
+  font-weight: 300;
+  letter-spacing: 0em;
   color: #000000;
 }
 
 .motaphoto-menu h3 {
-  font-family: "SpaceMono-Regular", sans-serif;
+  font-family: "SpaceMono-Regular";
   font-size: 1em;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: #000000;
 }
 
 .motaphoto-menu li {
@@ -115,6 +144,30 @@ p {
   color: #313144;
 }
 
+/* Boutons */
+button {
+  border: none;
+  padding: 10px 20px;
+  background-color: #D8D8D8;
+  font-family: "SpaceMono-Regular";
+  color: #000000;
+  cursor: pointer;
+  height: 50px;
+  width: 100%;
+}
+button:hover {
+  background-color: #FE5858;
+  color: #ffffff;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 1148px;
+  width: 100%;
+}
+
 @media all and (max-width: 700px) {
   h1 {
     font-size: 1.72em;
@@ -122,7 +175,25 @@ p {
   h2 {
     font-size: 2.87em;
   }
+  h3 {
+    font-size: 1em;
+  }
+  .content {
+    max-width: 100%;
+  }
 }
+.header {
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  width: 100%;
+  position: sticky;
+  top: 0px;
+  z-index: 9999;
+}
+
 .motaphoto-header {
   height: 80px;
   width: 100%;
@@ -130,6 +201,7 @@ p {
   top: 0px;
   z-index: 9999;
   background-color: #ffffff;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -141,7 +213,6 @@ p {
   justify-content: start;
   height: 80px;
   width: 50%;
-  margin-left: 200px !important;
 }
 
 .nav-header {
@@ -149,10 +220,13 @@ p {
   font-size: 1em;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: end;
   height: 80px;
   width: 50%;
-  margin-right: 200px !important;
+}
+
+.nathalie-mota {
+  width: 60%;
 }
 
 .nav-header ul {
@@ -191,6 +265,7 @@ p {
   align-items: center;
   justify-content: center;
   width: 100%;
+  margin-top: 20px;
   border-top: 2px solid #000000;
   height: 40px;
 }
@@ -205,6 +280,8 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 1148px;
+  width: 100%;
 }
 
 .nav-footer ul {
@@ -214,10 +291,24 @@ p {
 
 .nav-footer li {
   display: inline-block;
-  margin-left: 2em;
-  margin-right: 2em;
+  margin-left: 3em;
+  margin-right: 3em;
 }
 
+@media all and (max-width: 700px) {
+  .motaphoto-footer {
+    height: 150px;
+  }
+  .nav-footer {
+    max-width: 700px;
+  }
+  .nav-footer li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+  }
+}
 /* Layouts
 --------------------------------------------- */
 main {
@@ -227,38 +318,6 @@ main {
 .center-container {
   display: flex;
   justify-content: center;
-}
-
-.header {
-  background-color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 80px;
-  width: 100%;
-  position: sticky;
-  top: 0px;
-  z-index: 9999;
-}
-
-.motaphoto-logo {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  width: 50%;
-  margin-left: 50px;
-}
-
-.nav-header {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  width: 50%;
-  margin-right: 50px;
-}
-
-.nathalie-mota {
-  width: 60%;
 }
 
 /* Page d'accueil */
@@ -283,6 +342,18 @@ main {
   z-index: 2;
 }
 
+@media all and (max-width: 700px) {
+  .first-img {
+    width: 100%;
+    height: 250px;
+    background-size: contain;
+  }
+  .first-img h1 {
+    font-weight: 700;
+    font-size: 30px;
+    -webkit-text-stroke: 1px #ffffff;
+  }
+}
 /* Templates
 --------------------------------------------- */
 /* Le fond de la modale */
@@ -300,7 +371,28 @@ main {
   background-color: rgb(0, 0, 0);
   /* Couleur de repli */
   background-color: rgba(0, 0, 0, 0.4);
-  /* Noir avec opacité */
+}
+
+/* Contenu de la modale */
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.modal-content {
+  position: relative;
+  background-color: #ffffff;
+  margin: auto;
+  padding: 0;
+  border: 5px solid #000000;
+  top: 100px;
+  width: 597px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  opacity: 0;
+  transform: scale(0.8);
+  animation: fadeInModal 0.5s ease forwards 1s;
 }
 
 .modal-header {
@@ -326,21 +418,6 @@ main {
   padding: 2px 12px;
   background-color: #ffffff;
   color: #000000;
-}
-
-/* Contenu de la modale */
-.modal-content {
-  position: relative;
-  background-color: #ffffff;
-  margin: auto;
-  padding: 0;
-  border: 5px solid #000000;
-  top: 100px;
-  width: 597px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  opacity: 0;
-  transform: scale(0.8);
-  animation: fadeInModal 0.5s ease forwards 1s;
 }
 
 /* Le bouton de fermeture */
@@ -399,6 +476,37 @@ main {
     transform: scale(1);
   }
 }
+/* Responsive */
+@media all and (max-width: 700px) {
+  .modal-content {
+    position: absolute;
+    border: 5px solid #000000;
+    top: 90px;
+    width: 350px;
+    margin: 0;
+  }
+  .modal-header {
+    background-position-y: 1rem;
+    background-position-x: -2rem;
+    height: 80px;
+  }
+  .modal-body {
+    padding: 0;
+    padding-left: 3em;
+    padding-right: 3em;
+  }
+  .wpcf7 input[type=text],
+  .wpcf7 input[type=email],
+  .wpcf7 input[type=number],
+  .wpcf7 textarea {
+    padding: 5px;
+    margin-bottom: 1px;
+    margin-top: 1px;
+  }
+  .wpcf7 input[type=submit] {
+    padding: 0px 0px;
+  }
+}
 .content-single {
   display: flex;
   align-items: flex-end;
@@ -428,7 +536,6 @@ main {
 }
 
 .single-thumbnail {
-  max-width: 1148px;
   width: 100%;
   height: auto;
   display: block;
@@ -439,9 +546,7 @@ main {
   align-items: center;
   justify-content: start;
   flex-direction: row;
-  max-width: 1148px;
-  width: 100%;
-  height: 118px;
+  min-height: 118px;
 }
 
 .content-interaction.interest {
@@ -452,7 +557,11 @@ main {
   display: flex;
   align-items: center;
   justify-content: start;
+  margin-right: 10px;
   width: 50%;
+}
+.single-left-bottom p {
+  font-family: "Poppins-Medium";
 }
 
 .single-right-bottom {
@@ -466,10 +575,85 @@ main {
   display: flex;
   align-items: center;
   justify-content: start;
-  max-width: 1148px;
-  width: 100%;
 }
 
+.half-content {
+  width: 50%;
+}
+
+/* Responsive */
+@media all and (max-width: 700px) {
+  .single {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 100%;
+    width: 100%;
+  }
+  .content-single {
+    max-width: 100%;
+    width: 100%;
+    margin-top: 20px;
+    align-items: center;
+    flex-direction: column;
+  }
+  .single-left {
+    width: 265px;
+    margin-right: 0px;
+    height: auto;
+    order: 2;
+    border-bottom: 0;
+  }
+  .single-right {
+    width: 100%;
+    margin-left: 0px;
+    height: auto;
+    order: 1;
+  }
+  .single-thumbnail {
+    width: 265px;
+    height: 397px;
+    display: flex;
+  }
+  .single-left-bottom {
+    justify-content: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: 0;
+    width: 100%;
+    margin-top: 20px;
+    border-top: 2px solid #000000;
+  }
+  .mini {
+    margin-top: 20px;
+    border-top: none;
+  }
+  .content-interaction {
+    justify-content: center;
+    flex-direction: column;
+  }
+  .single-right-bottom {
+    justify-content: center;
+    width: 100%;
+  }
+  .single-right-bottom.none {
+    display: none;
+    width: 0;
+  }
+  .half-content {
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 265px;
+  }
+  button {
+    margin-bottom: 20px;
+  }
+  .content-presentation {
+    justify-content: center;
+    margin-top: 20px;
+  }
+}
 .portfolio-container {
   max-width: 1148px;
   width: 100%;
@@ -499,6 +683,20 @@ main {
      object-fit: cover;
 }
 
+@media all and (max-width: 700px) {
+  .portfolio-container {
+    max-width: 318px;
+  }
+  .portfolio-item {
+    flex: 0 0 calc(100% - 0px);
+    /* 1 élément par ligne */
+    margin-bottom: 0;
+  }
+  .post-content {
+    height: 279px;
+    margin-top: 20px;
+  }
+}
 .page.framed-layout {
   max-width: 1148px;
   width: 100%;
@@ -506,6 +704,12 @@ main {
   padding: 20px;
 }
 
+@media all and (max-width: 700px) {
+  .page.framed-layout {
+    max-width: 100%;
+    padding: 0px;
+  }
+}
 /* Filtres des photos */
 .select-post {
   box-sizing: border-box;
@@ -551,4 +755,12 @@ button {
 button:hover {
   background-color: #FE5858;
   color: #ffffff;
+}
+
+@media all and (max-width: 700px) {
+  .select-post {
+    padding: 10px;
+    margin: 5px;
+    width: 70%;
+  }
 }/*# sourceMappingURL=style.css.map */

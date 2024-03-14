@@ -18,12 +18,12 @@
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body class="uppercase-text" <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
 <header class="motaphoto-header">
 
-    <div class="header">
+    <div class="content">
         <div class="motaphoto-logo">
             <a href="<?= site_url() ?>">
             <img class="nathalie-mota" id="ajax_call" src="<?= site_url() ?>/wp-content/themes/motaphoto/assets/images/Logo.png">

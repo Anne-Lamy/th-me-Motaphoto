@@ -13,7 +13,29 @@
     background-color: rgb(0, 0, 0);
     /* Couleur de repli */
     background-color: rgba(0, 0, 0, 0.4);
-    /* Noir avec opacité */
+}
+
+/* Contenu de la modale */
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.modal-content {
+    position: relative;
+    background-color: $color_grey_light;
+    margin: auto;
+    padding: 0;
+    border: 5px solid $color_black_strong;
+    top: 100px;
+    width: 597px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    opacity: 0;
+    transform: scale(0.8);
+    animation: fadeInModal 0.5s ease forwards 1s;
 }
 
 .modal-header {
@@ -41,20 +63,7 @@
     color: $color_black_strong;
 }
 
-/* Contenu de la modale */
-.modal-content {
-    position: relative;
-    background-color: $color_grey_light;
-    margin: auto;
-    padding: 0;
-    border: 5px solid $color_black_strong;
-    top: 100px;
-    width: 597px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    opacity: 0;
-    transform: scale(0.8);
-    animation: fadeInModal 0.5s ease forwards 1s;
-}
+
 
 /* Le bouton de fermeture */
 .close {
@@ -112,4 +121,38 @@
         opacity: 1;
         transform: scale(1);
     }
+}
+
+/* Responsive */
+
+@media all and (max-width: #{$breakpoint__large_phone}) {
+
+    .modal-content {
+        position: absolute;
+        border: 5px solid $color_black_strong;
+        top: 90px;
+        width: 350px;
+        margin: 0;
+        }
+        .modal-header {
+            background-position-y: 1rem;
+            background-position-x: -2rem;
+            height: 80px;
+        }
+        .modal-body {
+            padding: 0;
+            padding-left: 3em;
+            padding-right: 3em;
+        }
+        .wpcf7 input[type="text"],
+        .wpcf7 input[type="email"],
+        .wpcf7 input[type="number"],
+        .wpcf7 textarea {
+            padding: 5px;
+            margin-bottom: 1px;
+            margin-top: 1px;
+        }
+        .wpcf7 input[type="submit"] {
+            padding: 0px 0px;
+        }
 }
