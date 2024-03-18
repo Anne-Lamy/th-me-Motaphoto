@@ -9,6 +9,8 @@ function enqueue_custom_scripts_styles() {
     wp_enqueue_script('menu-script', get_template_directory_uri() . '/js/menu-responsive.js', array(), true);
     // Script de la modale
     wp_enqueue_script('modal-script', get_template_directory_uri() . '/js/contact-modal.js', array(), true);
+    // Script de la lightbox
+    wp_enqueue_script('lightbox-script', get_template_directory_uri() . '/js/lightbox.js', array(), true);
     // Script du contenu du single photo.
     wp_enqueue_script('photo-filter', get_template_directory_uri() . '/js/photo-filter.js', array('jquery'), true);
 

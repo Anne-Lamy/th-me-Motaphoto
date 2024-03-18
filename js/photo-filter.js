@@ -35,7 +35,7 @@ jQuery(document).ready(function($) {
 
 
 
-// AFFICHAGE DE LA REF ET DE LA CATEGORIE AU SURVOLE D'UNE PHOTO :
+// AFFICHAGE DE LA REF ET DE LA CATEGORIE AU SURVOL D'UNE PHOTO :
 
 // Sélection de tous les éléments .post-content.
 const thumbnails = document.querySelectorAll('.post-content');
@@ -43,15 +43,20 @@ const thumbnails = document.querySelectorAll('.post-content');
 // Sélectionne tous les .info-single de la boucle .post-content.
 thumbnails.forEach(thumbnail => {
     const info = thumbnail.querySelector('#info-single');
+    const screen = thumbnail.querySelector('#full-screen');
 
     thumbnail.addEventListener('mouseover', function() {
         info.classList.add('fadeInTop');
+        screen.classList.add('fadeInTop');
     });
 
     thumbnail.addEventListener('mouseout', function() {
         info.classList.remove('fadeInTop');
+        screen.classList.remove('fadeInTop');
     });
 });
+
+
 
 
 

@@ -60,6 +60,12 @@
     align-items: center;
     justify-content: end;
     width: 50%;
+    .arrow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
 }
 
 .content-presentation {
@@ -114,7 +120,6 @@
     }
 
     .single-left-bottom {
-        justify-content: center;
         justify-content: center;
         flex-direction: column;
         margin-right: 0;
