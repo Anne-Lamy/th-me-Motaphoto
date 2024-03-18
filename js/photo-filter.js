@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
 
+// FILTRES DU FORMULAIRE DE LA PAGE D'ACCUEIL:
+
     console.log('Le script JS a bien été chargé');
 
     // Lorsque l'élément avec l'ID "ajax_call" change (dans option) ...
@@ -29,4 +31,28 @@ jQuery(document).ready(function($) {
         // Empêche le formulaire de se soumettre normalement.
         return false;
     });
+
+
+
+
+// AFFICHAGE DE LA REF ET DE LA CATEGORIE AU SURVOLE D'UNE PHOTO :
+
+// Sélection de tous les éléments .post-content.
+const thumbnails = document.querySelectorAll('.post-content');
+
+// Sélectionne tous les .info-single de la boucle .post-content.
+thumbnails.forEach(thumbnail => {
+    const info = thumbnail.querySelector('#info-single');
+
+    thumbnail.addEventListener('mouseover', function() {
+        info.classList.add('fadeInTop');
+    });
+
+    thumbnail.addEventListener('mouseout', function() {
+        info.classList.remove('fadeInTop');
+    });
+});
+
+
+
 });

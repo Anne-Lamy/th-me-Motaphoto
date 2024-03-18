@@ -27,12 +27,14 @@
 .nav-footer ul {
     margin: 0;
     padding: 0;
+    margin-top: 10px;
 }
 
 .nav-footer li {
     display: inline-block;
-    margin-left: 3em;
-    margin-right: 3em;
+    width: 20em;
+    display: flex;
+    justify-content: center;
 }
 
 @media all and (max-width: #{$breakpoint__large_phone}) {
@@ -42,13 +44,19 @@
     }
 
 .nav-footer {
-    max-width: 700px;
+    max-width: 375px;
+}
+
+.nav-footer ul {
+    flex-direction: column;
+    margin-top: 20px;
 }
 
 .nav-footer li {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
     margin: 1em;
 }
 

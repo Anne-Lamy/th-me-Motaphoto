@@ -5,6 +5,8 @@ function enqueue_custom_scripts_styles() {
     wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
     // Style Sass du thème
     wp_enqueue_style('sass-style', get_template_directory_uri() . '/sass/style.css', array('parent-style'));
+    // Script du menu responsive
+    wp_enqueue_script('menu-script', get_template_directory_uri() . '/js/menu-responsive.js', array(), true);
     // Script de la modale
     wp_enqueue_script('modal-script', get_template_directory_uri() . '/js/contact-modal.js', array(), true);
     // Script du contenu du single photo.
@@ -40,7 +42,7 @@ add_action( 'init', 'register_my_menus' );
 function add_custom_nav_menu_items($items, $args) {
     if ($args->theme_location == 'principal-menu') {
         // enregistrer un identifiant personnalisé pour le lien de contact.
-        $items .= '<a href="#" id="contact-link" class="motaphoto-menu">Contact</a>';
+        $items .= '<li><a href="#" id="contact-link" class="motaphoto-menu">Contact</a></li>';
     }
     return $items;
 }

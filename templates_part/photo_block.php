@@ -64,9 +64,11 @@
         <div class="center-container">
             <div class="portfolio-container">
                 <article class="portfolio-item">
-                    <div class="post-content" id="ajax_return">
-                        
-                    </div>  
+                    <a href="<?php the_permalink(); ?>">
+                        <div class="post-content" id="ajax-return">
+                            
+                        </div>  
+                    </a>
                 </article>
             </div>
         </div>

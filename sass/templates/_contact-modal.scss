@@ -2,7 +2,7 @@
 .modal {
     display: none;
     position: fixed;
-    z-index: 999;
+    z-index: 998;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); /* Utiliser translate pour centrer le modal exactement au milieu */
@@ -16,13 +16,6 @@
 }
 
 /* Contenu de la modale */
-
-.center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
 
 .modal-content {
     position: relative;
@@ -130,29 +123,29 @@
     .modal-content {
         position: absolute;
         border: 5px solid $color_black_strong;
-        top: 90px;
-        width: 350px;
+        top: 80px;
+        width: 97%;
         margin: 0;
         }
-        .modal-header {
-            background-position-y: 1rem;
-            background-position-x: -2rem;
-            height: 80px;
-        }
-        .modal-body {
-            padding: 0;
-            padding-left: 3em;
-            padding-right: 3em;
-        }
-        .wpcf7 input[type="text"],
-        .wpcf7 input[type="email"],
-        .wpcf7 input[type="number"],
-        .wpcf7 textarea {
-            padding: 5px;
-            margin-bottom: 1px;
-            margin-top: 1px;
-        }
-        .wpcf7 input[type="submit"] {
-            padding: 0px 0px;
-        }
+    .modal-header {
+        background-position-y: 1rem;
+        background-position-x: -2rem;
+        height: 80px;
+    }
+    .modal-body {
+        padding: 0;
+        padding-left: 3em;
+        padding-right: 3em;
+    }
+    .wpcf7 input[type="text"],
+    .wpcf7 input[type="email"],
+    .wpcf7 input[type="number"],
+    .wpcf7 textarea {
+        padding: 5px;
+        margin-bottom: 1px;
+        margin-top: 1px;
+    }
+    .wpcf7 input[type="submit"] {
+        padding: 0px 0px;
+    }
 }

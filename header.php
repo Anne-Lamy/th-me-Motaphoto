@@ -26,16 +26,32 @@
     <div class="content">
         <div class="motaphoto-logo">
             <a href="<?= site_url() ?>">
-            <img class="nathalie-mota" id="ajax_call" src="<?= site_url() ?>/wp-content/themes/motaphoto/assets/images/Logo.png">
+            <img src="<?= site_url() ?>/wp-content/themes/motaphoto/assets/images/Logo.png">
             </a>
         </div>
-        <div class="nav-header motaphoto-menu">
-            <h3>
-            <?php wp_nav_menu([
-                    'theme_location' => 'principal-menu',
-                ]);
-            ?>
-            </h3>
+        <div class="motaphoto-menu">
+            <div class="menu-desktop">
+                <h3>
+                <?php wp_nav_menu([
+                        'theme_location' => 'principal-menu',
+                    ]);
+                ?>
+                </h3>
+            </div>
+            <div class="menu-burger">
+                <a href="#menu-xl" id="burger-link">
+                <img id="burger" src="<?= site_url() ?>/wp-content/themes/motaphoto/assets/images/burger.png">
+                <img id="cross" src="<?= site_url() ?>/wp-content/themes/motaphoto/assets/images/cross.png">
+                </a>
+            </div>
+        </div>
+        <div id="menu-xl" class="menu-xl">
+            <h1>
+                <?php wp_nav_menu([
+                        'theme_location' => 'principal-menu',
+                    ]);
+                ?>
+            </h1>
         </div>
     </div>
 

@@ -1,15 +1,3 @@
-.header {
-    background-color: $color_grey_light;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 80px;
-    width: 100%;
-    position: sticky;
-    top: 0px;
-    z-index: 9999;
-}
-
 .motaphoto-header {
     height: 80px;
     width: 100%;
@@ -31,7 +19,7 @@
     width: 50%;
 }
 
-.nav-header {
+.motaphoto-menu {
     font-family: $font_desk_h3;
     font-size: 1em;
     display: flex;
@@ -41,35 +29,106 @@
     width: 50%;
 }
 
-.nathalie-mota {
-    width: 60%;
-}
-
-.nav-header ul {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.motaphoto-menu ul {
     margin: 0;
     padding: 0;
-}
-
-.nav-header li {
-    display: inline-block;
-    margin-left: 2em;
-}
-
-#contact-link {
-    text-decoration: none;
-    color: $color_black-strong;
-    font-family: $font_desk_h3, sans-serif;
-    font-size: 1em;
+    list-style-type: none;
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-left: 2em;
+    justify-content: flex-end;
+}
+
+.motaphoto-menu li {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 10em;
 }
 
 .motaphoto-logo img {
     height: 14px;
     width: auto;
+}
+
+.menu-burger {
+    display: none;
+    width: 0;
+}
+
+.menu-xl {
+    display: none;
+}
+
+@media all and (max-width: #{$breakpoint__large_phone}) {
+
+    .motaphoto-logo {
+        margin-left: 2em;
+        width: 80%;
+        }
+
+    .motaphoto-logo img {
+        height: 10px;
+    }
+
+    .motaphoto-menu {
+        width: 20%;
+        margin-right: 2em;
+    }
+
+    .menu-desktop {
+        display: none;
+        width: 0%;
+        }
+        
+    .menu-burger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20%;
+    }
+
+    #cross {
+        display: none;
+    }
+
+    .menu-xl {
+        position: absolute;
+        top: 80px;
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 700px;
+        background-color: $color_red_strong;
+        opacity: 0;
+        transition: opacity 500ms ease-in-out, transform 1s ease-in-out;
+        transform: translateY(-780px);
+    }
+    
+    .menu-xl ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .menu-xl li a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 300px;
+        height: 80px;
+        margin: 10px;
+        color: $color_grey_light;
+        font-family: $font_desk_h3;
+        font-size: 2em;
+        font-weight: 200;
+        text-decoration: none;
+    }
+
+    #menu-xl.fadeInTop {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
 }

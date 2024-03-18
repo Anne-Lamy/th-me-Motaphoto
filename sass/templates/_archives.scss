@@ -10,6 +10,9 @@
     flex: 0 0 calc(50% - 10px);
     /* 2 éléments par ligne avec un espace de 10px entre eux */
     margin-bottom: 20px;
+    a {
+        text-decoration: none;
+    }
 }
 
 .post-content {
@@ -24,6 +27,46 @@
         height: 100%;
         object-fit: cover;
         }
+}
+
+#info-single {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    flex-direction: row;
+    opacity: 0;
+    transform: translateY(0);
+    transition: opacity 500ms ease-in-out, transform ease-in-out;
+        h3 {
+            color: $color_grey_light;
+            margin-left: 1em;
+            margin-right: 1em;
+        }
+}
+
+#info-single.fadeInTop {
+    opacity: 1;
+    transform: translateY(-495px);
+}
+
+.post-content::before {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.5s ease-in-out;
+}
+
+.post-content:hover::before {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        content: url('../assets/images/icon-eye.png');
+        background-color: rgba(0, 0, 0, 0.5);
 }
 
 @media all and (max-width: #{$breakpoint__large_phone}) {

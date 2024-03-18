@@ -74,9 +74,11 @@ if (have_posts()) : while (have_posts()) : the_post();?>
         <div class="center-container">
             <div class="portfolio-container">
                 <article class="portfolio-item">
-                    <div class="post-content" id="ajax_return">
+                <a href="<?php the_permalink(); ?>">
+                    <div class="post-content" id="ajax-return">
                         
                     </div>  
+                </a>
                 </article>
             </div>
         </div>

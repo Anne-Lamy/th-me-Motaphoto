@@ -182,18 +182,6 @@ button:hover {
     max-width: 100%;
   }
 }
-.header {
-  background-color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 80px;
-  width: 100%;
-  position: sticky;
-  top: 0px;
-  z-index: 9999;
-}
-
 .motaphoto-header {
   height: 80px;
   width: 100%;
@@ -215,7 +203,7 @@ button:hover {
   width: 50%;
 }
 
-.nav-header {
+.motaphoto-menu {
   font-family: "SpaceMono-Regular";
   font-size: 1em;
   display: flex;
@@ -225,32 +213,20 @@ button:hover {
   width: 50%;
 }
 
-.nathalie-mota {
-  width: 60%;
-}
-
-.nav-header ul {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.motaphoto-menu ul {
   margin: 0;
   padding: 0;
-}
-
-.nav-header li {
-  display: inline-block;
-  margin-left: 2em;
-}
-
-#contact-link {
-  text-decoration: none;
-  color: #000000;
-  font-family: "SpaceMono-Regular", sans-serif;
-  font-size: 1em;
+  list-style-type: none;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-left: 2em;
+  justify-content: flex-end;
+}
+
+.motaphoto-menu li {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 10em;
 }
 
 .motaphoto-logo img {
@@ -258,6 +234,77 @@ button:hover {
   width: auto;
 }
 
+.menu-burger {
+  display: none;
+  width: 0;
+}
+
+.menu-xl {
+  display: none;
+}
+
+@media all and (max-width: 700px) {
+  .motaphoto-logo {
+    margin-left: 2em;
+    width: 80%;
+  }
+  .motaphoto-logo img {
+    height: 10px;
+  }
+  .motaphoto-menu {
+    width: 20%;
+    margin-right: 2em;
+  }
+  .menu-desktop {
+    display: none;
+    width: 0%;
+  }
+  .menu-burger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+  }
+  #cross {
+    display: none;
+  }
+  .menu-xl {
+    position: absolute;
+    top: 80px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 700px;
+    background-color: #E00000;
+    opacity: 0;
+    transition: opacity 500ms ease-in-out, transform 1s ease-in-out;
+    transform: translateY(-780px);
+  }
+  .menu-xl ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  .menu-xl li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 80px;
+    margin: 10px;
+    color: #ffffff;
+    font-family: "SpaceMono-Regular";
+    font-size: 2em;
+    font-weight: 200;
+    text-decoration: none;
+  }
+  #menu-xl.fadeInTop {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .motaphoto-footer {
   background-color: #ffffff;
   display: flex;
@@ -287,12 +334,14 @@ button:hover {
 .nav-footer ul {
   margin: 0;
   padding: 0;
+  margin-top: 10px;
 }
 
 .nav-footer li {
   display: inline-block;
-  margin-left: 3em;
-  margin-right: 3em;
+  width: 20em;
+  display: flex;
+  justify-content: center;
 }
 
 @media all and (max-width: 700px) {
@@ -300,12 +349,17 @@ button:hover {
     height: 150px;
   }
   .nav-footer {
-    max-width: 700px;
+    max-width: 375px;
+  }
+  .nav-footer ul {
+    flex-direction: column;
+    margin-top: 20px;
   }
   .nav-footer li {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
     margin: 1em;
   }
 }
@@ -360,7 +414,7 @@ main {
 .modal {
   display: none;
   position: fixed;
-  z-index: 999;
+  z-index: 998;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); /* Utiliser translate pour centrer le modal exactement au milieu */
@@ -374,13 +428,6 @@ main {
 }
 
 /* Contenu de la modale */
-.center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
 .modal-content {
   position: relative;
   background-color: #ffffff;
@@ -481,8 +528,8 @@ main {
   .modal-content {
     position: absolute;
     border: 5px solid #000000;
-    top: 90px;
-    width: 350px;
+    top: 80px;
+    width: 97%;
     margin: 0;
   }
   .modal-header {
@@ -667,6 +714,9 @@ main {
   /* 2 éléments par ligne avec un espace de 10px entre eux */
   margin-bottom: 20px;
 }
+.portfolio-item a {
+  text-decoration: none;
+}
 
 .post-content {
   position: relative;
@@ -681,6 +731,46 @@ main {
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+#info-single {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  flex-direction: row;
+  opacity: 0;
+  transform: translateY(0);
+  transition: opacity 500ms ease-in-out, transform ease-in-out;
+}
+#info-single h3 {
+  color: #ffffff;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+#info-single.fadeInTop {
+  opacity: 1;
+  transform: translateY(-495px);
+}
+
+.post-content::before {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 0.5s ease-in-out;
+}
+
+.post-content:hover::before {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: url("../assets/images/icon-eye.png");
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 @media all and (max-width: 700px) {
