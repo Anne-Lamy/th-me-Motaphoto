@@ -1,7 +1,7 @@
 <div class="page framed-layout">
 
     <div class="singles">
-        <form action="<?php echo admin_url( 'admin-ajax.php' ); ?>" method="post" id="ajax_call">   
+        <form action="<?php echo admin_url('admin-ajax.php'); ?>" method="post" id="ajax_call">   
             <div class="content-interaction">
                 <div class="single-left-bottom mini">
                     <select name="category" id="category" class="select-post">
@@ -36,17 +36,17 @@
                         <option value="" class="hidden-option">TRIER PAR</option>
                         <option value=""> </option>
                         <?php
-                        // Récupérer toutes les dates de publication des posts.
+                        // Récupére toutes les dates de publication des posts.
                         $args = array(
                             'post_type' => 'photos',
                             'posts_per_page' => -1,
                             'fields' => 'ids',
                         );
-                        $query = new WP_Query($args);
-                        if ($query->have_posts()) {
+                        $query = new WP_Query($args); // Effectue une requette auprés de la base de données.
+                        if ($query->have_posts()) { // Si on récupère des résultats ...
                             $dates = array(); // Tableau pour stocker les dates.
-                            while ($query->have_posts()) {
-                                $query->the_post();
+                            while ($query->have_posts()) { // Parcourt chaque post.
+                                $query->the_post(); // On envois les résultats au script (sous forme de données JSON) ...
                                 $post_date = get_the_date('Y'); // Récupérer l'année de publication.
                                 if (!in_array($post_date, $dates)) { // Vérifier si l'année n'est pas déjà présente dans le tableau.
                                     $dates[] = $post_date; // Ajouter l'année au tableau si elle n'est pas déjà présente.
@@ -63,12 +63,8 @@
         </form>
         <div class="center-container">
             <div class="portfolio-container">
-                <article class="portfolio-item">
-                    <a href="<?php the_permalink(); ?>">
-                        <div class="post-content" id="ajax-return">
-                            
-                        </div>  
-                    </a>
+                <article class="portfolio-item" id="ajax_return">
+            
                 </article>
             </div>
         </div>

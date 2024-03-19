@@ -154,42 +154,74 @@ add_action('admin_init', 'motaphoto_settings_register');
 
 
 // Récupération des posts PHOTOS depuis le formulaire de selection.
-
 function motaphoto_request_photos() {
 
     var_dump("La requête a bien été traitée par WordPress.");
 
-    // Vérification du nonce
-    $nonce = $_POST['nonce'];
-    if (!wp_verify_nonce($nonce, 'photo_filter_nonce')) {
-        wp_send_json_error('Invalid nonce'); // Arrête la requête si le nonce est invalide
-    }
-
-    $category = $_POST['category'];
-    $format = $_POST['format'];
-    $date = $_POST['date'];
+    // Vérifie si les variables existent et ne sont pas nulle,
+    // Nettoie et sécurise la valeur de la variable pour des raisons de sécurité,
+    // Si la variable n'existe pas ou est nulle, alors elle est définie comme une chaîne vide ''.
+    $category = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : '';
+    $format = isset($_POST['format']) ? sanitize_text_field($_POST['format']) : '';
+    $date = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : '';
 
     // Configuration des arguments pour la requête WP_Query.
     $args = array(
         'post_type' => 'photos',
         'posts_per_page' => 8,
-        'category' => $category, // Filtre par catégorie.
-        'format' => $format, // Filtre par format.
-        'date_query' => array( // Filtre par date (année).
+        'tax_query' => array(
+            'relation' => 'AND',
+            array(
+                'taxonomy' => 'categories',
+                'field' => 'id',
+                'terms' => $category,
+            ),
+            array(
+                'taxonomy' => 'formats',
+                'field' => 'id',
+                'terms' => $format,
+            ),
+        ),
+        'date_query' => array(
             array(
                 'year' => $date,
             ),
         ),
     );
 
+
     $query = new WP_Query($args);  // Effectue une requette auprés de la base de données.
 
     // On vérifie si on obtient des résultats.
     if ($query->have_posts()) {    // Si on récupère des résultats ...
         while ($query->have_posts()) {
-            $query->the_post();    // On envois les résultats au script (sous forme de données JSON) ...
-            echo '<div>' . get_the_post_thumbnail() . '</div>'; // Affiche la/les photos.
+            $query->the_post();    // On envois les résultats au script (sous forme de données JSON) ...?>
+
+            <article class="portfolio-item">                    
+                    <div class="post-content">
+                        <?php echo get_the_post_thumbnail(); ?>
+                        <div id="full-screen">
+                            <img class="screen-link" src="<?= site_url() ?>/wp-content/themes/motaphoto/assets/images/screen.png">
+                        </div>
+                        <a href="<?php echo get_the_permalink(); ?>">
+                        <div id="info-single">
+                            <h3><?php echo get_the_title(); ?></h3>
+                                <h3><?php $categories = get_the_terms(get_the_ID(), 'categories');
+                                        if ($categories) {
+                                            foreach ($categories as $category) {
+                                                echo $category->name;
+                                            }
+                                        }
+                                    ?>
+                            </h3>
+                        </div>
+                        </a>
+                    </div>                    
+                </article>
+
+            <?php
         }
+        wp_reset_postdata(); // Réinitialiser les données de publication.
     } else {
         echo 'Aucune photo trouvée !';
     }
@@ -201,4 +233,5 @@ function motaphoto_request_photos() {
 add_action('wp_ajax_request_photos', 'motaphoto_request_photos');
 // Rend également la function accessible pour les utilisateurs non connectés.
 add_action('wp_ajax_nopriv_request_photos', 'motaphoto_request_photos');
+
 
