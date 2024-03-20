@@ -46,12 +46,12 @@
             </div>
         </div>
         <div id="menu-xl" class="menu-xl">
-            <h1>
+            <h3>
                 <?php wp_nav_menu([
                         'theme_location' => 'principal-menu',
                     ]);
                 ?>
-            </h1>
+            </h3>
         </div>
     </div>
 

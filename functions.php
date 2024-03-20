@@ -11,13 +11,13 @@ function enqueue_custom_scripts_styles() {
     wp_enqueue_script('modal-script', get_template_directory_uri() . '/js/contact-modal.js', array(), true);
     // Script de la lightbox
     wp_enqueue_script('lightbox-script', get_template_directory_uri() . '/js/lightbox.js', array(), true);
-    // Script du contenu du single photo.
+    // Script du filtre des photos.
     wp_enqueue_script('photo-filter', get_template_directory_uri() . '/js/photo-filter.js', array('jquery'), true);
 
     // Création et ajout du nonce pour le script 'photo-filter'
     $nonce = wp_create_nonce('photo_filter_nonce');
 
-    wp_localize_script('photo-filter', 'photo_filter_js', array(
+    wp_localize_script('photo-filter', 'photos_ajax_js', array(
         'ajax_url' => admin_url('admin-ajax.php'),
         'nonce' => $nonce, // Ajout du nonce à l'objet JavaScript.
     ));
@@ -27,7 +27,7 @@ add_action('wp_enqueue_scripts', 'enqueue_custom_scripts_styles');
 
 
 // _______________________________________________________________
-// MENUS :
+// AJOUT DU MENU WP + CONTACT :
 
 
 function register_my_menus() {
@@ -52,7 +52,7 @@ add_filter('wp_nav_menu_items', 'add_custom_nav_menu_items', 10, 2);
 
 
 // _______________________________________________________________
-// THEME "Motaphoto" :
+// THEME "MOTAPHOTO" :
 
 
 // On créer notre lien Motaphto dans le menu de Wordpress.
@@ -150,10 +150,44 @@ add_action('admin_init', 'motaphoto_settings_register');
 
 
 // _______________________________________________________________
-// PUPLICATION "Mes Photos" :
+// FONCTION POUR CHARGER UNE IMAGE ALEATOIRE DANS LE HERO :
+
+function load_random_image_callback() {
+
+    // Configuration des arguments pour la requête WP_Query.
+    $args = array(
+        'post_type' => 'photos',
+        'posts_per_page' => 1,
+        'orderby' => 'rand' // Trie les résultats de manière aléatoire
+    );
+
+    // Effectue la requête WP_Query avec les arguments définis
+    $query = new WP_Query($args);
+
+    // Vérifie si la requête a des résultats
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            // Affiche le code HTML de l'image (URL de l'image et titre)
+            echo '<img src="' . get_the_post_thumbnail_url() . '" alt="' . get_the_title() . '">';
+        }
+        // Réinitialise les données de la requête pour éviter les conflits
+        wp_reset_postdata();
+    }
+
+    // Arrête le script PHP après avoir envoyé la réponse (l'image)
+    wp_die();
+}
+
+// Appelle la function de la requette et indique à WP qu'elle est à utiliser via un appel Ajax.
+add_action('wp_ajax_load_random_image', 'load_random_image_callback');
+// Rend également la function accessible pour les utilisateurs non connectés.
+add_action('wp_ajax_nopriv_load_random_image', 'load_random_image_callback');
 
 
-// Récupération des posts PHOTOS depuis le formulaire de selection.
+// _______________________________________________________________
+// FONCTION DE RECUPERATION DES PHOTOS DEPUIS photo_filter.php :
+
 function motaphoto_request_photos() {
 
     var_dump("La requête a bien été traitée par WordPress.");
@@ -213,5 +247,8 @@ function motaphoto_request_photos() {
 add_action('wp_ajax_request_photos', 'motaphoto_request_photos');
 // Rend également la function accessible pour les utilisateurs non connectés.
 add_action('wp_ajax_nopriv_request_photos', 'motaphoto_request_photos');
+
+
+
 
 
