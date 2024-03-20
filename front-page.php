@@ -16,7 +16,7 @@ get_header();
     </div>
     <?php endwhile; endif;?>
     
-    <?php get_template_part('templates_part/photo_block'); ?>
+    <?php get_template_part('templates_part/photo-filter'); ?>
 
 </main>
 

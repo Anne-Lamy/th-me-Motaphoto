@@ -98,8 +98,8 @@ if (have_posts()) : while (have_posts()) : the_post();?>
         </div>
         <div class="center-container">
             <div class="portfolio-container">
-                <?php // Récupère les catégories de la publication actuelle
-                $categories = get_the_terms(get_the_ID(), 'categories');
+            <?php // Récupère les catégories de la publication actuelle
+            $categories = get_the_terms(get_the_ID(), 'categories');
                 if ($categories) { // Vérifie s'il y a des catégories associées à la publication
                     foreach ($categories as $category) { // Parcourt chaque catégorie
                         // Définit les arguments pour la requête WP_Query
@@ -119,42 +119,18 @@ if (have_posts()) : while (have_posts()) : the_post();?>
                         if ($query->have_posts()) {    // Si on récupère des résultats ...
                             while ($query->have_posts()) {
                                 $query->the_post();    // On envois les résultats au script (sous forme de données JSON) ...
-                                ?>
-                <article class="portfolio-item">
-                    
-                    <div class="post-content">
-                        <?php the_post_thumbnail(); ?>
-                        <div id="full-screen">
-                            <img class="screen-link" src="<?= site_url() ?>/wp-content/themes/motaphoto/assets/images/screen.png">
-                        </div>
-                        <a href="<?php the_permalink(); ?>">
-                        <div id="info-single">
-                            <h3><?php the_title(); ?></h3>
-                                <h3><?php $categories = get_the_terms(get_the_ID(), 'categories');
-                                        if ($categories) {
-                                            foreach ($categories as $category) {
-                                                echo $category->name;
-                                            }
-                                        }
-                                    ?>
-                            </h3>
-                        </div>
-                        </a>
-                    </div>  
-                    
-                </article>
-                                <?php
+
+                                get_template_part('templates_part/photo_block'); 
+
+                                }
                             }
+                            wp_reset_postdata(); // Réinitialiser les données de la requête.
                         }
-                        wp_reset_postdata(); // Réinitialiser les données de la requête.
                     }
-                }
-                ?>
+                    ?>
             </div>
         </div>
-
     </article>
-
 </div>    
 
 <?php 

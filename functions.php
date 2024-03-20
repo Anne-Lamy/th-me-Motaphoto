@@ -187,7 +187,7 @@ function motaphoto_request_photos() {
                 'year' => $date,
             ),
         ),
-    );
+    ); 
 
 
     $query = new WP_Query($args);  // Effectue une requette auprés de la base de données.
@@ -195,35 +195,15 @@ function motaphoto_request_photos() {
     // On vérifie si on obtient des résultats.
     if ($query->have_posts()) {    // Si on récupère des résultats ...
         while ($query->have_posts()) {
-            $query->the_post();    // On envois les résultats au script (sous forme de données JSON) ...?>
+            $query->the_post();    // On envois les résultats au script (sous forme de données JSON) ...
+            }
+        
+            echo '<div>' . get_template_part('templates_part/photo_block') . '</div>';
 
-            <article class="portfolio-item">                    
-                    <div class="post-content">
-                        <?php echo get_the_post_thumbnail(); ?>
-                        <div id="full-screen">
-                            <img class="screen-link" src="<?= site_url() ?>/wp-content/themes/motaphoto/assets/images/screen.png">
-                        </div>
-                        <a href="<?php echo get_the_permalink(); ?>">
-                        <div id="info-single">
-                            <h3><?php echo get_the_title(); ?></h3>
-                                <h3><?php $categories = get_the_terms(get_the_ID(), 'categories');
-                                        if ($categories) {
-                                            foreach ($categories as $category) {
-                                                echo $category->name;
-                                            }
-                                        }
-                                    ?>
-                            </h3>
-                        </div>
-                        </a>
-                    </div>                    
-                </article>
-
-            <?php
-        }
+        
         wp_reset_postdata(); // Réinitialiser les données de publication.
     } else {
-        echo 'Aucune photo trouvée !';
+        echo 'Bientôt diponible en ligne !';
     }
 
     wp_die(); // Termine la requête Ajax.
