@@ -2,8 +2,9 @@
 
     <div class="singles">
         <form action="<?php echo admin_url('admin-ajax.php'); ?>" method="post" id="ajax_call">   
-            <div class="content-interaction">
+            <div class="content-interaction ">
                 <div class="single-left-bottom mini">
+                    <div class="custom-select">
                     <select name="category" id="category" class="select-post">
                         <option value="" class="hidden-option">CATEGORIES</option>
                         <option value=""> </option>
@@ -17,6 +18,8 @@
                         }
                         ?>
                     </select>
+                    </div>
+                    <div class="custom-select">
                     <select name="format" id="format" class="select-post">
                         <option value="" class="hidden-option">FORMATS</option>
                         <option value=""> </option>
@@ -30,8 +33,10 @@
                         }
                         ?>
                     </select>
+                    </div>
                 </div>
-                <div class="single-right-bottom">     
+                <div class="single-right-bottom">
+                    <div class="custom-select">
                     <select type="date" name="date" id="date" class="select-post">
                         <option value="" class="hidden-option">TRIER PAR</option>
                         <option value=""> </option>
@@ -57,6 +62,7 @@
                         }
                         ?>
                     </select>
+                    </div>
 
                 </div>
             </div>

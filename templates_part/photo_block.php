@@ -2,7 +2,9 @@
     <div class="post-content">
         <?php echo get_the_post_thumbnail(); ?>
         <div id="full-screen">
+            
             <img class="screen-link" src="<?= site_url() ?>/wp-content/themes/motaphoto/assets/images/screen.png">
+            
         </div>
         <a href="<?php echo get_the_permalink(); ?>">
         <div id="info-single">

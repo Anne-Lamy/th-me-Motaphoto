@@ -187,7 +187,7 @@ button:hover {
   width: 100%;
   position: sticky;
   top: 0px;
-  z-index: 9999;
+  z-index: 980;
   background-color: #ffffff;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -271,7 +271,7 @@ button:hover {
   .menu-xl {
     position: absolute;
     top: 80px;
-    z-index: 999;
+    z-index: 970;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -317,7 +317,8 @@ button:hover {
   height: 40px;
 }
 
-.footer-contact {
+.footer-content {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -435,7 +436,8 @@ main {
   z-index: 998;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Utiliser translate pour centrer le modal exactement au milieu */
+  transform: translate(-50%, -50%);
+  /* Centrer le modal exactement au milieu */
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -501,23 +503,32 @@ main {
 }
 
 /* Formulaire */
-.wpcf7 input[type=text],
-.wpcf7 input[type=email],
-.wpcf7 input[type=number],
-.wpcf7 textarea {
+form.contact-motaphoto {
+  width: 17em;
+  font-family: "SpaceMono-Regular";
+  font-size: 14px;
+}
+
+input,
+textarea {
   border-radius: 8px;
   border: 1px solid #B8BBC2;
   padding: 8px;
-  margin-bottom: 10px;
-  margin-top: 2px;
+  margin-bottom: 30px;
+  margin-top: 7px;
   box-sizing: border-box;
   width: 100%;
 }
 
+textarea {
+  margin-bottom: 5px;
+}
+
 /* Boutons */
-.wpcf7 input[type=submit] {
+input[type=submit] {
   border: none;
   padding: 10px 20px;
+  border-radius: 0px;
   background-color: #D8D8D8;
   color: #000000;
   cursor: pointer;
@@ -525,9 +536,17 @@ main {
   width: 100%;
 }
 
-.wpcf7 input[type=submit]:hover {
+input[type=submit]:hover {
   background-color: #FE5858;
   color: #ffffff;
+}
+
+.success-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "SpaceMono-Regular";
+  color: #FE5858;
 }
 
 /* Animations */
@@ -560,15 +579,13 @@ main {
     padding-left: 3em;
     padding-right: 3em;
   }
-  .wpcf7 input[type=text],
-  .wpcf7 input[type=email],
-  .wpcf7 input[type=number],
-  .wpcf7 textarea {
+  input,
+  textarea {
     padding: 5px;
     margin-bottom: 1px;
     margin-top: 1px;
   }
-  .wpcf7 input[type=submit] {
+  input[type=submit] {
     padding: 0px 0px;
   }
 }
@@ -725,6 +742,117 @@ main {
     margin-top: 20px;
   }
 }
+/* Le fond de la lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 990;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  /* Activer le défilement si nécessaire */
+  background-color: rgb(0, 0, 0);
+  /* Couleur de repli */
+  background-color: rgba(0, 0, 0, 0.8);
+  animation: lightboxIn 0.5s;
+}
+
+.lightbox_next,
+.lightbox_prev {
+  border: none;
+  background: url(../assets/images/arrow.svg) center center/50px 100% no-repeat;
+  width: 10%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin-top: -16px;
+  text-indent: -3000px;
+  z-index: 991;
+}
+
+.lightbox_prev {
+  right: auto;
+  left: 0;
+  transform: rotate(180deg);
+}
+
+.lightbox_close {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: url(../assets/images/cross.svg) center center/100% 100% no-repeat transparent;
+  position: fixed;
+  text-indent: -3000px;
+  top: 100px;
+  right: 50px;
+  z-index: 992;
+}
+
+.lightbox button {
+  cursor: pointer;
+  transition: opacity 0.3s;
+  text-indent: -3000px;
+}
+
+.lightbox button:hover {
+  opacity: 1;
+  background-color: transparent !important;
+}
+
+.lightbox_container img {
+  max-width: 90%;
+  height: auto;
+  border: 5px solid #000000;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  animation: lightboxIn 0.5s;
+}
+
+.lightbox_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0px;
+  margin-bottom: 100px;
+  margin-left: 100px;
+  margin-right: 100px;
+  min-height: 100vh; /* 100% de la hauteur de l'écran, permet de center. */
+}
+
+.lightbox_loader {
+  width: 50px;
+  height: 50px;
+  opacity: 0.5;
+  background: url(../assets/images/loader.svg) center center/100% 100% no-repeat;
+}
+
+@keyframes lightboxIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Responsive */
+.page.framed-layout {
+  max-width: 1148px;
+  min-height: 700px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+@media all and (max-width: 700px) {
+  .page.framed-layout {
+    max-width: 95%;
+    min-height: 100%;
+    padding: 0px;
+  }
+}
 .portfolio-container {
   max-width: 1148px;
   width: 100%;
@@ -838,21 +966,96 @@ main {
     transform: translateY(-279px);
   }
 }
-.page.framed-layout {
-  max-width: 1148px;
-  min-height: 700px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 20px;
+/* Le conteneur doit être positionné par rapport : */
+.custom-select {
+  position: relative;
+  width: 50%;
+  margin: 10px;
+  font-family: "SpaceMono-Regular";
+  font-size: 14px;
 }
 
-@media all and (max-width: 700px) {
-  .page.framed-layout {
-    max-width: 95%;
-    min-height: 100%;
-    padding: 0px;
-  }
+/*masquer l'élément SELECT d'origine : */
+.custom-select select {
+  display: none;
 }
+
+/* Style de la flèche à l’intérieur de l’élément select : */
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #B8BBC2 transparent transparent transparent;
+}
+
+/* Flèche vers le haut lorsque la boîte de sélection est ouverte (active) : */
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #B8BBC2 transparent;
+  top: 7px;
+}
+
+/* ____________________________________________________________________ */
+/* Options + Elément sélectionné : */
+.select-items div,
+.select-selected {
+  color: #000000;
+  padding: 8px;
+  border: 1px solid #B8BBC2;
+  border-color: transparent;
+  cursor: pointer;
+}
+
+/* Elément sélectionné : */
+.select-selected {
+  box-sizing: border-box;
+  border-radius: 8px 8px 8px 8px;
+  border: 1px solid #B8BBC2;
+  padding: 8px;
+  width: 100%;
+  background-position: calc(100% - 40px) center;
+  cursor: pointer;
+}
+.select-selected:hover {
+  border: 1px solid #E00000;
+  border-radius: 8px 8px 0px 0px;
+  border: 2px solid #E00000;
+}
+
+/* Options listing : */
+.select-items {
+  position: absolute;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border: 1px solid #B8BBC2;
+  border-top: 0px;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+.select-items:hover {
+  color: #ffffff;
+}
+
+/* Eléments masqués lorsque la boîte de sélection est fermée : */
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover,
+.same-as-selected {
+  background-color: #E00000;
+  color: #ffffff;
+}
+
+/* _________________________________________________ */
 /* Filtres des photos */
 .select-post {
   box-sizing: border-box;
@@ -860,7 +1063,7 @@ main {
   border: 1px solid #B8BBC2;
   padding: 8px;
   margin: 10px;
-  width: 40%;
+  width: 100%;
   background-position: calc(100% - 40px) center;
   cursor: pointer;
 }
@@ -874,7 +1077,8 @@ main {
   margin: 10px;
   background-color: #ffffff;
   color: #000000;
-  font-size: 16px;
+  font-family: "SpaceMono-Regular";
+  font-size: 14px;
 }
 .select-post option:hover {
   background-color: #FE5858;

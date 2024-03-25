@@ -5,7 +5,8 @@
     z-index: 998;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Utiliser translate pour centrer le modal exactement au milieu */
+    transform: translate(-50%, -50%);
+    /* Centrer le modal exactement au milieu */
     width: 100%;
     height: 100%;
     overflow: auto;
@@ -74,23 +75,33 @@
 }
 
 /* Formulaire */
-.wpcf7 input[type="text"],
-.wpcf7 input[type="email"],
-.wpcf7 input[type="number"],
-.wpcf7 textarea {
+
+form.contact-motaphoto {
+    width: 17em;
+    font-family: $font_desk_main;
+    font-size: 14px;
+}
+
+input,
+textarea {
     border-radius: 8px;
     border: 1px solid #B8BBC2;
     padding: 8px;
-    margin-bottom: 10px;
-    margin-top: 2px;
+    margin-bottom: 30px;
+    margin-top: 7px;
     box-sizing: border-box;
     width: 100%;
 }
 
+textarea {
+    margin-bottom: 5px;
+}
+
 /* Boutons */
-.wpcf7 input[type="submit"] {
+input[type="submit"] {
     border: none;
     padding: 10px 20px;
+    border-radius: 0px;
     background-color: $color_grey_strong;
     color: $color_black_strong;
     cursor: pointer;
@@ -98,9 +109,17 @@
     width: 100%;
 }
 
-.wpcf7 input[type="submit"]:hover {
+input[type="submit"]:hover {
     background-color: $color_red_average;
     color: $color_grey_light;
+}
+
+.success-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font_desk_main;
+    color: $color_red_average;
 }
 
 /* Animations */
@@ -137,15 +156,13 @@
         padding-left: 3em;
         padding-right: 3em;
     }
-    .wpcf7 input[type="text"],
-    .wpcf7 input[type="email"],
-    .wpcf7 input[type="number"],
-    .wpcf7 textarea {
+    input,
+    textarea {
         padding: 5px;
         margin-bottom: 1px;
         margin-top: 1px;
     }
-    .wpcf7 input[type="submit"] {
+    input[type="submit"] {
         padding: 0px 0px;
     }
 }

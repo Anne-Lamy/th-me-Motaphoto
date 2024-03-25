@@ -19,9 +19,9 @@ get_header();
             <h1>PHOTOGRAPHE EVENT</h1>
         </div>
 
-    <?php endwhile; endif;?>
-    
-    <?php get_template_part('templates_part/photo_filter'); ?>
+        <?php get_template_part('templates_part/photo_filter'); ?>
+
+        <?php endwhile; endif;?>
 
 </main>
 

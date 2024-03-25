@@ -50,16 +50,18 @@
     justify-content: start;
     margin-right: 10px;
     width: 50%;
+
     p {
         font-family: $font_desk_poppins;
     }
-    }
+}
 
 .single-right-bottom {
     display: flex;
     align-items: center;
     justify-content: end;
     width: 50%;
+
     .arrow {
         display: flex;
         align-items: center;
@@ -84,12 +86,12 @@
 @media all and (max-width: #{$breakpoint__large_phone}) {
 
     .single {
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            max-width: 100%;
-            width: 100%;
-        }
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        max-width: 100%;
+        width: 100%;
+    }
 
     .content-single {
         max-width: 100%;
@@ -97,8 +99,8 @@
         margin-top: 20px;
         align-items: center;
         flex-direction: column;
-        }
-        
+    }
+
     .single-left {
         width: 265px;
         margin-right: 0px;
@@ -145,8 +147,8 @@
     }
 
     .single-right-bottom.none {
-            display: none;
-            width: 0;
+        display: none;
+        width: 0;
     }
 
     .half-content {
@@ -160,9 +162,9 @@
         margin-bottom: 20px;
     }
 
-        .content-presentation {
-            justify-content: center;
-            margin-top: 20px;
-        }
+    .content-presentation {
+        justify-content: center;
+        margin-top: 20px;
+    }
 
 }

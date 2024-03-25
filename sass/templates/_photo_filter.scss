@@ -1,0 +1,154 @@
+/* Le conteneur doit être positionné par rapport : */
+.custom-select {
+    position: relative;
+    width: 50%;
+    margin: 10px;
+    font-family: $font_desk_main;
+    font-size: 14px;
+}
+
+/*masquer l'élément SELECT d'origine : */
+.custom-select select {
+    display: none;
+}
+
+
+
+/* Style de la flèche à l’intérieur de l’élément select : */
+.select-selected:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #B8BBC2 transparent transparent transparent;
+}
+
+/* Flèche vers le haut lorsque la boîte de sélection est ouverte (active) : */
+.select-selected.select-arrow-active:after {
+    border-color: transparent transparent #B8BBC2 transparent;
+    top: 7px;
+}
+
+/* ____________________________________________________________________ */
+
+/* Options + Elément sélectionné : */
+.select-items div,
+.select-selected {
+    color: #000000;
+    padding: 8px;
+    border: 1px solid #B8BBC2;
+    border-color: transparent;
+    cursor: pointer;
+}
+
+/* Elément sélectionné : */
+.select-selected {
+    box-sizing: border-box;
+    border-radius: 8px 8px 8px 8px;
+    border: 1px solid #B8BBC2;
+    padding: 8px;
+    width: 100%;
+    background-position: calc(100% - 40px) center;
+    cursor: pointer;
+
+    &:hover {
+        border: 1px solid $color_red_strong;
+        border-radius: 8px 8px 0px 0px;
+        border: 2px solid #E00000;
+    }
+}
+
+/* Options listing : */
+.select-items {
+    position: absolute;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 1px solid #B8BBC2;
+    border-top: 0px;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+
+    &:hover {
+        color: #ffffff;
+    }
+}
+
+/* Eléments masqués lorsque la boîte de sélection est fermée : */
+.select-hide {
+    display: none;
+}
+
+.select-items div:hover,
+.same-as-selected {
+    background-color: #E00000;
+    color: #ffffff;
+}
+
+/* _________________________________________________ */
+/* Filtres des photos */
+.select-post {
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid #B8BBC2;
+    padding: 8px;
+    margin: 10px;
+    width: 100%;
+    background-position: calc(100% - 40px) center;
+    cursor: pointer;
+
+    &:hover {
+        border: 1px solid $color_red_strong;
+    }
+}
+
+.select-post option {
+    box-sizing: content-box;
+    padding: 8px;
+    margin: 10px;
+    background-color: $color_grey_light;
+    color: $color_black_strong;
+    font-family: $font_desk_main;
+    font-size: 14px;
+
+    &:hover {
+        background-color: $color_red_average;
+        color: $color_grey_light;
+    }
+}
+
+.select-post option.hidden-option {
+    display: none;
+}
+
+button {
+    border: none;
+    padding: 10px 20px;
+    background-color: $color_grey_strong;
+    color: $color_black_strong;
+    cursor: pointer;
+    height: 50px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: $color_red_average;
+    color: $color_grey_light;
+}
+
+@media all and (max-width: #{$breakpoint__large_phone}) {
+
+    .select-post {
+        padding: 10px;
+        margin: 5px;
+        width: 70%;
+    }
+
+}

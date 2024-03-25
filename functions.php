@@ -10,7 +10,7 @@ function enqueue_custom_scripts_styles() {
     // Script de la modale
     wp_enqueue_script('modal-script', get_template_directory_uri() . '/js/contact-modal.js', array(), true);
     // Script de la lightbox
-    wp_enqueue_script('lightbox-script', get_template_directory_uri() . '/js/lightbox.js', array(), true);
+    // wp_enqueue_script('lightbox-script', get_template_directory_uri() . '/js/lightbox.js', array('modal-script'), true);
     // Script du filtre des photos.
     wp_enqueue_script('photo-filter', get_template_directory_uri() . '/js/photo-filter.js', array('jquery'), true);
 
@@ -23,7 +23,6 @@ function enqueue_custom_scripts_styles() {
     ));
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_scripts_styles');
-
 
 
 // _______________________________________________________________
@@ -190,8 +189,6 @@ add_action('wp_ajax_nopriv_load_random_image', 'load_random_image_callback');
 
 function motaphoto_request_photos() {
 
-    var_dump("La requête a bien été traitée par WordPress.");
-
     // Vérifie si les variables existent et ne sont pas nulle,
     // Nettoie et sécurise la valeur de la variable pour des raisons de sécurité,
     // Si la variable n'existe pas ou est nulle, alors elle est définie comme une chaîne vide ''.
@@ -203,25 +200,25 @@ function motaphoto_request_photos() {
     $args = array(
         'post_type' => 'photos',
         'posts_per_page' => 8,
-        'tax_query' => array(
-            'relation' => 'AND',
+        'tax_query' => array( // Query pour filtrer par taxonomies personnalisées.
+            'relation' => 'AND', // Relation entre les filtres (ET pour que les deux conditions soient remplies).
             array(
-                'taxonomy' => 'categories',
-                'field' => 'id',
-                'terms' => $category,
+                'taxonomy' => 'categories', // Taxonomie "catégories".
+                'field' => 'id', // Champ à utiliser pour la comparaison (id de "catégorie").
+                'terms' => $category, // Termes à comparer (valeur provenant de la variable $category).
             ),
             array(
-                'taxonomy' => 'formats',
-                'field' => 'id',
-                'terms' => $format,
-            ),
-        ),
-        'date_query' => array(
-            array(
-                'year' => $date,
+                'taxonomy' => 'formats', // Deuxième taxonomie "formats".
+                'field' => 'id', // Champ à utiliser pour la comparaison (id de "formats").
+                'terms' => $format, // Termes à comparer (valeur provenant de la variable $format).
             ),
         ),
-    ); 
+        'date_query' => array( // Query pour filtrer par date.
+            array(
+                'year' => $date, // Filtre par année (valeur provenant de la variable $date).
+            ),
+        ),
+    );
 
 
     $query = new WP_Query($args);  // Effectue une requette auprés de la base de données.
@@ -249,6 +246,76 @@ add_action('wp_ajax_request_photos', 'motaphoto_request_photos');
 add_action('wp_ajax_nopriv_request_photos', 'motaphoto_request_photos');
 
 
+// _______________________________________________________________
+// FONCTION POUR CHARGER UNE IMAGE FULL DANS LA LIGHTBOX :
+
+/*function full_image_lightbox() {
+
+    $args = array(
+        'post_type' => 'photos',
+        'posts_per_page' => 1,
+    );
+
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+
+            echo '<div>' . get_template_part('templates_part/lightbox') . '</div>';
+        }
+        wp_reset_postdata();
+    }
+    wp_die();
+}
+
+add_action('wp_ajax_full_image_lightbox', 'full_image_lightbox');
+add_action('wp_ajax_nopriv_full_image_lightbox', 'full_image_lightbox');*/
+
+
+// _______________________________________________________________
+// RECEPTION DU MESSAGE DU FORMULAIRE :
+
+// Ajouter un gestionnaire d'action pour le traitement du formulaire
+add_action('admin_post_traitement_formulaire', 'traitement_formulaire_callback');
+add_action('admin_post_nopriv_traitement_formulaire', 'traitement_formulaire_callback');
+
+function traitement_formulaire_callback() {
+    // Récupérer les données du formulaire
+    $nom = $_POST['your-name'];
+    $email = $_POST['your-email'];
+    $ref_photo = $_POST['your-subject'];
+    $message = $_POST['your-message'];
+
+    // Connexion à la base de données WordPress
+    global $wpdb;
+
+    // Récupérer les adresses e-mail des utilisateurs
+    $users_emails = $wpdb->get_col("SELECT user_email FROM $wpdb->users");
+
+    // Sujet de l'e-mail
+    $sujet = "Nouveau message depuis le formulaire de contact";
+
+    // Corps de l'e-mail
+    $contenu = "Nom: $nom\n";
+    $contenu .= "E-mail: $email\n";
+    $contenu .= "Ref. Photo: $ref_photo\n\n";
+    $contenu .= "Message:\n$message";
+
+    // En-têtes de l'e-mail
+    $headers = "From: $nom <$email>";
+
+    // Envoyer l'e-mail à chaque utilisateur
+    foreach ($users_emails as $user_email) {
+        mail($user_email, $sujet, $contenu, $headers);
+    }
+
+    echo "Votre message a été envoyé !";
+
+    // Rediriger l'utilisateur après le traitement du formulaire
+    wp_redirect(home_url());
+    exit;
+}
 
 
 
