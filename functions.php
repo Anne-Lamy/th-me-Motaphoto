@@ -10,7 +10,7 @@ function enqueue_custom_scripts_styles() {
     // Script de la modale
     wp_enqueue_script('modal-script', get_template_directory_uri() . '/js/contact-modal.js', array(), true);
     // Script de la lightbox
-    // wp_enqueue_script('lightbox-script', get_template_directory_uri() . '/js/lightbox.js', array('modal-script'), true);
+    wp_enqueue_script('lightbox-script', get_template_directory_uri() . '/js/lightbox.js', array('jquery'), true);
     // Script du filtre des photos.
     wp_enqueue_script('photo-filter', get_template_directory_uri() . '/js/photo-filter.js', array('jquery'), true);
 
@@ -249,36 +249,44 @@ add_action('wp_ajax_nopriv_request_photos', 'motaphoto_request_photos');
 // _______________________________________________________________
 // FONCTION POUR CHARGER UNE IMAGE FULL DANS LA LIGHTBOX :
 
-/*function full_image_lightbox() {
+function full_image_lightbox() {
+    $html = isset($_POST['html']) ? $_POST['html'] : '';
 
-    $args = array(
-        'post_type' => 'photos',
-        'posts_per_page' => 1,
-    );
+    $image_url = '';
 
-    $query = new WP_Query($args);
+    // Vérifie si le HTML est valide
+    if (!empty($html)) {
+        $dom = new DOMDocument();
+        $dom->loadHTML($html);
 
-    if ($query->have_posts()) {
-        while ($query->have_posts()) {
-            $query->the_post();
-
-            echo '<div>' . get_template_part('templates_part/lightbox') . '</div>';
+        // Récupère l'URL de l'image dans la div "post-content"
+        $images = $dom->getElementsByTagName('img');
+        foreach ($images as $image) {
+            if ($image->parentNode->parentNode->getAttribute('class') === 'post-content') {
+                $image_url = $image->getAttribute('src');
+                break;
+            }
         }
-        wp_reset_postdata();
     }
+
+    // Retourne l'URL de l'image ou un message d'erreur
+    if (!empty($image_url)) {
+        echo '<img src="' . esc_url($image_url) . '" alt="Image à afficher">';
+    } else {
+        echo 'Aucune image trouvée dans la div "post-content"';
+    }
+
     wp_die();
 }
 
+
+
 add_action('wp_ajax_full_image_lightbox', 'full_image_lightbox');
-add_action('wp_ajax_nopriv_full_image_lightbox', 'full_image_lightbox');*/
+add_action('wp_ajax_nopriv_full_image_lightbox', 'full_image_lightbox');
 
 
 // _______________________________________________________________
 // RECEPTION DU MESSAGE DU FORMULAIRE :
-
-// Ajouter un gestionnaire d'action pour le traitement du formulaire
-add_action('admin_post_traitement_formulaire', 'traitement_formulaire_callback');
-add_action('admin_post_nopriv_traitement_formulaire', 'traitement_formulaire_callback');
 
 function traitement_formulaire_callback() {
     // Récupérer les données du formulaire
@@ -317,5 +325,7 @@ function traitement_formulaire_callback() {
     exit;
 }
 
-
+// Ajouter un gestionnaire d'action pour le traitement du formulaire
+add_action('admin_post_traitement_formulaire', 'traitement_formulaire_callback');
+add_action('admin_post_nopriv_traitement_formulaire', 'traitement_formulaire_callback');
 

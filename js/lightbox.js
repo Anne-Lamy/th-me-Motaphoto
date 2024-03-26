@@ -1,57 +1,56 @@
-document.addEventListener('DOMContentLoaded', function () {
-    
-    class lightbox {
-        // Initialiser la lightbox.
-        static init() {
-            // Récupérer le lien "screen-link" qui ouvre la lightbox.
-            const screenLinks = document.querySelectorAll('.screen-link');
-            Array.forEach(link => { link.addEventListener('click', e => { // On lance une fonction qui prendra en paramètre l'évènement.
-                e.preventDefault() //Stopper le comporetment par défaut
-                // initialise la lightbox.
-                new lightbox(e.currentTarget.getAttribute(screenLinks)) // Récupére l'évènement (l'url), le lien actuel cliqué et séléctionne l'attribut (l'url de mon lien).
+jQuery(document).ready(function($) {
 
-            })
-                
-            });
+    // AFFICHAGE DE LA LIGHTBOX :
+
+    // Récupérer la lightbox.
+    const lightbox = document.getElementById('lightbox');
+    // Récupérer le lien "screen-link" qui ouvre la lightbox.
+    const screenLinks = document.querySelectorAll('.screen-link');
+    // Récupérer (x) qui ferme la lightbox.
+    const spanClose = document.querySelector(".lightbox_close");
+
+    // Lorsque l'utilisateur clique sur un lien "screen-link", la lightbox s'affiche.
+    screenLinks.forEach(link => {
+        link.onclick = function() {
+            lightbox.style.display = "block";
         }
-
-        /**
-        * @param {string} url url de mon lien.
-        */
-
-        constructor (url) {
-            // Construction du dom à partir de l'url dans une constante element.
-            const element = this.buildDom(url)
-            // Récupère le body et lui ajoute element.
-            document.body.appendChild(element)
-        }
-
-                /**
-        * @param {string} url url de mon lien.
-        * @returns {HTMLElement}
-        */
-
-        buildDom (url) {
-            const dom = document.createElement('div')
-            dom.classList.add('lightbox')
-            dom.innerHTML ='<div id="lightbox" class="lightbox"><button class="lightbox_close"> </button><button class="lightbox_next"> </button><button class="lightbox_prev"> </button><div class="lightbox_container"><?php the_post_thumbnail(); ?></div></div>'
-        return dom
+    });
+    // Lorsque l'utilisateur clique sur (x), la lightbox disparait.
+    spanClose.onclick = function() {
+        lightbox.style.display = "none";
+    }
+    // Lorsque l'utilisateur clique n'importe où en dehors de la lightbox, elle se ferme.
+    document.onclick = function(event) {
+        if (event.target == lightbox) {
+            lightbox.style.display = "none";
         }
     }
 
-    /*
-    <div id="lightbox" class="lightbox">
 
-        <button class="lightbox_close"> </button>
-        <button class="lightbox_next"> </button>
-        <button class="lightbox_prev"> </button>
-        <div class="lightbox_container">
-            <?php the_post_thumbnail(); ?>
-        </div>
+// _______________________________________________________________
+// FONCTION POUR CHARGER L'IMAGE :
+    
+function fullImage() {
+    var postContentHtml = $('.post-content').html();
+    // Effectue une requête Ajax POST vers admin-ajax.php
+    $.ajax({
+        url: photos_ajax_js.ajax_url,
+        type: 'POST',
+        data: {
+            action: 'full_image_lightbox', // Action à exécuter côté serveur
+            html: postContentHtml, // Passer le HTML de la div "post-content"
+        },
+        success: function(response) {
+            // Met à jour le contenu de la div ".lightbox_container" avec l'image récupérée
+            $('.lightbox_container').html(response);
+        }
+    });
+}
 
-    </div>*/
+// Appelle la fonction pour charger l'image.
+fullImage();
 
-    // Initialise la lightbox dés le changement de la page.
-    lightbox.init()
+
 
 });
+

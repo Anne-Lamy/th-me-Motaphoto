@@ -758,6 +758,11 @@ input[type=submit]:hover {
   /* Couleur de repli */
   background-color: rgba(0, 0, 0, 0.8);
   animation: lightboxIn 0.5s;
+  transition: 0.3s;
+}
+
+.lightbox.fadeOut {
+  opacity: 0;
 }
 
 .lightbox_next,
@@ -794,16 +799,17 @@ input[type=submit]:hover {
 
 .lightbox button {
   cursor: pointer;
-  transition: opacity 0.3s;
+  transition: opacity 0.3;
   text-indent: -3000px;
 }
 
 .lightbox button:hover {
   opacity: 1;
-  background-color: transparent !important;
+  background-color: transparent;
 }
 
 .lightbox_container img {
+  margin-top: 80px;
   max-width: 90%;
   height: auto;
   border: 5px solid #000000;
