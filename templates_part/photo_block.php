@@ -6,15 +6,13 @@
         $image_url = get_the_post_thumbnail_url(get_the_ID(), 'large');
         if ($image_url) {
             $args = array(
-                'class' => 'lightbox-image', // Ajoutez la classe 'lightbox-image' ici.
+                'class' => 'lightbox-image', // Ajoute la classe 'lightbox-image'.
             );
-
             // Génère la balise img avec la classe spécifique.
             echo get_the_post_thumbnail(get_the_ID(), 'large', $args);
         }
         ?>
 
-        
         <div id="full-screen">
             <img class="screen-link" src="<?= site_url() ?>/wp-content/themes/motaphoto/assets/images/screen.png">
         </div>

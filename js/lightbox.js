@@ -2,14 +2,45 @@ jQuery(document).ready(function($) {
 
     // AFFICHAGE DE LA LIGHTBOX :
 
-    // Récupére la lightbox.
+    // Récupére les élément de la lightbox.
     const lightbox = document.getElementById('lightbox');
-    // Récupére le lien "screen-link" qui ouvre la lightbox.
     const screenLinks = document.querySelectorAll('.screen-link');
+    const lightboxContainer = document.querySelector('.lightbox_container.full-image');
     // Récupére les éléments de navigation de la lightbox.
     const spanClose = document.querySelector(".lightbox_close");
     const prevButton = document.querySelector('.lightbox_prev');
     const nextButton = document.querySelector('.lightbox_next');
+
+    // _______________________________________________________________
+    // FONCTION POUR CHARGER L'IMAGE :
+        
+function fullImage() {
+    // Récupère l'URL de l'image avec la classe "lightbox-image"
+    var imageUrl = $('.post-content .lightbox-image').attr('src');
+
+    console.log(imageUrl); // Affiche l'URL de l'image dans la console.
+
+    if (imageUrl) {
+        $.ajax({
+            url: photos_ajax_js.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'full_image_lightbox',
+                image_url: imageUrl, // Passer l'URL de l'image.
+            },
+            success: function(response) {
+                $('.lightbox_container').html(response);
+            }
+        });
+    } else {
+        console.log('Aucune image trouvée dans la div "post-content"');
+    }
+}
+
+fullImage();
+
+    // _______________________________________________________________
+    // NAVIGATION DANS LA LIGHTBOX :
 
     // Lorsque l'utilisateur clique sur un lien "screen-link", la lightbox s'affiche.
     screenLinks.forEach(link => {
@@ -47,37 +78,6 @@ jQuery(document).ready(function($) {
             lightbox.style.display = "none";
         }
     }
-
-
-// _______________________________________________________________
-// FONCTION POUR CHARGER L'IMAGE :
-    
-function fullImage() {
-    // Récupère l'URL de l'image avec la classe "lightbox-image"
-    var imageUrl = $('.post-content .lightbox-image').attr('src');
-
-    console.log(imageUrl); // Affiche l'URL de l'image dans la console.
-
-    if (imageUrl) {
-        $.ajax({
-            url: photos_ajax_js.ajax_url,
-            type: 'POST',
-            data: {
-                action: 'full_image_lightbox',
-                image_url: imageUrl, // Passer l'URL de l'image.
-            },
-            success: function(response) {
-                $('.lightbox_container').html(response);
-            }
-        });
-    } else {
-        console.log('Aucune image trouvée dans la div "post-content"');
-    }
-}
-
-fullImage();
-
-
 
 
 
