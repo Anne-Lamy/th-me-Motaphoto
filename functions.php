@@ -185,6 +185,38 @@ add_action('wp_ajax_nopriv_load_random_image', 'load_random_image_callback');
 
 
 // _______________________________________________________________
+// FONCTION POUR CHARGER UNE IMAGE FULL DANS LA LIGHTBOX :
+
+function full_image_lightbox() {
+
+    $args = array(
+        'post_type' => 'photos',
+        'posts_per_page' => 1,
+    );
+
+    // Effectue la requête WP_Query avec les arguments définis
+    $query = new WP_Query($args);
+    // Retourne l'URL de l'image ou un message d'erreur
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            // Affiche le code HTML de l'image (URL de l'image et titre)
+            echo '<img src="' . get_the_post_thumbnail_url() . '" alt="' . get_the_title() . '">';
+        }
+    } else {
+        echo 'Aucune photo trouvée !';
+    }
+
+    wp_die();
+}
+
+add_action('wp_ajax_full_image_lightbox', 'full_image_lightbox');
+add_action('wp_ajax_nopriv_full_image_lightbox', 'full_image_lightbox');
+
+
+
+
+// _______________________________________________________________
 // FONCTION DE RECUPERATION DES PHOTOS DEPUIS photo_filter.php :
 
 function motaphoto_request_photos() {
@@ -234,7 +266,7 @@ function motaphoto_request_photos() {
         
         wp_reset_postdata(); // Réinitialiser les données de publication.
     } else {
-        echo 'Bientôt diponible en ligne !';
+        echo 'Aucune photo trouvée !';
     }
 
     wp_die(); // Termine la requête Ajax.
@@ -247,46 +279,7 @@ add_action('wp_ajax_nopriv_request_photos', 'motaphoto_request_photos');
 
 
 // _______________________________________________________________
-// FONCTION POUR CHARGER UNE IMAGE FULL DANS LA LIGHTBOX :
-
-function full_image_lightbox() {
-    $html = isset($_POST['html']) ? $_POST['html'] : '';
-
-    $image_url = '';
-
-    // Vérifie si le HTML est valide
-    if (!empty($html)) {
-        $dom = new DOMDocument();
-        $dom->loadHTML($html);
-
-        // Récupère l'URL de l'image dans la div "post-content"
-        $images = $dom->getElementsByTagName('img');
-        foreach ($images as $image) {
-            if ($image->parentNode->parentNode->getAttribute('class') === 'post-content') {
-                $image_url = $image->getAttribute('src');
-                break;
-            }
-        }
-    }
-
-    // Retourne l'URL de l'image ou un message d'erreur
-    if (!empty($image_url)) {
-        echo '<img src="' . esc_url($image_url) . '" alt="Image à afficher">';
-    } else {
-        echo 'Aucune image trouvée dans la div "post-content"';
-    }
-
-    wp_die();
-}
-
-
-
-add_action('wp_ajax_full_image_lightbox', 'full_image_lightbox');
-add_action('wp_ajax_nopriv_full_image_lightbox', 'full_image_lightbox');
-
-
-// _______________________________________________________________
-// RECEPTION DU MESSAGE DU FORMULAIRE :
+// RECEPTION DU MESSAGE DE CONFIRMATION DU FORMULAIRE :
 
 function traitement_formulaire_callback() {
     // Récupérer les données du formulaire
@@ -317,8 +310,6 @@ function traitement_formulaire_callback() {
     foreach ($users_emails as $user_email) {
         mail($user_email, $sujet, $contenu, $headers);
     }
-
-    echo "Votre message a été envoyé !";
 
     // Rediriger l'utilisateur après le traitement du formulaire
     wp_redirect(home_url());

@@ -2,12 +2,14 @@ jQuery(document).ready(function($) {
 
     // AFFICHAGE DE LA LIGHTBOX :
 
-    // Récupérer la lightbox.
+    // Récupére la lightbox.
     const lightbox = document.getElementById('lightbox');
-    // Récupérer le lien "screen-link" qui ouvre la lightbox.
+    // Récupére le lien "screen-link" qui ouvre la lightbox.
     const screenLinks = document.querySelectorAll('.screen-link');
-    // Récupérer (x) qui ferme la lightbox.
+    // Récupére les éléments de navigation de la lightbox.
     const spanClose = document.querySelector(".lightbox_close");
+    const prevButton = document.querySelector('.lightbox_prev');
+    const nextButton = document.querySelector('.lightbox_next');
 
     // Lorsque l'utilisateur clique sur un lien "screen-link", la lightbox s'affiche.
     screenLinks.forEach(link => {
@@ -15,6 +17,26 @@ jQuery(document).ready(function($) {
             lightbox.style.display = "block";
         }
     });
+    // Chargement de l'image précédente.
+    if (prevButton) {
+        prevButton.onclick = function() {
+            // Récupère la valeur de l'attribut data-image de prevButton (URL de l'image précédente)
+            const imageUrl = this.getAttribute('data-image');
+            if (imageUrl) { // Si l'URL de l'image est définie (non vide ou non nulle)
+                // Met à jour le contenu de lightboxContainer avec une balise img contenant l'URL de l'image précédente.
+                lightboxContainer.innerHTML = '<img src="' + imageUrl + '" alt="Image à afficher">';
+            }
+        };
+    }
+    // Chargement de l'image suivante.
+    if (nextButton) {
+        nextButton.onclick = function() {
+            const imageUrl = this.getAttribute('data-image');
+            if (imageUrl) {
+                lightboxContainer.innerHTML = '<img src="' + imageUrl + '" alt="Image à afficher">';
+            }
+        };
+    }
     // Lorsque l'utilisateur clique sur (x), la lightbox disparait.
     spanClose.onclick = function() {
         lightbox.style.display = "none";
@@ -31,24 +53,31 @@ jQuery(document).ready(function($) {
 // FONCTION POUR CHARGER L'IMAGE :
     
 function fullImage() {
-    var postContentHtml = $('.post-content').html();
-    // Effectue une requête Ajax POST vers admin-ajax.php
-    $.ajax({
-        url: photos_ajax_js.ajax_url,
-        type: 'POST',
-        data: {
-            action: 'full_image_lightbox', // Action à exécuter côté serveur
-            html: postContentHtml, // Passer le HTML de la div "post-content"
-        },
-        success: function(response) {
-            // Met à jour le contenu de la div ".lightbox_container" avec l'image récupérée
-            $('.lightbox_container').html(response);
-        }
-    });
+    // Récupère l'URL de l'image avec la classe "lightbox-image"
+    var imageUrl = $('.post-content .lightbox-image').attr('src');
+
+    console.log(imageUrl); // Affiche l'URL de l'image dans la console.
+
+    if (imageUrl) {
+        $.ajax({
+            url: photos_ajax_js.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'full_image_lightbox',
+                image_url: imageUrl, // Passer l'URL de l'image.
+            },
+            success: function(response) {
+                $('.lightbox_container').html(response);
+            }
+        });
+    } else {
+        console.log('Aucune image trouvée dans la div "post-content"');
+    }
 }
 
-// Appelle la fonction pour charger l'image.
 fullImage();
+
+
 
 
 

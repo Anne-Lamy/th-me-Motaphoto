@@ -66,7 +66,7 @@ $('#ajax_call').on('change', function(e) {
 // Sélection de tous les éléments .post-content.
 const thumbnails = document.querySelectorAll('.post-content');
 
-// Sélectionne tous les .info-single de la boucle .post-content.
+// Sélectionne tous les elements de la boucle .post-content.
 thumbnails.forEach(thumbnail => {
     const info = thumbnail.querySelector('#info-single');
     const screen = thumbnail.querySelector('#full-screen');
@@ -82,6 +82,7 @@ thumbnails.forEach(thumbnail => {
     });
 });
 
+
 // _______________________________________________________________
 // ANIMATION DES FILTRES :
 
@@ -94,18 +95,18 @@ for (i = 0; i < l; i++) {
     selElmnt = x[i].getElementsByTagName("select")[0];
     ll = selElmnt.length;
 
-    /* Pour chaque élément, créez un nouveau DIV qui fera office d'élément sélectionné : */
+    /* Pour chaque élément, créez une nouvelle DIV qui fera office d'élément sélectionné : */
     a = document.createElement("DIV");
     a.setAttribute("class", "select-selected");
     a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
     x[i].appendChild(a);
 
-    /* Pour chaque élément, créez un nouveau DIV qui contiendra la liste d'options :*/
+    /* Pour chaque élément, créez une nouvelle DIV qui contiendra la liste d'options :*/
     b = document.createElement("DIV");
     b.setAttribute("class", "select-items select-hide");
     for (j = 1; j < ll; j++) {
     /* Pour chaque option de l'élément select d'origine,
-     créez un nouveau DIV qui fera office d'élément d'option : */
+     créez une nouvelle DIV qui fera office d'élément d'option : */
     c = document.createElement("DIV");
     c.innerHTML = selElmnt.options[j].innerHTML;
     c.addEventListener("click", function(e) {
