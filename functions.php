@@ -185,35 +185,36 @@ add_action('wp_ajax_nopriv_load_random_image', 'load_random_image_callback');
 
 
 // _______________________________________________________________
-// FONCTION POUR CHARGER UNE IMAGE FULL DANS LA LIGHTBOX :
+// FONCTION POUR CHARGER LES IMAGES DANS LA LIGHTBOX :
 
 function full_image_lightbox() {
-
     $args = array(
         'post_type' => 'photos',
-        'posts_per_page' => 1,
+        'posts_per_page' => -1, // Récupérer toutes les images
     );
 
     // Effectue la requête WP_Query avec les arguments définis
     $query = new WP_Query($args);
-    // Retourne l'URL de l'image ou un message d'erreur
+    $image_urls = array(); // Initialise un tableau pour stocker les URLs des images
+
+    // Vérifie si des images ont été trouvées
     if ($query->have_posts()) {
         while ($query->have_posts()) {
             $query->the_post();
-            // Affiche le code HTML de l'image (URL de l'image et titre)
-            echo '<img src="' . get_the_post_thumbnail_url() . '" alt="' . get_the_title() . '">';
+            // Ajoute l'URL de l'image au tableau
+            $image_urls[] = get_the_post_thumbnail_url();
         }
     } else {
-        echo 'Aucune photo trouvée !';
+        // Aucune photo trouvée
+        $image_urls[] = 'Aucune photo trouvée !';
     }
 
-    wp_die();
+    // Renvoie les URLs des images au format JSON
+    wp_send_json($image_urls);
 }
 
 add_action('wp_ajax_full_image_lightbox', 'full_image_lightbox');
 add_action('wp_ajax_nopriv_full_image_lightbox', 'full_image_lightbox');
-
-
 
 
 // _______________________________________________________________

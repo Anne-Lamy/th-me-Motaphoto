@@ -11,63 +11,74 @@ jQuery(document).ready(function($) {
     const prevButton = document.querySelector('.lightbox_prev');
     const nextButton = document.querySelector('.lightbox_next');
 
+    // Variables pour stocker les URLs des images
+    let imageUrls = [];
+    let currentImageIndex = 0;
+
     // _______________________________________________________________
     // FONCTION POUR CHARGER L'IMAGE :
         
-function fullImage() {
-    // Récupère l'URL de l'image avec la classe "lightbox-image"
-    var imageUrl = $('.post-content .lightbox-image').attr('src');
-
-    console.log(imageUrl); // Affiche l'URL de l'image dans la console.
-
-    if (imageUrl) {
+    // Fonction pour charger une image dans la lightbox.
+    function loadFullImage(imageUrl) {
+        lightboxContainer.innerHTML = '<img src="' + imageUrl + '" alt="Image à afficher">';
+    }
+        
+    // Fonction pour charger toutes les images de la publication "photos".
+    function loadAllImages() {
         $.ajax({
             url: photos_ajax_js.ajax_url,
             type: 'POST',
             data: {
                 action: 'full_image_lightbox',
-                image_url: imageUrl, // Passer l'URL de l'image.
             },
             success: function(response) {
-                $('.lightbox_container').html(response);
+                if (response && response.length > 0) { // Vérification que la réponse contient des données
+                    imageUrls = response; // Stocke les URLs des images
+                    // Charge la première image si la lightbox est affichée
+                    if (lightbox.style.display === "block") {
+                        loadFullImage(imageUrls[currentImageIndex]);
+                    }
+                }
             }
         });
-    } else {
-        console.log('Aucune image trouvée dans la div "post-content"');
     }
-}
 
-fullImage();
+    // Chargement initial de toutes les images
+    loadAllImages();
 
     // _______________________________________________________________
     // NAVIGATION DANS LA LIGHTBOX :
 
-    // Lorsque l'utilisateur clique sur un lien "screen-link", la lightbox s'affiche.
+    // Lorsque l'utilisateur clique sur un lien "screen-link", la lightbox s'affiche et charge l'image correspondante.
     screenLinks.forEach(link => {
         link.onclick = function() {
             lightbox.style.display = "block";
-        }
+            const imageUrl = this.getAttribute('data-image'); // URL de l'image à charger
+            if (imageUrl) {
+                loadFullImage(imageUrl);
+            }
+        };
     });
-    // Chargement de l'image précédente.
+    
+    // Chargement de l'image précédente
     if (prevButton) {
         prevButton.onclick = function() {
-            // Récupère la valeur de l'attribut data-image de prevButton (URL de l'image précédente)
-            const imageUrl = this.getAttribute('data-image');
-            if (imageUrl) { // Si l'URL de l'image est définie (non vide ou non nulle)
-                // Met à jour le contenu de lightboxContainer avec une balise img contenant l'URL de l'image précédente.
-                lightboxContainer.innerHTML = '<img src="' + imageUrl + '" alt="Image à afficher">';
+            if (currentImageIndex > 0) {
+                currentImageIndex--; // Décrémente l'indice
+                loadFullImage(currentImageIndex); // Charge l'image précédente.
             }
         };
     }
-    // Chargement de l'image suivante.
+    // Chargement de l'image suivante
     if (nextButton) {
         nextButton.onclick = function() {
-            const imageUrl = this.getAttribute('data-image');
-            if (imageUrl) {
-                lightboxContainer.innerHTML = '<img src="' + imageUrl + '" alt="Image à afficher">';
+            if (currentImageIndex < imageUrls.length - 1) {
+                currentImageIndex++; // Incrémente l'indice
+                loadFullImage(currentImageIndex); // Charge l'image suivante.
             }
         };
     }
+
     // Lorsque l'utilisateur clique sur (x), la lightbox disparait.
     spanClose.onclick = function() {
         lightbox.style.display = "none";
@@ -82,4 +93,3 @@ fullImage();
 
 
 });
-
