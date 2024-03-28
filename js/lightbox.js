@@ -13,7 +13,7 @@ jQuery(document).ready(function($) {
 
     // Variables pour stocker les URLs des images
     let imageUrls = [];
-    let currentImageIndex = 0;
+    let currentImageIndex = 0; // Indice de l'image actuellement affichée
 
     // _______________________________________________________________
     // FONCTION POUR CHARGER L'IMAGE :
@@ -22,6 +22,7 @@ jQuery(document).ready(function($) {
     function loadFullImage(imageUrl) {
         lightboxContainer.innerHTML = '<img src="' + imageUrl + '" alt="Image à afficher">';
     }
+
         
     // Fonction pour charger toutes les images de la publication "photos".
     function loadAllImages() {
@@ -32,6 +33,7 @@ jQuery(document).ready(function($) {
                 action: 'full_image_lightbox',
             },
             success: function(response) {
+                console.log(response);
                 if (response && response.length > 0) { // Vérification que la réponse contient des données
                     imageUrls = response; // Stocke les URLs des images
                     // Charge la première image si la lightbox est affichée
@@ -59,25 +61,29 @@ jQuery(document).ready(function($) {
             }
         };
     });
-    
-    // Chargement de l'image précédente
-    if (prevButton) {
-        prevButton.onclick = function() {
-            if (currentImageIndex > 0) {
-                currentImageIndex--; // Décrémente l'indice
-                loadFullImage(currentImageIndex); // Charge l'image précédente.
-            }
-        };
+
+    // Fonction pour charger l'image suivante
+    function loadNextImage() {
+        currentImageIndex++;
+        if (currentImageIndex >= screenLinks.length) {
+            currentImageIndex = 0; // Revenir au début de la liste si on dépasse le dernier élément
+        }
+        const nextImageUrl = screenLinks[currentImageIndex].getAttribute('data-image');
+        loadFullImage(nextImageUrl);
     }
-    // Chargement de l'image suivante
-    if (nextButton) {
-        nextButton.onclick = function() {
-            if (currentImageIndex < imageUrls.length - 1) {
-                currentImageIndex++; // Incrémente l'indice
-                loadFullImage(currentImageIndex); // Charge l'image suivante.
-            }
-        };
+    // Fonction pour charger l'image précédente
+    function loadPrevImage() {
+        currentImageIndex--;
+        if (currentImageIndex < 0) {
+            currentImageIndex = screenLinks.length - 1; // Revenir à la fin de la liste si on dépasse le premier élément
+        }
+        const prevImageUrl = screenLinks[currentImageIndex].getAttribute('data-image');
+        loadFullImage(prevImageUrl);
     }
+    // Écouteurs d'événements pour les boutons de navigation
+    prevButton.addEventListener('click', loadPrevImage);
+    nextButton.addEventListener('click', loadNextImage);
+
 
     // Lorsque l'utilisateur clique sur (x), la lightbox disparait.
     spanClose.onclick = function() {

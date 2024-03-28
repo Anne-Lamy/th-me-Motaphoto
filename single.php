@@ -105,7 +105,7 @@ if (have_posts()) : while (have_posts()) : the_post();?>
                         // Définit les arguments pour la requête WP_Query
                         $args = array(
                             'post_type' => 'photos', // Type de publication à rechercher.
-                            'posts_per_page' => 2, // Nombre de photos à afficher par catégorie.
+                            'posts_per_page' => 16, // Nombre de photos à afficher par catégorie.
                             'tax_query' => array( // Définit une requête basée sur la taxonomie (catégorie ici)
                                 array(
                                     'taxonomy' => 'categories', // Taxonomie à interroger.
