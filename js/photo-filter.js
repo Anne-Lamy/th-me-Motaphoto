@@ -40,14 +40,38 @@ function fullImageCategory() {
             action: 'full_image_category', // Action à exécuter côté serveur
         },
         success: function(response) {
+            console.log(response);
             // Met à jour le contenu.
-            $('.post-content').html(response);
+            $('').html(response);
         }
     });
 }
 
 // Appelle la fonction pour charger une image de la même catégories.
 fullImageCategory();
+
+
+// _______________________________________________________________
+// AFFICHAGE DE LA REF ET DE LA CATEGORIE AU SURVOL D'UNE PHOTO :
+
+// Sélection de tous les éléments .post-content.
+const thumbnails = document.querySelectorAll('.post-content');
+
+// Sélectionne tous les elements de la boucle .post-content.
+thumbnails.forEach(thumbnail => {
+    const info = thumbnail.querySelector('#info-single');
+    const screen = thumbnail.querySelector('#full-screen');
+
+    thumbnail.addEventListener('mouseover', function() {
+        info.classList.add('fadeInTop');
+        screen.classList.add('fadeInTop');
+    });
+
+    thumbnail.addEventListener('mouseout', function() {
+        info.classList.remove('fadeInTop');
+        screen.classList.remove('fadeInTop');
+    });
+});
 
 
 // _______________________________________________________________
@@ -102,29 +126,6 @@ function loadFilterImage() {
 
 // Appelle la fonction pour charger les images filtrées.
 loadFilterImage();
-
-
-// _______________________________________________________________
-// AFFICHAGE DE LA REF ET DE LA CATEGORIE AU SURVOL D'UNE PHOTO :
-
-// Sélection de tous les éléments .post-content.
-const thumbnails = document.querySelectorAll('.post-content');
-
-// Sélectionne tous les elements de la boucle .post-content.
-thumbnails.forEach(thumbnail => {
-    const info = thumbnail.querySelector('#info-single');
-    const screen = thumbnail.querySelector('#full-screen');
-
-    thumbnail.addEventListener('mouseover', function() {
-        info.classList.add('fadeInTop');
-        screen.classList.add('fadeInTop');
-    });
-
-    thumbnail.addEventListener('mouseout', function() {
-        info.classList.remove('fadeInTop');
-        screen.classList.remove('fadeInTop');
-    });
-});
 
 
 // _______________________________________________________________

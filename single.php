@@ -97,21 +97,17 @@ if (have_posts()) : while (have_posts()) : the_post();?>
         <div class="content-presentation">
             <h3>VOUS AIMEREZ AUSSI</h3>
         </div>
-        <div class="center-container">
-            <div class="portfolio-container">
+        
             
-            <?php 
-            
-            get_template_part('templates_part/photo_block'); ?>
+            <?php
+                get_template_part('templates_part/photo_block');
+            ?>
 
-            </div>
-        </div>
-    </article>
+
+        </article>
     
 </div>    
 
-<?php 
-/* Termine la boucle */
-endwhile; endif;
+<?php endwhile; endif;
 
 get_footer();

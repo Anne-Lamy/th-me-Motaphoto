@@ -7,7 +7,7 @@
 
 get_header(); ?>
 
-<div class="center-container">
+<article class="center-container">
 
     <div class="portfolio-container">
 
@@ -44,6 +44,6 @@ get_header(); ?>
         endwhile; endif;?>
     </div>
 
-</div>
+</article>
 
 <?php get_footer(); ?>

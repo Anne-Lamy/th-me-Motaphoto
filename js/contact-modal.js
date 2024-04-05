@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var span = document.getElementsByClassName("close")[0];
 
     // Afficher la modale dès que la page se charge
-    modal.style.display = "block";
+    // modal.style.display = "block";
 
     // Lorsque l'utilisateur clique sur les liens "Contact", la modale s'ouvre.
     contactLinks = Array.from(contactLinks); // Conversion en tableau.

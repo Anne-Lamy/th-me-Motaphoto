@@ -68,12 +68,9 @@
             </div>
         </form>
         
-        <div class="center-container">
-            <div class="portfolio-container">
 
                 <?php get_template_part('templates_part/photo_block'); ?>
 
-            </div>
-        </div>
+
     </div>
 </div>

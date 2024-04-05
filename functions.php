@@ -10,7 +10,7 @@ function enqueue_custom_scripts_styles() {
     // Script de la modale
     wp_enqueue_script('modal-script', get_template_directory_uri() . '/js/contact-modal.js', array(), true);
     // Script de la lightbox
-    // wp_enqueue_script('lightbox-script', get_template_directory_uri() . '/js/lightbox.js', array('jquery'), true);
+    wp_enqueue_script('lightbox-script', get_template_directory_uri() . '/js/lightbox.js', array('jquery'), true);
     // Script du filtre des photos.
     wp_enqueue_script('photo-filter', get_template_directory_uri() . '/js/photo-filter.js', array('jquery'), true);
 
@@ -188,14 +188,15 @@ add_action('wp_ajax_nopriv_load_random_image', 'load_random_image_callback');
 
 function full_image_category() {
 
-// Obtient l'ID de la publication actuelle et les termes de taxonomie 'categories' associés
-$post_id = get_the_ID();
-$category = get_the_terms($post_id, 'categories');
+    // Obtient l'ID de la publication actuelle et les termes de taxonomie 'categories' associés
+    $post_id = get_the_ID();
+    $category = get_the_terms($post_id, 'categories');
 
-if ($category) {
+        if ($category) {
             $args = array(
                 'post_type' => 'photos',
                 'posts_per_page' => 2,
+                'orderby' => 'rand',
                 'tax_query' => array(
                     array(
                         'taxonomy' => 'categories',
@@ -215,7 +216,7 @@ if ($category) {
                 }
                 wp_reset_postdata();
             }
-    }
+        }
 
     wp_die();
 }

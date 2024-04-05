@@ -20,7 +20,7 @@ jQuery(document).ready(function($) {
         
     // Fonction pour charger une image dans la lightbox.
     function loadFullImage(imageUrl) {
-        lightboxContainer.innerHTML = '<img src="' + imageUrl + '" alt="Image à afficher">';
+        lightboxContainer.innerHTML = '<img src="' + imageUrl + '" alt="Image à afficher en grand">';
     }
 
         
