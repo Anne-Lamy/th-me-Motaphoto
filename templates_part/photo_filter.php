@@ -6,8 +6,8 @@
                 <div class="single-left-bottom mini">
                     <div class="custom-select">
                     <select name="category" id="category" class="select-post">
-                        <option value="" class="hidden-option">CATEGORIES</option>
-                        <option value=""> </option>
+                        <option class="hidden-option">CATEGORIES</option>
+                        <option> </option>
                         <?php 
                         // Récupérer toutes les catégories du type de post "photos"
                         $categories = get_terms('categories');
@@ -21,8 +21,8 @@
                     </div>
                     <div class="custom-select">
                     <select name="format" id="format" class="select-post">
-                        <option value="" class="hidden-option">FORMATS</option>
-                        <option value=""> </option>
+                        <option class="hidden-option">FORMATS</option>
+                        <option> </option>
                         <?php 
                         // Récupérer tous les formats du type de post "photos"
                         $formats = get_terms('formats');
@@ -38,10 +38,10 @@
                 <div class="single-right-bottom">
                     <div class="custom-select">
                     <select type="date" name="date" id="date" class="select-post">
-                        <option value="" class="hidden-option">TRIER PAR</option>
-                        <option value=""> </option>
+                        <option class="hidden-option">TRIER PAR</option>
+                        <option> </option>
                         <?php
-                        // Récupére toutes les dates de publication des posts.
+                        // Récupére toutes les dates de publication des posts sans doublons.
                         $args = array(
                             'post_type' => 'photos',
                             'posts_per_page' => -1,

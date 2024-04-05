@@ -33,7 +33,6 @@ jQuery(document).ready(function($) {
                 action: 'full_image_lightbox',
             },
             success: function(response) {
-                console.log(response);
                 if (response && response.length > 0) { // Vérification que la réponse contient des données
                     imageUrls = response; // Stocke les URLs des images
                     // Charge la première image si la lightbox est affichée

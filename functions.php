@@ -10,16 +10,15 @@ function enqueue_custom_scripts_styles() {
     // Script de la modale
     wp_enqueue_script('modal-script', get_template_directory_uri() . '/js/contact-modal.js', array(), true);
     // Script de la lightbox
-    wp_enqueue_script('lightbox-script', get_template_directory_uri() . '/js/lightbox.js', array('jquery'), true);
+    // wp_enqueue_script('lightbox-script', get_template_directory_uri() . '/js/lightbox.js', array('jquery'), true);
     // Script du filtre des photos.
     wp_enqueue_script('photo-filter', get_template_directory_uri() . '/js/photo-filter.js', array('jquery'), true);
 
     // Création et ajout du nonce pour le script 'photo-filter'
     $nonce = wp_create_nonce('photo_filter_nonce');
-
     wp_localize_script('photo-filter', 'photos_ajax_js', array(
         'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => $nonce, // Ajout du nonce à l'objet JavaScript.
+        'nonce' => $nonce, // Ajout du nonce dans les données localisées
     ));
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_scripts_styles');
@@ -167,7 +166,7 @@ function load_random_image_callback() {
     if ($query->have_posts()) {
         while ($query->have_posts()) {
             $query->the_post();
-            // Affiche le code HTML de l'image (URL de l'image et titre)
+            
             echo '<img src="' . get_the_post_thumbnail_url() . '" alt="' . get_the_title() . '">';
         }
         // Réinitialise les données de la requête pour éviter les conflits
@@ -185,7 +184,50 @@ add_action('wp_ajax_nopriv_load_random_image', 'load_random_image_callback');
 
 
 // _______________________________________________________________
+// FONCTION POUR CHARGER LES IMAGES DE MÊME CATEGORIE :
+
+function full_image_category() {
+
+// Obtient l'ID de la publication actuelle et les termes de taxonomie 'categories' associés
+$post_id = get_the_ID();
+$category = get_the_terms($post_id, 'categories');
+
+if ($category) {
+            $args = array(
+                'post_type' => 'photos',
+                'posts_per_page' => 2,
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'categories',
+                        'field' => 'term_id', // Utilise le champ 'term_id' pour la comparaison
+                        'terms' => $category->term_id, // Utilise l'ID de la catégorie
+                    ),
+                ),
+            );
+
+            $query = new WP_Query($args);
+
+            if ($query->have_posts()) {
+                while ($query->have_posts()) {
+                    $query->the_post();
+
+                    echo '<img src="' . get_the_post_thumbnail_url() . '" alt="' . get_the_title() . '">';
+                }
+                wp_reset_postdata();
+            }
+    }
+
+    wp_die();
+}
+
+add_action('wp_ajax_full_image_category', 'full_image_category');
+add_action('wp_ajax_nopriv_full_image_category', 'full_image_category');
+
+
+// _______________________________________________________________
 // FONCTION POUR CHARGER LES IMAGES DANS LA LIGHTBOX :
+
+// Obtient l'URL de l'image en vedette pour la publication.
 
 function full_image_lightbox() {
     $args = array(
@@ -255,14 +297,13 @@ function motaphoto_request_photos() {
 
 
     $query = new WP_Query($args);  // Effectue une requette auprés de la base de données.
-
     // On vérifie si on obtient des résultats.
     if ($query->have_posts()) {    // Si on récupère des résultats ...
         while ($query->have_posts()) {
             $query->the_post();    // On envois les résultats au script (sous forme de données JSON) ...
             }
-        
-            echo '<div>' . get_template_part('templates_part/photo_block') . '</div>';
+            // Affiche le code HTML de l'image (URL de l'image et titre)
+            echo '<img src="' . get_the_post_thumbnail_url() . '" alt="' . get_the_title() . '">';
 
         
         wp_reset_postdata(); // Réinitialiser les données de publication.
@@ -320,4 +361,3 @@ function traitement_formulaire_callback() {
 // Ajouter un gestionnaire d'action pour le traitement du formulaire
 add_action('admin_post_traitement_formulaire', 'traitement_formulaire_callback');
 add_action('admin_post_nopriv_traitement_formulaire', 'traitement_formulaire_callback');
-

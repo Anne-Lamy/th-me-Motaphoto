@@ -582,8 +582,8 @@ input[type=submit]:hover {
   input,
   textarea {
     padding: 5px;
-    margin-bottom: 1px;
-    margin-top: 1px;
+    margin-bottom: 10px;
+    margin-top: 5px;
   }
   input[type=submit] {
     padding: 0px 0px;
@@ -701,7 +701,7 @@ input[type=submit]:hover {
   }
   .single-thumbnail {
     width: 265px;
-    height: 397px;
+    height: auto;
     display: flex;
   }
   .single-left-bottom {
@@ -822,10 +822,25 @@ input[type=submit]:hover {
   align-items: center;
   justify-content: center;
   margin-top: 0px;
-  margin-bottom: 100px;
+  margin-bottom: 10px;
   margin-left: 100px;
   margin-right: 100px;
-  min-height: 100vh; /* 100% de la hauteur de l'écran, permet de center. */
+  min-height: 100vh; /* 100% de la hauteur de l'écran, permet de centrer. */
+}
+
+#info-lightbox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-left: 100px;
+  margin-right: 100px;
+  z-index: 998;
+}
+#info-lightbox h3 {
+  color: #ffffff;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 .lightbox_loader {

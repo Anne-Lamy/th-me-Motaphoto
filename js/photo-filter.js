@@ -28,36 +28,80 @@ $('.load-more-images').on('click', function() {
 
 
 // _______________________________________________________________
-// FILTRES DU FORMULAIRE DE LA PAGE D'ACCUEIL:
+// FONCTION POUR CHARGER UNE IMAGE DE TYPE CATEGORIES :
 
-// Lorsque l'élément avec l'ID "ajax_call" change (dans option) ...
-$('#ajax_call').on('change', function(e) {
-    e.preventDefault();
+function fullImageCategory() {
 
-    var filter = $(this).serialize(); // Encode les données dans une chaîne de requête URL.
-
-    // Ajout du nonce à la requête AJAX
-    filter += '&nonce=' + photos_ajax_js.nonce;
-
-    console.log('Filter data:', filter); // Voir les données filtrées.
-
-    // Effectue une requête AJAX.
+    // Effectuez une requête Ajax POST vers admin-ajax.php
     $.ajax({
-        // Utilise l'URL définie par WordPress pour les requêtes AJAX.
         url: photos_ajax_js.ajax_url,
-        // Utilise la méthode POST pour envoyer les données.
         type: 'POST',
-        // Les données à envoyer, y compris l'action à exécuter dans le fichier PHP.
-        data: filter, // Les données.
-        // Fonction exécutée en cas de succès de la requête AJAX.
+        data: {
+            action: 'full_image_category', // Action à exécuter côté serveur
+        },
         success: function(response) {
-            console.log('Voir la réponse du serveur:', response); // Voir la réponse du serveur.
-            
-            // Met à jour le contenu de l'élément contenant l'ID "ajax_return" avec la réponse reçue du serveur PHP.
-            $('#ajax_return').html(response);
+            // Met à jour le contenu.
+            $('.post-content').html(response);
         }
     });
-});
+}
+
+// Appelle la fonction pour charger une image de la même catégories.
+fullImageCategory();
+
+
+// _______________________________________________________________
+// FONCTION DE CHARGEMENT DES PHOTOS POUR photo_filter.php :
+    
+function loadFilterImage() {
+
+        // Vérifie si les sélecteurs existent
+        if ($('#category').length && $('#format').length && $('#date').length) {
+            // Attend le changement dans les sélecteurs du formulaire
+            $('#category, #format, #date').on('change', function(e) {
+                e.preventDefault(); // Empêche le formulaire de se soumettre normalement
+
+                // Récupère les valeurs des sélecteurs individuellement
+                var categoryValue = $('#category').val();
+                var formatValue = $('#format').val();
+                var dateValue = $('#date').val();
+
+                console.log(categoryValue);
+                console.log(formatValue);
+                console.log(dateValue);
+
+                console.log("La fonction de rappel est déclenchée !");
+
+                // Récupère le nonce depuis les données localisées
+                var nonce = photos_ajax_js.nonce;
+
+                // Effectue une requête AJAX
+                $.ajax({
+                    type: 'POST',
+                    url: photos_ajax_js.ajax_url,
+                    data: {
+                        action: 'request_photos', // Action à appeler dans functions.php
+                        category: categoryValue, // Valeur de la catégorie
+                        format: formatValue, // Valeur du format
+                        date: dateValue, // Valeur de la date
+                        nonce: nonce // Ajout du nonce dans les données de la requête
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        $('.post-content').html(response); // Met à jour la première classe .post-content
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText); // Affiche l'erreur en cas de problème
+                    }
+                });
+            });
+        } else {
+            console.log('Les sélecteurs ne sont pas trouvés.');
+        };
+}
+
+// Appelle la fonction pour charger les images filtrées.
+loadFilterImage();
 
 
 // _______________________________________________________________
