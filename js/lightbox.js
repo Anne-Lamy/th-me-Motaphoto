@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 
     // AFFICHAGE DE LA LIGHTBOX :
 
-    // Récupére les élément de la lightbox.
+    // Récupére les élément pour la lightbox.
     const lightbox = document.getElementById('lightbox');
     const screenLinks = document.querySelectorAll('.screen-link');
     const lightboxContainer = document.querySelector('.lightbox_container.full-image');

@@ -22,7 +22,9 @@
     <?php endif; ?> 
     
     <div class="lightbox_container full-image">
-    <?php /* insertion de l'image plein écran via Ajax */ ?>
+
+    <!-- insertion de l'image plein écran via Ajax -->
+    
     </div>
 
 </div>

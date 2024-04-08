@@ -184,48 +184,6 @@ add_action('wp_ajax_nopriv_load_random_image', 'load_random_image_callback');
 
 
 // _______________________________________________________________
-// FONCTION POUR CHARGER LES IMAGES DE MÊME CATEGORIE :
-
-function full_image_category() {
-
-    // Obtient l'ID de la publication actuelle et les termes de taxonomie 'categories' associés
-    $post_id = get_the_ID();
-    $category = get_the_terms($post_id, 'categories');
-
-        if ($category) {
-            $args = array(
-                'post_type' => 'photos',
-                'posts_per_page' => 2,
-                'orderby' => 'rand',
-                'tax_query' => array(
-                    array(
-                        'taxonomy' => 'categories',
-                        'field' => 'term_id', // Utilise le champ 'term_id' pour la comparaison
-                        'terms' => $category->term_id, // Utilise l'ID de la catégorie
-                    ),
-                ),
-            );
-
-            $query = new WP_Query($args);
-
-            if ($query->have_posts()) {
-                while ($query->have_posts()) {
-                    $query->the_post();
-
-                    echo '<img src="' . get_the_post_thumbnail_url() . '" alt="' . get_the_title() . '">';
-                }
-                wp_reset_postdata();
-            }
-        }
-
-    wp_die();
-}
-
-add_action('wp_ajax_full_image_category', 'full_image_category');
-add_action('wp_ajax_nopriv_full_image_category', 'full_image_category');
-
-
-// _______________________________________________________________
 // FONCTION POUR CHARGER LES IMAGES DANS LA LIGHTBOX :
 
 // Obtient l'URL de l'image en vedette pour la publication.

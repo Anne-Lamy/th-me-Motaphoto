@@ -28,30 +28,6 @@ $('.load-more-images').on('click', function() {
 
 
 // _______________________________________________________________
-// FONCTION POUR CHARGER UNE IMAGE DE TYPE CATEGORIES :
-
-function fullImageCategory() {
-
-    // Effectuez une requête Ajax POST vers admin-ajax.php
-    $.ajax({
-        url: photos_ajax_js.ajax_url,
-        type: 'POST',
-        data: {
-            action: 'full_image_category', // Action à exécuter côté serveur
-        },
-        success: function(response) {
-            console.log(response);
-            // Met à jour le contenu.
-            $('').html(response);
-        }
-    });
-}
-
-// Appelle la fonction pour charger une image de la même catégories.
-fullImageCategory();
-
-
-// _______________________________________________________________
 // AFFICHAGE DE LA REF ET DE LA CATEGORIE AU SURVOL D'UNE PHOTO :
 
 // Sélection de tous les éléments .post-content.

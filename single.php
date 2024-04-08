@@ -97,14 +97,32 @@ if (have_posts()) : while (have_posts()) : the_post();?>
         <div class="content-presentation">
             <h3>VOUS AIMEREZ AUSSI</h3>
         </div>
-        
-            
+        <div class="photo-block">
             <?php
-                get_template_part('templates_part/photo_block');
+            // Récupère les termes de la catégorie de la publication actuelle
+            $current_post_categories = wp_get_post_terms(get_the_ID(), 'categories', ['fields' => 'ids']);
+            
+            $query = new WP_Query([
+                'post_type' => 'photos',
+                'posts_per_page' => 2,
+                'orderby' => 'rand',
+                'tax_query' => [
+                    [
+                        'taxonomy' => 'categories',
+                        'field' => 'id',
+                        'terms' => $current_post_categories, // Utilise les catégories de la publication actuelle.
+                    ]
+                ]
+            ]);
+            
+            while ($query->have_posts()) : $query->the_post();
+
+            get_template_part('templates_part/photo_block');
+
+            endwhile; wp_reset_postdata();
             ?>
-
-
-        </article>
+        </div>
+    </article>
     
 </div>    
 
