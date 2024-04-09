@@ -1,10 +1,15 @@
 jQuery(document).ready(function($) {
 
-// _______________________________________________________________
-// AFFICHAGE DE LA LIGHTBOX :
+    // _______________________________________________________________
+    // AFFICHAGE DE LA LIGHTBOX :
 
     var screenLink = $('.screen-link');
     var lightbox = $('#lightbox');
+    var lightboxContainer = lightbox.find('.lightbox_container');
+
+    // Tableau pour stocker les URL des images
+    var images = [];
+    var currentIndex = 0;
 
     // Ajoute un écouteur d'événement pour le clic sur l'image
     screenLink.on('click', function(event) {
@@ -13,89 +18,45 @@ jQuery(document).ready(function($) {
         lightbox.show();
 
         // Obtient l'index de l'image actuelle
-        var current_index = $(this).data('image');
+        currentIndex = $(this).index('.screen-link');
 
-        // Effectue une requête Ajax POST vers admin-ajax.php pour charger l'image actuelle
-        $.ajax({
-            url: photos_ajax_js.ajax_url,
-            type: 'POST',
-            data: {
-                action: 'full_image_lightbox', // Action à exécuter côté serveur
-                current_index: current_index
-            },
-            success: function(response) {
-                console.log(response);
-                // Met à jour le contenu de la div .lightbox_container avec la réponse (l'image chargée).
-                $('.lightbox_container').html('<img src="' + response + '">');
-            }
-        });
+        // Affiche l'image actuelle dans la lightbox
+        lightboxContainer.html('<img src="' + images[currentIndex] + '">');
     });
 
-// _______________________________________________________________
-// NAVIGATION DANS LA LIGHTBOX :
+    // _______________________________________________________________
+    // NAVIGATION DANS LA LIGHTBOX :
 
     // Sélectionne les boutons "lightbox_next" et "lightbox_prev"
     var nextButton = $('.lightbox_next');
     var prevButton = $('.lightbox_prev');
-    var currentIndex = 0; // Index de l'image actuelle
-
-    // Fonction pour envoyer une requête AJAX pour obtenir l'image suivante
-    function fetchNextImage() {
-        $.ajax({
-            url: photos_ajax_js.ajax_url,
-            method: 'POST',
-            data: {
-                action: 'full_image_lightbox',
-                current_index: currentIndex
-            },
-            dataType: 'json',
-            success: function(data) {
-                console.log(data);
-                // Mettez à jour la lightbox avec l'image suivante
-                updateLightbox(data.url);
-            }
-        });
-    }
-
-    // Fonction pour envoyer une requête AJAX pour obtenir l'image précédente
-    function fetchPrevImage() {
-        $.ajax({
-            url: photos_ajax_js.ajax_url,
-            method: 'POST',
-            data: {
-                action: 'full_image_lightbox',
-                current_index: currentIndex
-            },
-            dataType: 'json',
-            success: function(data) {
-                console.log(data);
-                // Mettez à jour la lightbox avec l'image précédente
-                updateLightbox(data.url);
-            }
-        });
-    }
-
-    // Fonction pour mettre à jour la lightbox avec une nouvelle image
-    function updateLightbox(imageUrl) {
-        // Mettre à jour l'élément de la lightbox avec la nouvelle image
-        var lightboxImage = $('.lightbox_container img');
-        lightboxImage.attr('src', imageUrl);
-    }
 
     nextButton.on('click', function(event) {
         event.preventDefault();
-        currentIndex++; // Image suivante
-        fetchNextImage();
+        // Incrémente l'index
+        currentIndex++;
+        // Vérifie si nous avons atteint la fin du tableau
+        if (currentIndex >= images.length) {
+            currentIndex = 0; // Retour au début
+        }
+        // Affiche l'image suivante dans la lightbox
+        lightboxContainer.html('<img src="' + images[currentIndex] + '">');
     });
 
     prevButton.on('click', function(event) {
         event.preventDefault();
-        currentIndex--; // Image précédente
-        fetchPrevImage();
+        // Décrémente l'index
+        currentIndex--;
+        // Vérifie si nous sommes au début du tableau
+        if (currentIndex < 0) {
+            currentIndex = images.length - 1; // Va à la fin
+        }
+        // Affiche l'image précédente dans la lightbox
+        lightboxContainer.html('<img src="' + images[currentIndex] + '">');
     });
 
-// _______________________________________________________________
-// FERMETURE DE LA LIGHTBOX :
+    // _______________________________________________________________
+    // FERMETURE DE LA LIGHTBOX :
 
     // Fermeture de la lightbox lorsque l'utilisateur clique sur (x) ou en dehors de la lightbox
     var closeButton = $('.lightbox_close');
@@ -110,5 +71,21 @@ jQuery(document).ready(function($) {
             lightbox.hide();
         }
     };
+
+
+    // _______________________________________________________________
+    // CHARGEMENT DES IMAGES VIA AJAX DANS LA LIGHTBOX :
+
+    $.ajax({
+        url: photos_ajax_js.ajax_url,
+        type: 'post',
+        dataType: 'json',
+        data: {
+            action: 'full_image_lightbox'
+        },
+        success: function(response) {
+            images = response.images;
+        }
+    });
 
 });

@@ -231,10 +231,8 @@ add_action('wp_ajax_nopriv_filter_photos', 'filter_photos');
 // _______________________________________________________________
 // FONCTION POUR CHARGER LES IMAGES DANS LA LIGHTBOX :
 
-// Obtient l'URL de l'image en vedette pour la publication.
-
 function full_image_lightbox() {
-    $current_index = $_POST['current_index']; // Récupère l'index actuel
+
     $args = array(
         'post_type' => 'photos',
         'posts_per_page' => -1, // Récupérer toutes les images
@@ -242,31 +240,23 @@ function full_image_lightbox() {
 
     // Effectue la requête WP_Query avec les arguments définis
     $query = new WP_Query($args);
-    $image_urls = array(); // Initialise un tableau pour stocker les URLs des images
 
-    // Vérifie si des images ont été trouvées
+    $images = array();
+
+    // Vérifie si la requête a des résultats
     if ($query->have_posts()) {
-        $i = 0; // Nous initialisons une variable $i à 0
         while ($query->have_posts()) {
             $query->the_post();
-            // Ajoute l'URL de l'image avec l'ID de la publication au tableau
-            $image_urls[$i]['url'] = get_the_post_thumbnail_url(); // URL de l'image en vedette de la publication actuelle stockée dans le tableau $image_urls à l'indice $i, sous la clé 'url'.
-            $image_urls[$i]['id'] = get_the_ID(); // ID de la publication actuelle stoké dans le tableau $image_urls à l'indice $i, sous la clé 'id'.
-            $i++;
+            // Récupère l'URL de l'image et l'ajoute au tableau
+            $images[] = get_the_post_thumbnail_url();
         }
-    } else {
-        // Aucune photo trouvée
-        $image_urls[] = 'Aucune photo trouvée !';
+        // Réinitialise les données de la requête pour éviter les conflits
+        wp_reset_postdata();
     }
 
-    // Renvoie les URLs des images au format JSON
-    wp_send_json($image_urls[$current_index]);
-    // Réinitialise les données de la requête pour éviter les conflits
-    wp_reset_postdata();
-    // Arrête le script PHP après avoir envoyé la réponse (l'url des images)
-    wp_die();
+    // Retourne les images au format JSON
+    wp_send_json(array('images' => $images));
 }
-
 
 add_action('wp_ajax_full_image_lightbox', 'full_image_lightbox');
 add_action('wp_ajax_nopriv_full_image_lightbox', 'full_image_lightbox');
