@@ -22,7 +22,7 @@ $prev_image_url = $prev_post ? get_the_post_thumbnail_url($prev_post->ID, 'large
     <?php endif; ?> 
 
     <div class="lightbox_container">
-        <img class="full-image" src="" alt="">
+        <!-- insertion de l'image de fond via Ajax -->
     </div>
     
     <div id="info-lightbox">

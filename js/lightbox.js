@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
 
-    // _______________________________________________________________
-    // AFFICHAGE DE LA LIGHTBOX :
+// _______________________________________________________________
+// AFFICHAGE DE LA LIGHTBOX :
 
     var screenLink = $('.screen-link');
     var lightbox = $('#lightbox');
@@ -11,27 +11,33 @@ jQuery(document).ready(function($) {
         event.preventDefault();
         // Affiche la lightbox
         lightbox.show();
+
+        // Obtient l'index de l'image actuelle
+        var current_index = $(this).data('image');
+
+        // Effectue une requête Ajax POST vers admin-ajax.php pour charger l'image actuelle
+        $.ajax({
+            url: photos_ajax_js.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'full_image_lightbox', // Action à exécuter côté serveur
+                current_index: current_index
+            },
+            success: function(response) {
+                console.log(response);
+                // Met à jour le contenu de la div .lightbox_container avec la réponse (l'image chargée).
+                $('.lightbox_container').html('<img src="' + response + '">');
+            }
+        });
     });
 
-    // _______________________________________________________________
-    // NAVIGATION DANS LA LIGHTBOX :
+// _______________________________________________________________
+// NAVIGATION DANS LA LIGHTBOX :
 
     // Sélectionne les boutons "lightbox_next" et "lightbox_prev"
     var nextButton = $('.lightbox_next');
     var prevButton = $('.lightbox_prev');
     var currentIndex = 0; // Index de l'image actuelle
-
-    nextButton.on('click', function(event) {
-        event.preventDefault();
-        currentIndex++; // Image suivante
-        fetchNextImage();
-    });
-
-    prevButton.on('click', function(event) {
-        event.preventDefault();
-        currentIndex--; // Image précédente
-        fetchPrevImage();
-    });
 
     // Fonction pour envoyer une requête AJAX pour obtenir l'image suivante
     function fetchNextImage() {
@@ -76,10 +82,22 @@ jQuery(document).ready(function($) {
         lightboxImage.attr('src', imageUrl);
     }
 
-    // _______________________________________________________________
-    // FERMETURE DE LA LIGHTBOX :
+    nextButton.on('click', function(event) {
+        event.preventDefault();
+        currentIndex++; // Image suivante
+        fetchNextImage();
+    });
 
-    // Lorsque l'utilisateur clique sur (x), la lightbox disparait.
+    prevButton.on('click', function(event) {
+        event.preventDefault();
+        currentIndex--; // Image précédente
+        fetchPrevImage();
+    });
+
+// _______________________________________________________________
+// FERMETURE DE LA LIGHTBOX :
+
+    // Fermeture de la lightbox lorsque l'utilisateur clique sur (x) ou en dehors de la lightbox
     var closeButton = $('.lightbox_close');
 
     closeButton.on('click', function(event) {
@@ -87,11 +105,10 @@ jQuery(document).ready(function($) {
         lightbox.hide();
     });
 
-    // Lorsque l'utilisateur clique n'importe où en dehors de la lightbox, elle se ferme.
     document.onclick = function(event) {
-        if (event.target == lightbox) {
+        if (event.target == lightbox[0]) {
             lightbox.hide();
         }
-    }
+    };
 
 });

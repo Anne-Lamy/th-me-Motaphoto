@@ -246,12 +246,13 @@ function full_image_lightbox() {
 
     // Vérifie si des images ont été trouvées
     if ($query->have_posts()) {
-        $i = 0; // initialisation du tableau.
+        $i = 0; // Nous initialisons une variable $i à 0
         while ($query->have_posts()) {
             $query->the_post();
-            $image_urls[$i]['url'] = get_the_post_thumbnail_url(); // On stock l'URL à l'indice $i sous la clé 'url'.
-            $image_urls[$i]['id'] = get_the_ID(); // On stock l'ID à l'indice $i sous la clé 'id'.
-            $i++; // On incrémente la variable $i pour passer à l'élément suivant du tableau.
+            // Ajoute l'URL de l'image avec l'ID de la publication au tableau
+            $image_urls[$i]['url'] = get_the_post_thumbnail_url(); // URL de l'image en vedette de la publication actuelle stockée dans le tableau $image_urls à l'indice $i, sous la clé 'url'.
+            $image_urls[$i]['id'] = get_the_ID(); // ID de la publication actuelle stoké dans le tableau $image_urls à l'indice $i, sous la clé 'id'.
+            $i++;
         }
     } else {
         // Aucune photo trouvée
