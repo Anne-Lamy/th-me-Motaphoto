@@ -1,5 +1,6 @@
 .photo-block {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     flex-direction: row;
@@ -11,6 +12,7 @@
     max-width: 1148px;
     width: 564px;
     display: flex;
+    margin-bottom: 20px;
 }
 
 .portfolio-item {
@@ -55,6 +57,9 @@
     cursor: pointer;
     opacity: 1;
     transform: translateY(-495px);
+    img {
+        z-index: 1000;
+    }
 }
 
 #info-single {
@@ -78,6 +83,22 @@
 #info-single.fadeInTop {
     opacity: 1;
     transform: translateY(-495px);
+}
+
+#info-lighbox {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    flex-direction: row;
+    transition: opacity 500ms ease-in-out, transform ease-in-out;
+
+    h3 {
+        color: $color_grey_light;
+        margin-left: 1em;
+        margin-right: 1em;
+    }
 }
 
 .post-content::before {
@@ -108,6 +129,7 @@
 }
 
 #full-screen:hover::before {
+    z-index: 1000;
     top: 0;
     left: 0;
     width: 100%;
@@ -124,6 +146,7 @@
 
     .portfolio-container {
         max-width: 318px;
+        margin-bottom: 8px;
     }
 
     .portfolio-item {

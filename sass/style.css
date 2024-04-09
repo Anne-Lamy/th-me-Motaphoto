@@ -806,6 +806,7 @@ input[type=submit]:hover {
 .lightbox button:hover {
   opacity: 1;
   background-color: transparent;
+  z-index: 1001;
 }
 
 .lightbox_container img {
@@ -859,6 +860,26 @@ input[type=submit]:hover {
   }
 }
 /* Responsive */
+@media all and (max-width: 700px) {
+  .lightbox_container img {
+    width: 100vw;
+    height: 100vh;
+    -o-object-fit: cover;
+       object-fit: cover;
+    user-zoom: zoom; /* Autoriser le zoom utilisateur sur l'image */
+    touch-action: auto; /* Spécifier le comportement par défaut des gestes tactiles */
+  }
+  .lightbox_container {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .lightbox_next,
+  .lightbox_prev {
+    display: none;
+  }
+}
 .page.framed-layout {
   max-width: 1148px;
   min-height: 700px;
@@ -876,6 +897,7 @@ input[type=submit]:hover {
 }
 .photo-block {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
@@ -887,6 +909,7 @@ input[type=submit]:hover {
   max-width: 1148px;
   width: 564px;
   display: flex;
+  margin-bottom: 20px;
 }
 
 .portfolio-item {
@@ -932,6 +955,9 @@ input[type=submit]:hover {
   opacity: 1;
   transform: translateY(-495px);
 }
+#full-screen.fadeInTop img {
+  z-index: 1000;
+}
 
 #info-single {
   width: 100%;
@@ -953,6 +979,21 @@ input[type=submit]:hover {
 #info-single.fadeInTop {
   opacity: 1;
   transform: translateY(-495px);
+}
+
+#info-lighbox {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  flex-direction: row;
+  transition: opacity 500ms ease-in-out, transform ease-in-out;
+}
+#info-lighbox h3 {
+  color: #ffffff;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 .post-content::before {
@@ -983,6 +1024,7 @@ input[type=submit]:hover {
 }
 
 #full-screen:hover::before {
+  z-index: 1000;
   top: 0;
   left: 0;
   width: 100%;
@@ -997,6 +1039,7 @@ input[type=submit]:hover {
   }
   .portfolio-container {
     max-width: 318px;
+    margin-bottom: 8px;
   }
   .portfolio-item {
     flex: 0 0 calc(100% - 0px);

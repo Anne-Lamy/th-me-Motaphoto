@@ -48,7 +48,7 @@ if (have_posts()) : while (have_posts()) : the_post();?>
                 <!-- Affichage de l'année -->
                 <h3>Année : <?php echo get_the_date('Y'); ?></h3>
             </div>
-            <div class="single-right">
+            <div class="single-right screen-link">
                 <!-- Affichage de la photo -->            
                 <?php the_post_thumbnail('large', array('class' => 'single-thumbnail')); ?>
             </div>

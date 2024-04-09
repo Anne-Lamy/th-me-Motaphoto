@@ -212,71 +212,15 @@ function full_image_lightbox() {
 
     // Renvoie les URLs des images au format JSON
     wp_send_json($image_urls);
+    // Réinitialise les données de la requête pour éviter les conflits
+    wp_reset_postdata();
+    // Arrête le script PHP après avoir envoyé la réponse (l'url des images)
+    wp_die();
+
 }
 
 add_action('wp_ajax_full_image_lightbox', 'full_image_lightbox');
 add_action('wp_ajax_nopriv_full_image_lightbox', 'full_image_lightbox');
-
-
-// _______________________________________________________________
-// FONCTION DE RECUPERATION DES PHOTOS DEPUIS photo_filter.php :
-
-function motaphoto_request_photos() {
-
-    // Vérifie si les variables existent et ne sont pas nulle,
-    // Nettoie et sécurise la valeur de la variable pour des raisons de sécurité,
-    // Si la variable n'existe pas ou est nulle, alors elle est définie comme une chaîne vide ''.
-    $category = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : '';
-    $format = isset($_POST['format']) ? sanitize_text_field($_POST['format']) : '';
-    $date = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : '';
-
-    // Configuration des arguments pour la requête WP_Query.
-    $args = array(
-        'post_type' => 'photos',
-        'posts_per_page' => 8,
-        'tax_query' => array( // Query pour filtrer par taxonomies personnalisées.
-            'relation' => 'AND', // Relation entre les filtres (ET pour que les deux conditions soient remplies).
-            array(
-                'taxonomy' => 'categories', // Taxonomie "catégories".
-                'field' => 'id', // Champ à utiliser pour la comparaison (id de "catégorie").
-                'terms' => $category, // Termes à comparer (valeur provenant de la variable $category).
-            ),
-            array(
-                'taxonomy' => 'formats', // Deuxième taxonomie "formats".
-                'field' => 'id', // Champ à utiliser pour la comparaison (id de "formats").
-                'terms' => $format, // Termes à comparer (valeur provenant de la variable $format).
-            ),
-        ),
-        'date_query' => array( // Query pour filtrer par date.
-            array(
-                'year' => $date, // Filtre par année (valeur provenant de la variable $date).
-            ),
-        ),
-    );
-
-
-    $query = new WP_Query($args);  // Effectue une requette auprés de la base de données.
-    // On vérifie si on obtient des résultats.
-    if ($query->have_posts()) {    // Si on récupère des résultats ...
-        while ($query->have_posts()) {
-            $query->the_post();    // On envois les résultats au script (sous forme de données JSON) ...
-            }
-            // Affiche le code HTML de l'image (URL de l'image et titre)
-            echo '<img src="' . get_the_post_thumbnail_url() . '" alt="' . get_the_title() . '">';
-
-        
-        wp_reset_postdata(); // Réinitialiser les données de publication.
-    } else {
-        echo 'Aucune photo trouvée !';
-    }
-
-    wp_die(); // Termine la requête Ajax.
-}
-
-// Appelle la function de la requette et indique à WP qu'elle est à utiliser via un appel Ajax.
-add_action('wp_ajax_request_photos', 'motaphoto_request_photos');
-// Rend également la function accessible pour les utilisateurs non connectés.
-add_action('wp_ajax_nopriv_request_photos', 'motaphoto_request_photos');
 
 
 // _______________________________________________________________

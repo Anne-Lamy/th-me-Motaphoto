@@ -62,6 +62,7 @@
 .lightbox button:hover {
     opacity: 1;
     background-color: transparent;
+    z-index: 1001;
 }
 
 .lightbox_container img {
@@ -120,5 +121,24 @@
 
 @media all and (max-width: #{$breakpoint__large_phone}) {
 
+    .lightbox_container img {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        user-zoom: zoom; /* Autoriser le zoom utilisateur sur l'image */
+        touch-action: auto; /* Spécifier le comportement par défaut des gestes tactiles */
+        }
+
+    .lightbox_container {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+        .lightbox_next,
+        .lightbox_prev {
+            display: none;
+        }
 
 }

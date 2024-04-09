@@ -23,8 +23,19 @@
     
     <div class="lightbox_container full-image">
 
-    <!-- insertion de l'image plein écran via Ajax -->
-    
+    <?php the_post_thumbnail('full'); ?>
+
+    </div>
+    <div id="info-lightbox">
+        <h3><?php echo get_post_meta(get_the_ID(), 'ref', true); ?></h3>
+        <h3><?php 
+            $categories = get_the_terms(get_the_ID(), 'categories');
+            if ($categories) {
+                foreach ($categories as $category) {
+                    echo $category->name;
+                }
+            }
+        ?></h3>
     </div>
 
 </div>
