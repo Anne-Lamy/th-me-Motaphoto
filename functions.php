@@ -247,8 +247,13 @@ function full_image_lightbox() {
     if ($query->have_posts()) {
         while ($query->have_posts()) {
             $query->the_post();
-            // Récupère l'URL de l'image et l'ajoute au tableau
-            $images[] = get_the_post_thumbnail_url();
+            // Récupère l'URL de l'image, la référence et la catégorie.
+            $images[] = array(
+                'url' => get_the_post_thumbnail_url(),
+                'reference' => get_post_meta(get_the_ID(), 'ref', true),
+                'category' => get_the_terms(get_the_ID(), 'categories')[0]->name,
+            );
+
         }
         // Réinitialise les données de la requête pour éviter les conflits
         wp_reset_postdata();
@@ -256,6 +261,8 @@ function full_image_lightbox() {
 
     // Retourne les images au format JSON
     wp_send_json(array('images' => $images));
+
+    wp_die();
 }
 
 add_action('wp_ajax_full_image_lightbox', 'full_image_lightbox');
