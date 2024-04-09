@@ -69,40 +69,17 @@
         </form>        
 
         <div class="photo-block">
-            <?php
-                $category = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : '';
-                $format = isset($_POST['format']) ? sanitize_text_field($_POST['format']) : '';
-                $date = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : '';
 
-                $args = array(
-                    'post_type' => 'photos',
-                    'posts_per_page' => 8,
-                    'tax_query' => array(
-                        'relation' => 'AND',// (ET pour que les deux conditions soient remplies).
-                        array(
-                            'taxonomy' => 'categories',
-                            'field' => 'term_id',
-                            'terms' => $category,
-                        ),
-                        array(
-                            'taxonomy' => 'formats',
-                            'field' => 'term_id',
-                            'terms' => $format,
-                        ),
-                    ),
-                    'date_query' => array(
-                        array(
-                            'year' => $date,
-                        ),
-                    ),
-                );
-            
+            <?php
+            // Boucle pour afficher les résultats
+            if ($query->have_posts()) {
             while ($query->have_posts()) : $query->the_post();
 
             get_template_part('templates_part/photo_block');
 
             endwhile; wp_reset_postdata();
-            ?>
+            }?>
+            
         </div>
 
 

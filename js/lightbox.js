@@ -23,15 +23,13 @@ jQuery(document).ready(function($) {
 
     nextButton.on('click', function(event) {
         event.preventDefault();
-        currentIndex++;
-        // Envoie une requête AJAX pour obtenir l'image suivante
+        currentIndex++; // Image suivante
         fetchNextImage();
     });
 
     prevButton.on('click', function(event) {
         event.preventDefault();
-        currentIndex--;
-        // Envoie une requête AJAX pour obtenir l'image précédente
+        currentIndex--; // Image précédente
         fetchPrevImage();
     });
 
@@ -46,6 +44,7 @@ jQuery(document).ready(function($) {
             },
             dataType: 'json',
             success: function(data) {
+                console.log(data);
                 // Mettez à jour la lightbox avec l'image suivante
                 updateLightbox(data.url);
             }
@@ -63,6 +62,7 @@ jQuery(document).ready(function($) {
             },
             dataType: 'json',
             success: function(data) {
+                console.log(data);
                 // Mettez à jour la lightbox avec l'image précédente
                 updateLightbox(data.url);
             }
@@ -71,7 +71,7 @@ jQuery(document).ready(function($) {
 
     // Fonction pour mettre à jour la lightbox avec une nouvelle image
     function updateLightbox(imageUrl) {
-        // Mettez à jour l'élément de la lightbox avec la nouvelle image
+        // Mettre à jour l'élément de la lightbox avec la nouvelle image
         var lightboxImage = $('.lightbox_container img');
         lightboxImage.attr('src', imageUrl);
     }
@@ -84,13 +84,13 @@ jQuery(document).ready(function($) {
 
     closeButton.on('click', function(event) {
         event.preventDefault();
-        lightbox.style.display = "none";
+        lightbox.hide();
     });
 
     // Lorsque l'utilisateur clique n'importe où en dehors de la lightbox, elle se ferme.
     document.onclick = function(event) {
         if (event.target == lightbox) {
-            lightbox.style.display = "none";
+            lightbox.hide();
         }
     }
 

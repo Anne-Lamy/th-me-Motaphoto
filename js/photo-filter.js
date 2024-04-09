@@ -52,56 +52,25 @@ thumbnails.forEach(thumbnail => {
 
 // _______________________________________________________________
 // FONCTION DE CHARGEMENT DES PHOTOS POUR photo_filter.php :
-    
-function loadFilterImage() {
 
-        // Vérifie si les sélecteurs existent
-        if ($('#category').length && $('#format').length && $('#date').length) {
-            // Attend le changement dans les sélecteurs du formulaire
-            $('#category, #format, #date').on('change', function(e) {
-                e.preventDefault(); // Empêche le formulaire de se soumettre normalement
+jQuery(document).ready(function($) {
 
-                // Récupère les valeurs des sélecteurs individuellement
-                var categoryValue = $('#category').val();
-                var formatValue = $('#format').val();
-                var dateValue = $('#date').val();
+    $('#ajax_call').on('change', '.select-post', function() {
+        var filter = $('#ajax_call').serialize();
 
-                console.log(categoryValue);
-                console.log(formatValue);
-                console.log(dateValue);
+        $.ajax({
+            url: photos_ajax_js.ajax_url,
+            type: 'post',
+            data: filter + '&action=filter_photos',
+            success: function(response) {
+                console.log(response);
+                $('.photo-block').html(response);
+            }
+        });
+    });
 
-                console.log("La fonction de rappel est déclenchée !");
+});
 
-                // Récupère le nonce depuis les données localisées
-                var nonce = photos_ajax_js.nonce;
-
-                // Effectue une requête AJAX
-                $.ajax({
-                    type: 'POST',
-                    url: photos_ajax_js.ajax_url,
-                    data: {
-                        action: 'request_photos', // Action à appeler dans functions.php
-                        category: categoryValue, // Valeur de la catégorie
-                        format: formatValue, // Valeur du format
-                        date: dateValue, // Valeur de la date
-                        nonce: nonce // Ajout du nonce dans les données de la requête
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        $('.post-content').html(response); // Met à jour la première classe .post-content
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(xhr.responseText); // Affiche l'erreur en cas de problème
-                    }
-                });
-            });
-        } else {
-            console.log('Les sélecteurs ne sont pas trouvés.');
-        };
-}
-
-// Appelle la fonction pour charger les images filtrées.
-loadFilterImage();
 
 
 // _______________________________________________________________

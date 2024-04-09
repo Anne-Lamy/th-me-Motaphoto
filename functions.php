@@ -183,12 +183,58 @@ add_action('wp_ajax_load_random_image', 'load_random_image_callback');
 add_action('wp_ajax_nopriv_load_random_image', 'load_random_image_callback');
 
 
+
+// _______________________________________________________________
+// FONCTION POUR CHARGER LES IMAGES FILTREES :
+
+function filter_photos() {
+
+    $category = isset($_POST['category']) ? $_POST['category'] : '';
+    $format = isset($_POST['format']) ? $_POST['format'] : '';
+    $date = isset($_POST['date']) ? $_POST['date'] : '';
+
+    $args = array(
+        'post_type' => 'photos',
+        'posts_per_page' => 8,
+        'tax_query' => array(
+            'relation' => 'AND',
+            array(
+                'taxonomy' => 'categories',
+                'field'    => 'id',
+                'terms'    => $category,
+            ),
+            array(
+                'taxonomy' => 'formats',
+                'field'    => 'id',
+                'terms'    => $format,
+            ),
+        ),
+        'date_query' => array(
+            array(
+                'year' => $date,
+            ),
+        ),
+    );
+
+    $query = new WP_Query($args);
+
+    // Boucle pour afficher les résultats
+    
+    wp_die();
+}
+
+add_action('wp_ajax_filter_photos', 'filter_photos');
+add_action('wp_ajax_nopriv_filter_photos', 'filter_photos');
+
+
+
 // _______________________________________________________________
 // FONCTION POUR CHARGER LES IMAGES DANS LA LIGHTBOX :
 
 // Obtient l'URL de l'image en vedette pour la publication.
 
 function full_image_lightbox() {
+    $current_index = $_POST['current_index']; // Récupère l'index actuel
     $args = array(
         'post_type' => 'photos',
         'posts_per_page' => -1, // Récupérer toutes les images
@@ -200,10 +246,12 @@ function full_image_lightbox() {
 
     // Vérifie si des images ont été trouvées
     if ($query->have_posts()) {
+        $i = 0; // initialisation du tableau.
         while ($query->have_posts()) {
             $query->the_post();
-            // Ajoute l'URL de l'image au tableau
-            $image_urls[] = get_the_post_thumbnail_url();
+            $image_urls[$i]['url'] = get_the_post_thumbnail_url(); // On stock l'URL à l'indice $i sous la clé 'url'.
+            $image_urls[$i]['id'] = get_the_ID(); // On stock l'ID à l'indice $i sous la clé 'id'.
+            $i++; // On incrémente la variable $i pour passer à l'élément suivant du tableau.
         }
     } else {
         // Aucune photo trouvée
@@ -211,13 +259,13 @@ function full_image_lightbox() {
     }
 
     // Renvoie les URLs des images au format JSON
-    wp_send_json($image_urls);
+    wp_send_json($image_urls[$current_index]);
     // Réinitialise les données de la requête pour éviter les conflits
     wp_reset_postdata();
     // Arrête le script PHP après avoir envoyé la réponse (l'url des images)
     wp_die();
-
 }
+
 
 add_action('wp_ajax_full_image_lightbox', 'full_image_lightbox');
 add_action('wp_ajax_nopriv_full_image_lightbox', 'full_image_lightbox');
