@@ -28,6 +28,38 @@ $('.load-more-images').on('click', function() {
 
 
 // _______________________________________________________________
+// FONCTION POUR CHARGER UNE IMAGE PAR CATEGORIE :
+    
+/* function loadCategoryImages(category) {
+    $.ajax({
+        url: photos_ajax_js.ajax_url,
+        type: 'POST',
+        data: {
+            action: 'load_category_image',
+            category: category
+        },
+        success: function(response) {
+            console.log(response);
+            var images = response.images;
+            var container = $('.post-content');
+            // Efface le contenu précédent
+            container.empty();
+            // Ajoute les nouvelles images
+            $.each(images, function(index, image) {
+                // Ajoute la classe single-thumbnail à l'image
+                var imgHtml = '<img src="' + image.url + '" alt="' + image.title + '" class="single-thumbnail">';
+                container.append(imgHtml);
+            });
+        }
+    });
+}
+
+// Charger les images lorsque la page est prête
+var category = $('.post-content').data('category');
+loadCategoryImages(category); */
+
+
+// _______________________________________________________________
 // AFFICHAGE DE LA REF ET DE LA CATEGORIE AU SURVOL D'UNE PHOTO :
 
 // Sélection de tous les éléments .post-content.

@@ -147,6 +147,7 @@ add_action('admin_menu', 'motaphoto_add_admin_pages', 10);
 add_action('admin_init', 'motaphoto_settings_register');
 
 
+
 // _______________________________________________________________
 // FONCTION POUR CHARGER UNE IMAGE ALEATOIRE DANS LE HERO :
 
@@ -181,6 +182,65 @@ function load_random_image_callback() {
 add_action('wp_ajax_load_random_image', 'load_random_image_callback');
 // Rend également la function accessible pour les utilisateurs non connectés.
 add_action('wp_ajax_nopriv_load_random_image', 'load_random_image_callback');
+
+
+
+// _______________________________________________________________
+// FONCTION POUR CHARGER UNE IMAGE PAR CATEGORIE :
+
+/* function load_category_image() {
+    // Vérifie si la catégorie est définie dans la requête
+    if (isset($_POST['category'])) {
+        $category = sanitize_text_field($_POST['category']);
+        
+        // Récupère les images de la même catégorie
+        $query_args = array(
+            'post_type' => 'photos',
+            'posts_per_page' => 2,
+            'orderby' => 'rand',
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'categories',
+                    'field' => 'slug',
+                    'terms' => $category,
+                ),
+            ),
+        );
+    } else {
+        // Si aucune catégorie n'est spécifiée, récupère toutes les images
+        $query_args = array(
+            'post_type' => 'photos',
+            'posts_per_page' => 8,
+            'orderby' => 'rand',
+        );
+    }
+
+    $query = new WP_Query($query_args);
+
+    $like_also = array();
+
+    // Vérifie si la requête a des résultats
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+
+            $like_also[] = array(
+                'url' => get_the_post_thumbnail_url(),
+                'title' => get_the_title(get_the_ID(), 'title', true),
+                'category' => get_the_terms(get_the_ID(), 'categories')[0]->name,
+            );
+
+        }
+        // Réinitialise les données de la requête pour éviter les conflits
+        wp_reset_postdata();
+    }
+
+    // Retourne les images au format JSON
+    wp_send_json(array('images' => $like_also));
+}
+
+add_action('wp_ajax_load_category_image', 'load_category_image');
+add_action('wp_ajax_nopriv_load_category_image', 'load_category_image'); */
 
 
 

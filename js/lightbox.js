@@ -33,7 +33,6 @@ jQuery(document).ready(function($) {
 
     nextButton.on('click', function(event) {
         event.preventDefault();
-        // Incrémente l'index
         currentIndex++;
         // Vérifie si nous avons atteint la fin du tableau.
         if (currentIndex >= imagesData.length) {
@@ -45,7 +44,6 @@ jQuery(document).ready(function($) {
 
     prevButton.on('click', function(event) {
         event.preventDefault();
-        // Décrémente l'index
         currentIndex--;
         // Vérifie si nous sommes au début du tableau
         if (currentIndex < 0) {
@@ -55,7 +53,7 @@ jQuery(document).ready(function($) {
         displayImageInLightbox(currentIndex);
     });
 
-    // Fonction pour afficher une image avec ses informations dans la lightbox
+    // Fonction pour afficher une image avec ses infos dans la lightbox
     function displayImageInLightbox(index) {
         var imageData = imagesData[index];
         lightboxContainer.html('<img src="' + imageData.url + '">');

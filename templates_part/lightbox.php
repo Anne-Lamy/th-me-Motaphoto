@@ -9,7 +9,7 @@
     </div>
     
     <div id="info-lightbox">
-        <!-- insertion de la référence ainsi que la catégorie via Ajax -->
+        <!-- insertion de la référence et de la catégorie via Ajax -->
     </div>
 
 </div>

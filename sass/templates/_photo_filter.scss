@@ -12,8 +12,6 @@
     display: none;
 }
 
-
-
 /* Style de la flèche à l’intérieur de l’élément select : */
 .select-selected:after {
     position: absolute;
@@ -141,6 +139,13 @@ button {
 button:hover {
     background-color: $color_red_average;
     color: $color_grey_light;
+}
+
+.loading-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 @media all and (max-width: #{$breakpoint__large_phone}) {

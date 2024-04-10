@@ -619,8 +619,10 @@ input[type=submit]:hover {
 
 .single-thumbnail {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .content-interaction {
@@ -1192,6 +1194,13 @@ button {
 button:hover {
   background-color: #FE5858;
   color: #ffffff;
+}
+
+.loading-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 @media all and (max-width: 700px) {

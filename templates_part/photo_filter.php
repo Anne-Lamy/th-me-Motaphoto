@@ -71,16 +71,40 @@
         <div class="photo-block">
 
             <?php
-            // Boucle pour afficher les résultats
-            if ($query->have_posts()) {
-            while ($query->have_posts()) : $query->the_post();
+            // Définition de la variable $paged pour la pagination
+            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
-            get_template_part('templates_part/photo_block');
+            // Initialisation d'une nouvelle instance de la classe WP_Query pour récupérer les publications
+            $get_photos = new WP_Query(array( 
+                'post_type'     => 'photos',    // Type de publication à récupérer (dans ce cas, des photos)
+                'status'        => 'published', // Filtre pour récupérer uniquement les publications publiées
+                'posts_per_page'=> 8,           // Limite le nombre de publications à 8 par page
+                'orderby'       => 'post_date', // Trie les publications par date de publication
+                'order'         => 'DESC',      // Trie les publications en ordre décroissant (du plus récent au plus ancien)
+                'paged'         => $paged       // Utilisation de la variable $paged pour la pagination
+            ));
 
-            endwhile; wp_reset_postdata();
-            }?>
-            
+            if ($get_photos->have_posts()) {
+                while ($get_photos->have_posts()) : $get_photos->the_post();
+
+                    get_template_part('templates_part/photo_block');
+
+                endwhile;
+                wp_reset_postdata();
+
+                // Vérifier si le nombre de photos est inférieur à 8 pour afficher un message approprié.
+                if ($get_photos->post_count < 8) {
+                    echo '<div class="load-more"><a class="btn secondary-button">Plus de photos</a></div>';
+                } else {
+                    echo '<div id="photos-loader" class="loading-banner"><a class="btn" href="#!"><button type="submit">Charger plus !</button></a></div>';
+                }
+            } else {
+                echo '<p class="no-results">Aucun résultat trouvé pour votre filtre. Veuillez réessayer.</p>';
+            }
+            ?>
+
         </div>
+
 
 
     </div>
