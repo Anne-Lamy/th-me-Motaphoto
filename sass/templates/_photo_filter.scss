@@ -136,6 +136,10 @@ button {
     width: 100%;
 }
 
+.btn {
+    width: 25%;
+}
+
 button:hover {
     background-color: $color_red_average;
     color: $color_grey_light;
@@ -150,10 +154,19 @@ button:hover {
 
 @media all and (max-width: #{$breakpoint__large_phone}) {
 
+    .custom-select {
+        width: 70%;
+    }
+
     .select-post {
         padding: 10px;
         margin: 5px;
         width: 70%;
     }
+
+        button {
+            width: 70%;
+            margin-top: 20px;
+        }
 
 }

@@ -9,6 +9,8 @@ function enqueue_custom_scripts_styles() {
     wp_enqueue_script('menu-script', get_template_directory_uri() . '/js/menu-responsive.js', array(), true);
     // Script de la modale
     wp_enqueue_script('modal-script', get_template_directory_uri() . '/js/contact-modal.js', array(), true);
+    // Script du l'affichage des photos
+    wp_enqueue_script('photo-layout', get_template_directory_uri() . '/js/photo-layout.js', array('jquery'), true);
     // Script de la lightbox
     wp_enqueue_script('lightbox-script', get_template_directory_uri() . '/js/lightbox.js', array('jquery'), true);
     // Script du filtre des photos.
@@ -18,6 +20,7 @@ function enqueue_custom_scripts_styles() {
     $nonce = wp_create_nonce('photo_filter_nonce');
     wp_localize_script('photo-filter', 'photos_ajax_js', array(
         'ajax_url' => admin_url('admin-ajax.php'),
+        'permalink' => get_the_permalink(), // Ajouter la valeur de get_the_permalink()
         'nonce' => $nonce, // Ajout du nonce dans les données localisées
     ));
 }
@@ -146,6 +149,67 @@ add_action('admin_menu', 'motaphoto_add_admin_pages', 10);
 // Appelle la fonction d’un lot de réglages.
 add_action('admin_init', 'motaphoto_settings_register');
 
+
+// _______________________________________________________________
+// FONCTION POUR CHARGER PLUS DE PHOTOS :
+
+// Définition de la fonction pour la requête AJAX côté serveur
+function custom_api_get_photos_callback() {
+
+    // Initialisation d'un tableau pour stocker les données des publications
+    $posts_data = array();    
+
+    // Récupération du paramètre de pagination de la requête
+    $paged = $_POST['page'];   
+
+    // Si le paramètre de pagination est défini et non vide, l'utiliser, sinon le définir à 1
+    $paged = (isset($paged) || !(empty($paged))) ? $paged : 1;
+
+    // Récupération des publications de type 'photos' depuis la base de données
+    $posts = get_posts( array(
+        'post_type'       => 'photos',    // Type de publication à récupérer
+        'status'          => 'published', // Filtre pour récupérer uniquement les publications publiées
+        'posts_per_page'  => 8,           // Limite le nombre de publications à 8 par page
+        'orderby'         => 'post_date', // Trie les publications par date de publication
+        'order'           => 'DESC',      // Trie les publications en ordre décroissant (du plus récent au plus ancien)
+        'paged'           => $paged       // Utilisation du paramètre de pagination
+    ));
+
+    // Parcours de chaque publication récupérée
+    foreach($posts as $post){
+        // Récupération de l'identifiant de la publication
+        $id = $post->ID;
+        
+        // Récupération de l'URL de l'image à la une de la publication, si elle existe
+        $post_thumbnail = (has_post_thumbnail($id)) ? get_the_post_thumbnail_url($id) : null;
+
+        $post_categories = wp_get_post_terms($id, 'categories');
+        $categories = array();
+        foreach ($post_categories as $category) {
+            $categories[] = $category->name;
+        }
+        
+        // Ajout des données de la publication à un objet et ajout de cet objet au tableau $posts_data
+        $posts_data[] = (object)array(
+            'id' => $id,
+            'slug' => $post->post_name,
+            'type' => $post->post_type,
+            'title' => $post->post_title,
+            'featured_img_src' => $post_thumbnail,
+            'categories' => $categories
+        );
+    }
+
+    // Retourne les données des publications au format JSON
+    wp_send_json($posts_data);
+
+    // Arrête l'exécution du script
+    wp_die();
+}
+
+// Fonction pour la requête AJAX côté serveur.
+add_action('wp_ajax_custom_api_get_photos', 'custom_api_get_photos_callback');
+add_action('wp_ajax_nopriv_custom_api_get_photos', 'custom_api_get_photos_callback');
 
 
 // _______________________________________________________________

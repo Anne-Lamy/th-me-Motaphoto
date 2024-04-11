@@ -66,7 +66,7 @@
 
                 </div>
             </div>
-        </form>        
+        </form>     
 
         <div class="photo-block">
 
@@ -90,22 +90,23 @@
                     get_template_part('templates_part/photo_block');
 
                 endwhile;
-                wp_reset_postdata();
-
-                // Vérifier si le nombre de photos est inférieur à 8 pour afficher un message approprié.
-                if ($get_photos->post_count < 8) {
-                    echo '<div class="load-more"><a class="btn secondary-button">Plus de photos</a></div>';
-                } else {
-                    echo '<div id="photos-loader" class="loading-banner"><a class="btn" href="#!"><button type="submit">Charger plus !</button></a></div>';
-                }
-            } else {
-                echo '<p class="no-results">Aucun résultat trouvé pour votre filtre. Veuillez réessayer.</p>';
-            }
-            ?>
+                wp_reset_postdata();?>
 
         </div>
+                
+        <div class="photo-block" id="photos-list">
+            <!-- insertion des images en plus via Ajax -->
+        </div>
 
-
-
+            <?php // Vérifie si le nombre de photos est inférieur à 8 pour afficher un message approprié.
+            if ($get_photos->post_count < 8) {
+                echo '<div class="load-more"><a class="btn secondary-button">Plus de photos</a></div>';
+            } else {
+                echo '<div id="photos-loader" class="loading-banner"><button type="submit" class="btn">Charger plus !</button></div>';
+            }
+        } else {
+            echo '<p class="no-results">Aucun résultat trouvé pour votre filtre. Veuillez réessayer.</p>';
+        }
+        ?>
     </div>
 </div>

@@ -902,7 +902,6 @@ input[type=submit]:hover {
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
-  margin-bottom: 20px;
   width: 100%;
 }
 
@@ -1191,6 +1190,10 @@ button {
   width: 100%;
 }
 
+.btn {
+  width: 25%;
+}
+
 button:hover {
   background-color: #FE5858;
   color: #ffffff;
@@ -1204,9 +1207,16 @@ button:hover {
 }
 
 @media all and (max-width: 700px) {
+  .custom-select {
+    width: 70%;
+  }
   .select-post {
     padding: 10px;
     margin: 5px;
     width: 70%;
+  }
+  button {
+    width: 70%;
+    margin-top: 20px;
   }
 }/*# sourceMappingURL=style.css.map */
