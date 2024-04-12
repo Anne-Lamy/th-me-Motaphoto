@@ -7,37 +7,42 @@ jQuery(document).ready(function($) {
 
     let pull_page = 2;
 
-    // Fonction pour effectuer la requête AJAX
-    function getMorePhotos() {
+// Fonction pour effectuer la requête AJAX
+function getMorePhotos() {
+    
+    $.ajax({
+        url: photos_ajax_js.ajax_url,
+        type: 'POST',
+        data: {
+            action: 'custom_api_get_photos', // Action à exécuter côté serveur
+            page: pull_page // Numéro de la page à récupérer
+        },
+        success: function(response) {
+            console.log(response);
+            pull_page++; // Incrémenter le numéro de la page pour la prochaine requête
 
-        $.ajax({
-            url: photos_ajax_js.ajax_url,
-            type: 'POST',
-            data: {
-                action: 'custom_api_get_photos', // Action à exécuter côté serveur
-                page: pull_page // Numéro de la page à récupérer
-            },
-            success: function(response) {
-                console.log(response);
-                pull_page++; // Incrémenter le numéro de la page pour la prochaine requête
-
-                // Boucle à travers chaque photo dans la réponse
-                response.forEach(function(photo) {
-                    // Créer un élément HTML pour la photo
-                    var photoElement = '<article class="center-container"><div class="portfolio-container"><div class="portfolio-item"><div class="post-content post-category"><img src="' + photo.featured_img_src + '" alt="' + photo.title + '"><div id="full-screen"><img class="screen-link" src="' + photos_ajax_js.ajax_url + '/wp-content/themes/motaphoto/assets/images/screen.png"></div><a href="' + photos_ajax_js.permalink + '"><div id="info-single"><h3>' + photo.title + '</h3><h3>' + photo.categories + '</h3></div></a></div></div></div></article>';
-                    
-                    console.log(photoElement);
-
-                    // Ajouter la photo au conteneur
-                    $('#photos-list').append(photoElement);
-                });
-
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                console.error('Error:', errorThrown); // Gérer les erreurs éventuelles
+            // Si la réponse est vide, cacher le bouton de chargement
+            if (response.length === 0) {
+                $('#photos-loader').hide();
             }
-        });
-    }
+
+            // Boucle à travers chaque photo dans la réponse
+            response.forEach(function(photo) {
+                // Créer un élément HTML pour la photo
+                var photoElement = '<article class="center-container"><div class="portfolio-container"><div class="portfolio-item"><div class="post-content post-category"><img src="' + photo.featured_img_src + '" alt="' + photo.title + '"><div id="full-screen"><img class="screen-link" src="' + photos_ajax_js.ajax_url + '/wp-content/themes/motaphoto/assets/images/screen.png"></div><a href="' + photos_ajax_js.permalink + '"><div id="info-single"><h3>' + photo.title + '</h3><h3>' + photo.categories + '</h3></div></a></div></div></div></article>';
+                
+                console.log(photoElement);
+
+                // Ajouter la photo au conteneur
+                $('#photos-list').append(photoElement);
+            });
+
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            console.error('Error:', errorThrown); // Gérer les erreurs éventuelles
+        }
+    });
+}
 
     // Écouteur d'événements pour le clic sur le bouton "Charger plus"
     $('#photos-loader').on('click', function(event) {
