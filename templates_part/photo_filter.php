@@ -6,14 +6,14 @@
                 <div class="single-left-bottom mini">
                     <div class="custom-select">
                     <select name="category" id="category" class="select-post">
-                        <option class="hidden-option">CATEGORIES</option>
-                        <option> </option>
+                        <option value=""  data-slug="" class="hidden-option">CATEGORIES</option>
+                        <option value=""  data-slug=""> </option>
                         <?php 
-                        // Récupérer toutes les catégories du type de post "photos"
+                        // Récupére toutes les catégories du type de post "photos"
                         $categories = get_terms('categories');
                         if ($categories) {
                             foreach ($categories as $category) {
-                                echo '<option value="' . $category->term_id . '">' . $category->name . '</option>';
+                                echo '<option class="select-selected" value="' . $category->term_id . '" data-slug="' . $category->slug . '">' . $category->name . '</option>';
                             }
                         }
                         ?>
@@ -21,14 +21,14 @@
                     </div>
                     <div class="custom-select">
                     <select name="format" id="format" class="select-post">
-                        <option class="hidden-option">FORMATS</option>
-                        <option> </option>
+                        <option value=""  data-slug="" class="hidden-option">FORMATS</option>
+                        <option value=""  data-slug=""> </option>
                         <?php 
-                        // Récupérer tous les formats du type de post "photos"
+                        // Récupére tous les formats du type de post "photos"
                         $formats = get_terms('formats');
                         if ($formats) {
                             foreach ($formats as $format) {
-                                echo '<option value="' . $format->term_id . '">' . $format->name . '</option>';
+                                echo '<option class="select-selected" value="' . $format->term_id . '" data-slug="' . $format->slug . '">' . $format->name . '</option>';
                             }
                         }
                         ?>
@@ -38,8 +38,8 @@
                 <div class="single-right-bottom">
                     <div class="custom-select">
                     <select type="date" name="date" id="date" class="select-post">
-                        <option class="hidden-option">TRIER PAR</option>
-                        <option> </option>
+                        <option value=""  data-slug="" class="hidden-option">TRIER PAR</option>
+                        <option value=""  data-slug=""> </option>
                         <?php
                         // Récupére toutes les dates de publication des posts sans doublons.
                         $args = array(
@@ -55,20 +55,21 @@
                                 $post_date = get_the_date('Y'); // Récupérer l'année de publication.
                                 if (!in_array($post_date, $dates)) { // Vérifier si l'année n'est pas déjà présente dans le tableau.
                                     $dates[] = $post_date; // Ajouter l'année au tableau si elle n'est pas déjà présente.
-                                    echo '<option value="' . $post_date . '">' . $post_date . '</option>';
+                                    echo '<option class="select-selected" value="' . $post_date . '" data-slug="' . $post_date . '">' . $post_date . '</option>';
                                 }
                             }
                             wp_reset_postdata(); // Réinitialiser les données de publication
                         }
                         ?>
                     </select>
+
                     </div>
 
                 </div>
             </div>
         </form>     
-
-        <div class="photo-block">
+        
+        <div class="photo-block" id="photos-list">
 
             <?php
             // Définition de la variable $paged pour la pagination
@@ -93,10 +94,6 @@
                 wp_reset_postdata();?>
 
         </div>
-                
-        <div class="photo-block" id="photos-list">
-            <!-- insertion des images en plus via Ajax -->
-        </div>
 
             <?php // Vérifie si le nombre de photos est inférieur à 8 pour afficher un message approprié.
             if ($get_photos->post_count < 8) {
@@ -105,7 +102,7 @@
                 echo '<div id="photos-loader" class="loading-banner"><button type="submit" class="btn">Charger plus !</button></div>';
             }
         } else {
-            echo '<p class="no-results">Aucun résultat trouvé pour votre filtre. Veuillez réessayer.</p>';
+            echo '<p class="no-results">Aucun résultat trouvé. Veuillez réessayer.</p>';
         }
         ?>
     </div>

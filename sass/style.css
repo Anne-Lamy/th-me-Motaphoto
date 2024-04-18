@@ -640,7 +640,7 @@ input[type=submit]:hover {
 .single-left-bottom {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: space-between;
   margin-right: 10px;
   width: 50%;
 }
@@ -1066,11 +1066,10 @@ input[type=submit]:hover {
   font-size: 14px;
 }
 
-/*masquer l'élément SELECT d'origine : */
+/*masquer l'élément SELECT d'origine :
 .custom-select select {
-  display: none;
-}
-
+    display: none;
+}*/
 /* Style de la flèche à l’intérieur de l’élément select : */
 .select-selected:after {
   position: absolute;

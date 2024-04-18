@@ -151,6 +151,42 @@ add_action('admin_init', 'motaphoto_settings_register');
 
 
 // _______________________________________________________________
+// FONCTION POUR CHARGER UNE IMAGE ALEATOIRE DANS LE HERO :
+
+function load_random_image_callback() {
+
+    // Configuration des arguments pour la requête WP_Query.
+    $args = array(
+        'post_type' => 'photos',
+        'posts_per_page' => 1,
+        'orderby' => 'rand' // Trie les résultats de manière aléatoire
+    );
+
+    // Effectue la requête WP_Query avec les arguments définis
+    $query = new WP_Query($args);
+
+    // Vérifie si la requête a des résultats
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            
+            echo '<img src="' . get_the_post_thumbnail_url() . '" alt="' . get_the_title() . '">';
+        }
+        // Réinitialise les données de la requête pour éviter les conflits
+        wp_reset_postdata();
+    }
+
+    // Arrête le script PHP après avoir envoyé la réponse (l'image)
+    wp_die();
+}
+
+// Appelle la function de la requette et indique à WP qu'elle est à utiliser via un appel Ajax.
+add_action('wp_ajax_load_random_image', 'load_random_image_callback');
+// Rend également la function accessible pour les utilisateurs non connectés.
+add_action('wp_ajax_nopriv_load_random_image', 'load_random_image_callback');
+
+
+// _______________________________________________________________
 // FONCTION POUR CHARGER PLUS DE PHOTOS :
 
 // Définition de la fonction pour la requête AJAX côté serveur
@@ -213,139 +249,62 @@ add_action('wp_ajax_nopriv_custom_api_get_photos', 'custom_api_get_photos_callba
 
 
 // _______________________________________________________________
-// FONCTION POUR CHARGER UNE IMAGE ALEATOIRE DANS LE HERO :
-
-function load_random_image_callback() {
-
-    // Configuration des arguments pour la requête WP_Query.
-    $args = array(
-        'post_type' => 'photos',
-        'posts_per_page' => 1,
-        'orderby' => 'rand' // Trie les résultats de manière aléatoire
-    );
-
-    // Effectue la requête WP_Query avec les arguments définis
-    $query = new WP_Query($args);
-
-    // Vérifie si la requête a des résultats
-    if ($query->have_posts()) {
-        while ($query->have_posts()) {
-            $query->the_post();
-            
-            echo '<img src="' . get_the_post_thumbnail_url() . '" alt="' . get_the_title() . '">';
-        }
-        // Réinitialise les données de la requête pour éviter les conflits
-        wp_reset_postdata();
-    }
-
-    // Arrête le script PHP après avoir envoyé la réponse (l'image)
-    wp_die();
-}
-
-// Appelle la function de la requette et indique à WP qu'elle est à utiliser via un appel Ajax.
-add_action('wp_ajax_load_random_image', 'load_random_image_callback');
-// Rend également la function accessible pour les utilisateurs non connectés.
-add_action('wp_ajax_nopriv_load_random_image', 'load_random_image_callback');
-
-
-
-// _______________________________________________________________
-// FONCTION POUR CHARGER UNE IMAGE PAR CATEGORIE :
-
-/* function load_category_image() {
-    // Vérifie si la catégorie est définie dans la requête
-    if (isset($_POST['category'])) {
-        $category = sanitize_text_field($_POST['category']);
-        
-        // Récupère les images de la même catégorie
-        $query_args = array(
-            'post_type' => 'photos',
-            'posts_per_page' => 2,
-            'orderby' => 'rand',
-            'tax_query' => array(
-                array(
-                    'taxonomy' => 'categories',
-                    'field' => 'slug',
-                    'terms' => $category,
-                ),
-            ),
-        );
-    } else {
-        // Si aucune catégorie n'est spécifiée, récupère toutes les images
-        $query_args = array(
-            'post_type' => 'photos',
-            'posts_per_page' => 8,
-            'orderby' => 'rand',
-        );
-    }
-
-    $query = new WP_Query($query_args);
-
-    $like_also = array();
-
-    // Vérifie si la requête a des résultats
-    if ($query->have_posts()) {
-        while ($query->have_posts()) {
-            $query->the_post();
-
-            $like_also[] = array(
-                'url' => get_the_post_thumbnail_url(),
-                'title' => get_the_title(get_the_ID(), 'title', true),
-                'category' => get_the_terms(get_the_ID(), 'categories')[0]->name,
-            );
-
-        }
-        // Réinitialise les données de la requête pour éviter les conflits
-        wp_reset_postdata();
-    }
-
-    // Retourne les images au format JSON
-    wp_send_json(array('images' => $like_also));
-}
-
-add_action('wp_ajax_load_category_image', 'load_category_image');
-add_action('wp_ajax_nopriv_load_category_image', 'load_category_image'); */
-
-
-
-// _______________________________________________________________
 // FONCTION POUR CHARGER LES IMAGES FILTREES :
 
 function filter_photos() {
 
+    // Récupération du slug de la catégorie à filtrer depuis la requête AJAX
     $category = isset($_POST['category']) ? $_POST['category'] : '';
     $format = isset($_POST['format']) ? $_POST['format'] : '';
     $date = isset($_POST['date']) ? $_POST['date'] : '';
 
-    $args = array(
+    // Requête pour récupérer les publications correspondantes aux critères de filtrage
+    $ajaxposts = new WP_Query([
         'post_type' => 'photos',
         'posts_per_page' => 8,
         'tax_query' => array(
             'relation' => 'AND',
             array(
-                'taxonomy' => 'categories',
-                'field'    => 'id',
-                'terms'    => $category,
+                'taxonomy' => 'categories', // Taxonomie à utiliser pour le filtrage (la catégorie de photo)
+                'field'    => 'term_id', // Champ de la taxonomie pour la comparaison (l'ID du terme)
+                'terms'    => $category // Identifiants des termes à inclure dans la recherche
             ),
             array(
                 'taxonomy' => 'formats',
-                'field'    => 'id',
-                'terms'    => $format,
+                'field'    => 'term_id',
+                'terms'    => $format
             ),
         ),
         'date_query' => array(
             array(
                 'year' => $date,
+                'compare' => '=', // Compare l'année exactement
+                'type' => 'NUMERIC', // Type de comparaison
             ),
         ),
-    );
 
-    $query = new WP_Query($args);
+    ]);
+    // Initialisation de la variable de réponse
+    $response = '';
 
-    // Boucle pour afficher les résultats
-    
-    wp_die();
-}
+    // Vérification s'il y a des publications correspondantes
+    if($ajaxposts->have_posts()) {
+        // Boucle à travers les publications correspondantes
+        while($ajaxposts->have_posts()) : $ajaxposts->the_post();
+        // Ajout du contenu de chaque publication à la variable de réponse.
+        $response .= get_template_part('templates_part/photo_block');
+        endwhile;
+    } else {
+        // Si aucune publication n'est trouvée, définir un réponse.
+        $response = '<h3 class="success-message">Aucune photo trouvée !</h3>';
+    }
+
+    // Affichage de la réponse
+    echo $response;
+
+    // Arrêt de l'exécution du script
+    exit;
+    }
 
 add_action('wp_ajax_filter_photos', 'filter_photos');
 add_action('wp_ajax_nopriv_filter_photos', 'filter_photos');
