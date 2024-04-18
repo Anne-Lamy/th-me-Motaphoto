@@ -277,7 +277,7 @@ function filter_photos() {
         ),
         'date_query' => array(
             array(
-                'year' => $date,
+                'year' => intval($date),
                 'compare' => '=', // Compare l'année exactement
                 'type' => 'NUMERIC', // Type de comparaison
             ),

@@ -20,7 +20,7 @@ function getMorePhotos() {
             pull_page++; // Incrémenter le numéro de la page pour la prochaine requête
 
             // Si la réponse est vide, cacher le bouton de chargement
-            if (response.length === 0) {
+            if (response.length === 0 || response.length <= 8 ) {
                 $('#photos-loader').hide();
             }
 
