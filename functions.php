@@ -256,9 +256,9 @@ add_action('wp_ajax_nopriv_custom_api_get_photos', 'custom_api_get_photos_callba
 function filter_photos() {
 
     // Récupération du slug de la catégorie à filtrer depuis la requête AJAX
-    $category = isset($_POST['category']) ? $_POST['category'] : '';
-    $format = isset($_POST['format']) ? $_POST['format'] : '';
-    $date = isset($_POST['date']) ? $_POST['date'] : '';
+    $category_id = isset($_POST['category']) ? intval($_POST['category']) : 0;
+    $format_id = isset($_POST['format']) ? intval($_POST['format']) : 0;
+    $date_id = isset($_POST['date']) ? intval($_POST['date']) : 0;
 
     // Requête pour récupérer les publications correspondantes aux critères de filtrage
     $ajaxposts = new WP_Query([
@@ -269,23 +269,24 @@ function filter_photos() {
             array(
                 'taxonomy' => 'categories', // Taxonomie à utiliser pour le filtrage (la catégorie de photo)
                 'field'    => 'term_id', // Champ de la taxonomie pour la comparaison (l'ID du terme)
-                'terms'    => $category // Identifiants des termes à inclure dans la recherche
+                'terms'    => $category_id // Identifiants des termes à inclure dans la recherche
             ),
             array(
                 'taxonomy' => 'formats',
                 'field'    => 'term_id',
-                'terms'    => $format
+                'terms'    => $format_id
             ),
         ),
         'date_query' => array(
             array(
-                'year' => intval($date),
+                'year' => intval($date_id),
                 'compare' => '=', // Compare l'année exactement
                 'type' => 'NUMERIC', // Type de comparaison
             ),
         ),
 
     ]);
+
     // Initialisation de la variable de réponse
     $response = '';
 

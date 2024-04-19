@@ -94,8 +94,8 @@ function loadFilterImage() {
         console.log("Événement CHANGE détecté...");
 
         // Récupère les valeurs des sélecteurs
-        var categoryValue = $('#category option:selected').data('slug');
-        var formatValue = $('#format option:selected').data('slug');
+        var categoryValue = $('#category option:selected').val();
+        var formatValue = $('#format option:selected').val();
         var dateValue = $('#date').val();
 
         console.log(categoryValue);
