@@ -18,9 +18,11 @@ function enqueue_custom_scripts_styles() {
 
     // Création et ajout du nonce pour le script 'photo-filter'
     $nonce = wp_create_nonce('photo_filter_nonce');
+
     wp_localize_script('photo-filter', 'photos_ajax_js', array(
         'ajax_url' => admin_url('admin-ajax.php'),
         'permalink' => get_the_permalink(), // Ajouter la valeur de get_the_permalink()
+        'template_url' => get_template_directory_uri(), // Définir le chemin du modèle
         'nonce' => $nonce, // Ajout du nonce dans les données localisées
     ));
 }

@@ -62,6 +62,7 @@ loadCategoryImages(category); */
 // _______________________________________________________________
 // AFFICHAGE DE LA REF ET DE LA CATEGORIE AU SURVOL D'UNE PHOTO :
 
+function classMouseover() {
 // Sélection de tous les éléments .post-content.
 const thumbnails = document.querySelectorAll('.post-content');
 
@@ -80,5 +81,8 @@ thumbnails.forEach(thumbnail => {
         screen.classList.remove('fadeInTop');
     });
 });
+
+}
+classMouseover()
 
 });

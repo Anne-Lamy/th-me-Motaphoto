@@ -1212,10 +1212,13 @@ button:hover {
   .select-post {
     padding: 10px;
     margin: 5px;
-    width: 70%;
+    width: 100%;
   }
   button {
-    width: 70%;
+    width: 100%;
     margin-top: 20px;
+  }
+  .btn {
+    width: 80%;
   }
 }/*# sourceMappingURL=style.css.map */

@@ -27,12 +27,45 @@ function getMorePhotos() {
             // Boucle à travers chaque photo dans la réponse
             response.forEach(function(photo) {
                 // Créer un élément HTML pour la photo
-                var photoElement = '<article class="center-container"><div class="portfolio-container"><div class="portfolio-item"><div class="post-content post-category"><img src="' + photo.featured_img_src + '" alt="' + photo.title + '"><div id="full-screen"><img class="screen-link" src="' + photos_ajax_js.ajax_url + '/wp-content/themes/motaphoto/assets/images/screen.png"></div><a href="' + photos_ajax_js.permalink + '"><div id="info-single"><h3>' + photo.title + '</h3><h3>' + photo.categories + '</h3></div></a></div></div></div></article>';
+                var photoElement = '<article class="center-container"><div class="portfolio-container"><div class="portfolio-item"><div class="post-content post-category"><img src="' + photo.featured_img_src + '" alt="' + photo.title + '"><div id="full-screen"><img class="screen-link" src="' + photos_ajax_js.permalink + '/wp-content/themes/motaphoto/assets/images/screen.png"></div><a href="' + getPostUrl(photo.id) + '"><div id="info-single"><h3>' + photo.title + '</h3><h3>' + photo.categories + '</h3></div></a></div></div></div></article>';
                 
-                console.log(photoElement);
-
                 // Ajouter la photo au conteneur
                 $('#photos-list').append(photoElement);
+            });
+
+            // Fonction pour récupérer l'URL de la publication en fonction de son identifiant
+            function getPostUrl(postId) {
+                // Construire l'URL de la publication en utilisant l'identifiant de la publication
+                return photos_ajax_js.permalink + '/?p=' + postId;
+            }
+
+
+            // Lien vers la lighbox des photos en +
+            var screenLink = $('.screen-link');
+            var lightbox = $('#lightbox');
+            var currentIndex = 0;
+
+            screenLink.on('click', function(event) {
+                event.preventDefault();
+                lightbox.show();
+                currentIndex = $(this).index('.screen-link');
+                displayImageInLightbox(currentIndex);
+            });
+
+            // affichage de la ref et de la catégorie au survol des photos en +
+            const thumbnails = document.querySelectorAll('.post-content');
+
+            thumbnails.forEach(thumbnail => {
+                const info = thumbnail.querySelector('#info-single');
+                const screen = thumbnail.querySelector('#full-screen');
+                thumbnail.addEventListener('mouseover', function() {
+                    info.classList.add('fadeInTop');
+                    screen.classList.add('fadeInTop');
+                });
+                thumbnail.addEventListener('mouseout', function() {
+                    info.classList.remove('fadeInTop');
+                    screen.classList.remove('fadeInTop');
+                });
             });
 
         },
@@ -86,10 +119,10 @@ function loadFilterImage() {
             },
             success: function(response) {
                 console.log(response);
-                $('.post-content').html(response); // Met à jour la première classe .post-content
+                $('#photos-list').html(response);
             },
             error: function(xhr, status, error) {
-                console.log(xhr.responseText); // Affiche l'erreur en cas de problème
+                console.log(xhr.responseText);
             }
         });
     });
