@@ -189,7 +189,7 @@ add_action('wp_ajax_nopriv_load_random_image', 'load_random_image_callback');
 
 
 // _______________________________________________________________
-// FONCTION POUR CHARGER PLUS DE PHOTOS :
+// FONCTION POUR TRIER et CHARGER PLUS DE PHOTOS :
 
 // Définition de la fonction pour la requête AJAX côté serveur
 function custom_api_get_photos_callback() {
@@ -198,120 +198,102 @@ function custom_api_get_photos_callback() {
     $posts_data = array();    
 
     // Récupération du paramètre de pagination de la requête
-    $paged = $_POST['page'];   
+    $paged = isset($_POST['page']) ? intval($_POST['page']) : 1;
 
-    // Si le paramètre de pagination est défini et non vide, l'utiliser, sinon le définir à 1
-    $paged = (isset($paged) || !(empty($paged))) ? $paged : 1;
+    // Récupération des données de filtrage depuis la requête AJAX
+    $category_id = isset($_POST['category']) ? intval($_POST['category']) : 0;
+    $format_id = isset($_POST['format']) ? intval($_POST['format']) : 0;
+    $date_id = isset($_POST['date']) ? intval($_POST['date']) : 0;
 
-    // Récupération des publications de type 'photos' depuis la base de données
-    $posts = get_posts( array(
-        'post_type'       => 'photos',    // Type de publication à récupérer
-        'status'          => 'published', // Filtre pour récupérer uniquement les publications publiées
-        'posts_per_page'  => 8,           // Limite le nombre de publications à 8 par page
-        'orderby'         => 'post_date', // Trie les publications par date de publication
-        'order'           => 'DESC',      // Trie les publications en ordre décroissant (du plus récent au plus ancien)
-        'paged'           => $paged       // Utilisation du paramètre de pagination
-    ));
+    // Requête pour récupérer les publications correspondantes
+    $args = array(
+        'post_type'      => 'photos',
+        'post_status'    => 'publish',
+        'posts_per_page' => 8,
+        'paged'          => $paged,
+        'orderby'        => 'post_date',
+        'order'          => 'DESC',
+    );
 
-    // Parcours de chaque publication récupérée
-    foreach($posts as $post){
-        // Récupération de l'identifiant de la publication
-        $id = $post->ID;
-        
-        // Récupération de l'URL de l'image à la une de la publication, si elle existe
-        $post_thumbnail = (has_post_thumbnail($id)) ? get_the_post_thumbnail_url($id) : null;
+    // Si aucun filtre n'est défini, toutes les publications sont récupérées. Si un ou plusieurs filtres sont définis, seules les publications correspondant à tous les filtres seront récupérées.
+    if ($category_id || $format_id || $date_id) {
+        $args['tax_query'] = array('relation' => 'AND');
 
-        $post_categories = wp_get_post_terms($id, 'categories');
-        $categories = array();
-        foreach ($post_categories as $category) {
-            $categories[] = $category->name;
+        if ($category_id) {
+            $args['tax_query'][] = array(
+                'taxonomy' => 'categories',
+                'field'    => 'term_id',
+                'terms'    => $category_id,
+            );
         }
-        
-        // Ajout des données de la publication à un objet et ajout de cet objet au tableau $posts_data
-        $posts_data[] = (object)array(
-            'id' => $id,
-            'slug' => $post->post_name,
-            'type' => $post->post_type,
-            'title' => $post->post_title,
-            'featured_img_src' => $post_thumbnail,
-            'categories' => $categories
-        );
+
+        if ($format_id) {
+            $args['tax_query'][] = array(
+                'taxonomy' => 'formats',
+                'field'    => 'term_id',
+                'terms'    => $format_id,
+            );
+        }
+
+        if ($date_id) {
+            $args['date_query'] = array(
+                array(
+                    'year'     => intval($date_id),
+                    'compare'  => '=', 
+                    'type'     => 'NUMERIC',
+                ),
+            );
+        }
     }
 
-    // Retourne les données des publications au format JSON
-    wp_send_json($posts_data);
+    // Récupère les publications correspondantes selon les critères de filtrage définis dans $args.
+    $posts = new WP_Query($args);
 
-    // Arrête l'exécution du script
+    // Vérification s'il y a des publications correspondantes
+    if ($posts->have_posts()) {
+        while ($posts->have_posts()) : $posts->the_post();
+
+            // Récupération des informations de la publication
+            $id = get_the_ID();
+            $post_thumbnail = (has_post_thumbnail($id)) ? get_the_post_thumbnail_url($id) : null;
+            $post_formats = wp_get_post_terms($id, 'formats');
+            $formats = array();
+            foreach ($post_formats as $format) {
+                $formats[] = $format->name;
+            }
+            $post_categories = wp_get_post_terms($id, 'categories');
+            $categories = array();
+            foreach ($post_categories as $category) {
+                $categories[] = $category->name;
+            }
+            // Ajout des données de la publication à un objet et ajout de cet objet au tableau $posts_data
+            $posts_data[] = (object)array(
+                'id'               => $id,
+                'slug'             => get_post_field('post_name', $id), // Récupère le slug de la publication
+                'type'             => 'photos',
+                'title'            => get_the_title($id), // Récupère le titre de la publication
+                'featured_img_src' => $post_thumbnail,
+                'formats'          => $formats,
+                'categories'       => $categories
+            );
+        endwhile;
+        // Retourne les données des publications au format JSON
+        wp_send_json($posts_data);
+    } else {
+        // Si aucune publication n'est trouvée, définir une réponse.
+        $response = '<h3 class="success-message">Aucune photo trouvée !</h3>';
+
+        // Réinitialise les données de la requête pour éviter les conflits
+        wp_reset_postdata();
+    }
+
+    // Arrêt de l'exécution du script
     wp_die();
 }
 
 // Fonction pour la requête AJAX côté serveur.
 add_action('wp_ajax_custom_api_get_photos', 'custom_api_get_photos_callback');
 add_action('wp_ajax_nopriv_custom_api_get_photos', 'custom_api_get_photos_callback');
-
-
-// _______________________________________________________________
-// FONCTION POUR CHARGER LES IMAGES FILTREES :
-
-function filter_photos() {
-
-    // Récupération du slug de la catégorie à filtrer depuis la requête AJAX
-    $category_id = isset($_POST['category']) ? intval($_POST['category']) : 0;
-    $format_id = isset($_POST['format']) ? intval($_POST['format']) : 0;
-    $date_id = isset($_POST['date']) ? intval($_POST['date']) : 0;
-
-    // Requête pour récupérer les publications correspondantes aux critères de filtrage
-    $ajaxposts = new WP_Query([
-        'post_type' => 'photos',
-        'posts_per_page' => 8,
-        'tax_query' => array(
-            'relation' => 'AND',
-            array(
-                'taxonomy' => 'categories', // Taxonomie à utiliser pour le filtrage (la catégorie de photo)
-                'field'    => 'term_id', // Champ de la taxonomie pour la comparaison (l'ID du terme)
-                'terms'    => $category_id // Identifiants des termes à inclure dans la recherche
-            ),
-            array(
-                'taxonomy' => 'formats',
-                'field'    => 'term_id',
-                'terms'    => $format_id
-            ),
-        ),
-        'date_query' => array(
-            array(
-                'year' => intval($date_id),
-                'compare' => '=', // Compare l'année exactement
-                'type' => 'NUMERIC', // Type de comparaison
-            ),
-        ),
-
-    ]);
-
-    // Initialisation de la variable de réponse
-    $response = '';
-
-    // Vérification s'il y a des publications correspondantes
-    if($ajaxposts->have_posts()) {
-        // Boucle à travers les publications correspondantes
-        while($ajaxposts->have_posts()) : $ajaxposts->the_post();
-        // Ajout du contenu de chaque publication à la variable de réponse.
-        $response .= get_template_part('templates_part/photo_block');
-        endwhile;
-    } else {
-        // Si aucune publication n'est trouvée, définir un réponse.
-        $response = '<h3 class="success-message">Aucune photo trouvée !</h3>';
-    }
-
-    // Affichage de la réponse
-    echo $response;
-
-    // Arrêt de l'exécution du script
-    exit;
-    }
-
-add_action('wp_ajax_filter_photos', 'filter_photos');
-add_action('wp_ajax_nopriv_filter_photos', 'filter_photos');
-
 
 
 // _______________________________________________________________

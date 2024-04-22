@@ -10,7 +10,7 @@
                         <option value=""  data-slug=""> </option>
                         <?php 
                         // Récupére toutes les catégories du type de post "photos"
-                        $categories = get_terms('categories');
+                        $categories = get_terms( array( 'taxonomy' => 'categories'));
                         if ($categories) {
                             foreach ($categories as $category) {
                                 echo '<option class="select-selected" value="' . $category->term_id . '" data-slug="' . $category->slug . '">' . $category->name . '</option>';
@@ -25,7 +25,7 @@
                         <option value=""  data-slug=""> </option>
                         <?php 
                         // Récupére tous les formats du type de post "photos"
-                        $formats = get_terms('formats');
+                        $formats = get_terms( array( 'taxonomy' => 'formats'));
                         if ($formats) {
                             foreach ($formats as $format) {
                                 echo '<option class="select-selected" value="' . $format->term_id . '" data-slug="' . $format->slug . '">' . $format->name . '</option>';
@@ -72,17 +72,17 @@
         <div class="photo-block" id="photos-list">
 
             <?php
-            // Définition de la variable $paged pour la pagination
+            // Récupère le numéro de page ou attribue 1 par défaut
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
-            // Initialisation d'une nouvelle instance de la classe WP_Query pour récupérer les publications
+            // Récupération des publications
             $get_photos = new WP_Query(array( 
                 'post_type'     => 'photos',    // Type de publication à récupérer (dans ce cas, des photos)
                 'status'        => 'published', // Filtre pour récupérer uniquement les publications publiées
                 'posts_per_page'=> 8,           // Limite le nombre de publications à 8 par page
                 'orderby'       => 'post_date', // Trie les publications par date de publication
                 'order'         => 'DESC',      // Trie les publications en ordre décroissant (du plus récent au plus ancien)
-                'paged'         => $paged       // Utilisation de la variable $paged pour la pagination
+                'paged'         => $paged       // Pagination selon le numéro de page
             ));
 
             if ($get_photos->have_posts()) {
@@ -100,10 +100,7 @@
                 echo '<div class="load-more"><a class="btn secondary-button">Plus de photos</a></div>';
             } else {
                 echo '<div id="photos-loader" class="loading-banner"><button type="submit" class="btn">Charger plus !</button></div>';
-            }
-        } else {
-            echo '<p class="no-results">Aucun résultat trouvé. Veuillez réessayer.</p>';
-        }
+            }};
         ?>
     </div>
 </div>

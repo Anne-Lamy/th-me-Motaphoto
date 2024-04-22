@@ -544,9 +544,11 @@ input[type=submit]:hover {
 .success-message {
   display: flex;
   align-items: center;
+  text-align: center;
   justify-content: center;
   font-family: "SpaceMono-Regular";
   color: #FE5858;
+  width: 100%;
 }
 
 /* Animations */
