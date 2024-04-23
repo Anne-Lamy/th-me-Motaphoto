@@ -15,9 +15,11 @@
 
         <div class="footer-content">
             <!-- Ajout de la POPUP de contact. -->
-                <?php get_template_part('templates_part/contact-modal'); ?>
-            <!-- Ajout de la POPUP de la lightbox. -->
-                <?php get_template_part('templates_part/lightbox'); ?>
+            <?php get_template_part('templates_part/contact-modal'); ?>
+
+            <!-- Ajout de la POPUP de la lightbox. -->            
+            <?php get_template_part('templates_part/lightbox'); ?>            
+
         </div>
 
         <div class="nav-footer motaphoto-menu">

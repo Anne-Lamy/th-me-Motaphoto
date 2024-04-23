@@ -1,216 +1,248 @@
 jQuery(document).ready(function($) {
 
-// _______________________________________________________________
-// FONCTION POUR CHARGER UNE IMAGE ALEATOIRE :
-    
-function loadRandomImage() {
-    // Effectue une requête Ajax POST vers admin-ajax.php
-    $.ajax({
-        url: photos_ajax_js.ajax_url,
-        type: 'POST',
-        data: {
-            action: 'load_random_image' // Action à exécuter côté serveur
-        },
-        success: function(response) {
-            // Met à jour le contenu de la div .first-img avec la réponse (l'image chargée).
-            $('.first-img').html(response);
-        }
+    // _______________________________________________________________
+    // FONCTION POUR CHARGER UNE IMAGE ALEATOIRE :
+        
+    function loadRandomImage() {
+        // Effectue une requête Ajax POST vers admin-ajax.php
+        $.ajax({
+            url: photos_ajax_js.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'load_random_image' // Action à exécuter côté serveur
+            },
+            success: function(response) {
+                // Met à jour le contenu de la div .first-img avec la réponse (l'image chargée).
+                $('.first-img').html(response);
+            }
+        });
+    }
+
+    // _______________________________________________________________
+    // AFFICHAGE DE LA REF ET DE LA CATEGORIE AU SURVOL D'UNE PHOTO :
+
+    function classMouseover() {
+    // Sélection de tous les éléments .post-content.
+    const thumbnails = document.querySelectorAll('.post-content');
+
+    // Sélectionne tous les elements de la boucle .post-content.
+    thumbnails.forEach(thumbnail => {
+        const info = thumbnail.querySelector('#info-single');
+        const screen = thumbnail.querySelector('#full-screen');
+
+        thumbnail.addEventListener('mouseover', function() {
+            info.classList.add('fadeInTop');
+            screen.classList.add('fadeInTop');
+        });
+
+        thumbnail.addEventListener('mouseout', function() {
+            info.classList.remove('fadeInTop');
+            screen.classList.remove('fadeInTop');
+        });
     });
-}
 
-// Appelle la fonction pour charger une image aléatoire.
-loadRandomImage();
+    }
 
-// Charge image aléatoire lorsque celle-ci est cliquée.
-$('.load-more-images').on('click', function() {
-    loadRandomImage();
-});
+    // _______________________________________________________________
+    // AFFICHAGE DE LA LIGHTBOX :
 
+    function initializeLightbox() {
 
-// _______________________________________________________________
-// FONCTION POUR CHARGER UNE IMAGE DE TYPE CATEGORIES :
+        var screenLink = $('.screen-link');
+        var lightbox = $('#lightbox');
+        var lightboxContainer = lightbox.find('.lightbox_container');
+        var infoLightbox = lightbox.find('#info-lightbox');
 
-function fullImageCategory() {
+        // Tableau pour stocker les données des images
+        var imagesData = [];
+        var currentIndex = 0;
 
-    // Effectuez une requête Ajax POST vers admin-ajax.php
-    $.ajax({
-        url: photos_ajax_js.ajax_url,
-        type: 'POST',
-        data: {
-            action: 'full_image_category', // Action à exécuter côté serveur
-        },
-        success: function(response) {
-            // Met à jour le contenu.
-            $('.post-content').html(response);
+        // Ajoute un écouteur d'événement pour le clic sur l'image
+        screenLink.on('click', function(event) {
+            event.preventDefault();
+            // Affiche la lightbox
+            lightbox.show();
+
+            // Obtient l'index de l'image actuelle
+            currentIndex = $(this).index('.screen-link');
+
+            // Affiche l'image actuelle avec ses informations dans la lightbox
+            displayImageInLightbox(currentIndex);
+        });
+
+        // Navigation dans la lightbox :
+
+        var nextButton = $('.lightbox_next');
+        var prevButton = $('.lightbox_prev');
+
+        nextButton.on('click', function(event) {
+            event.preventDefault();
+            currentIndex++;
+            // Vérifie si nous avons atteint la fin du tableau.
+            if (currentIndex >= imagesData.length) {
+                currentIndex = 0; // Retour au début.
+            }
+            // Affiche l'image suivante dans la lightbox
+            displayImageInLightbox(currentIndex);
+        });
+
+        prevButton.on('click', function(event) {
+            event.preventDefault();
+            currentIndex--;
+            // Vérifie si nous sommes au début du tableau
+            if (currentIndex < 0) {
+                currentIndex = imagesData.length - 1; // Va à la fin
+            }
+            // Affiche l'image précédente dans la lightbox
+            displayImageInLightbox(currentIndex);
+        });
+
+        // Fonction pour afficher une image avec ses infos dans la lightbox
+        function displayImageInLightbox(index) {
+            var imageData = imagesData[index];
+            lightboxContainer.html('<img src="' + imageData.url + '">');
+            infoLightbox.html('<h3>' + imageData.reference + '</h3>' + '<h3>' + imageData.category + '</h3>');
         }
-    });
-}
 
-// Appelle la fonction pour charger une image de la même catégories.
-fullImageCategory();
+        // Fermeture de la lightbox lorsque l'utilisateur clique sur (x) ou en dehors de la lightbox
+        var closeButton = $('.lightbox_close');
 
+        closeButton.on('click', function(event) {
+            event.preventDefault();
+            lightbox.hide();
+        });
 
-// _______________________________________________________________
-// FONCTION DE CHARGEMENT DES PHOTOS POUR photo_filter.php :
-    
-function loadFilterImage() {
-
-        // Vérifie si les sélecteurs existent
-        if ($('#category').length && $('#format').length && $('#date').length) {
-            // Attend le changement dans les sélecteurs du formulaire
-            $('#category, #format, #date').on('change', function(e) {
-                e.preventDefault(); // Empêche le formulaire de se soumettre normalement
-
-                // Récupère les valeurs des sélecteurs individuellement
-                var categoryValue = $('#category').val();
-                var formatValue = $('#format').val();
-                var dateValue = $('#date').val();
-
-                console.log(categoryValue);
-                console.log(formatValue);
-                console.log(dateValue);
-
-                console.log("La fonction de rappel est déclenchée !");
-
-                // Récupère le nonce depuis les données localisées
-                var nonce = photos_ajax_js.nonce;
-
-                // Effectue une requête AJAX
-                $.ajax({
-                    type: 'POST',
-                    url: photos_ajax_js.ajax_url,
-                    data: {
-                        action: 'request_photos', // Action à appeler dans functions.php
-                        category: categoryValue, // Valeur de la catégorie
-                        format: formatValue, // Valeur du format
-                        date: dateValue, // Valeur de la date
-                        nonce: nonce // Ajout du nonce dans les données de la requête
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        $('.post-content').html(response); // Met à jour la première classe .post-content
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(xhr.responseText); // Affiche l'erreur en cas de problème
-                    }
-                });
-            });
-        } else {
-            console.log('Les sélecteurs ne sont pas trouvés.');
+        document.onclick = function(event) {
+            if (event.target == lightbox[0]) {
+                lightbox.hide();
+            }
         };
-}
 
-// Appelle la fonction pour charger les images filtrées.
-loadFilterImage();
-
-
-// _______________________________________________________________
-// AFFICHAGE DE LA REF ET DE LA CATEGORIE AU SURVOL D'UNE PHOTO :
-
-// Sélection de tous les éléments .post-content.
-const thumbnails = document.querySelectorAll('.post-content');
-
-// Sélectionne tous les elements de la boucle .post-content.
-thumbnails.forEach(thumbnail => {
-    const info = thumbnail.querySelector('#info-single');
-    const screen = thumbnail.querySelector('#full-screen');
-
-    thumbnail.addEventListener('mouseover', function() {
-        info.classList.add('fadeInTop');
-        screen.classList.add('fadeInTop');
-    });
-
-    thumbnail.addEventListener('mouseout', function() {
-        info.classList.remove('fadeInTop');
-        screen.classList.remove('fadeInTop');
-    });
-});
-
-
-// _______________________________________________________________
-// ANIMATION DES FILTRES :
-
-var x, i, j, l, ll, selElmnt, a, b, c;
-
-/* Recherchez tous les éléments avec la classe « custom-select » :*/
-x = document.getElementsByClassName("custom-select");
-l = x.length;
-for (i = 0; i < l; i++) {
-    selElmnt = x[i].getElementsByTagName("select")[0];
-    ll = selElmnt.length;
-
-    /* Pour chaque élément, créez une nouvelle DIV qui fera office d'élément sélectionné : */
-    a = document.createElement("DIV");
-    a.setAttribute("class", "select-selected");
-    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-    x[i].appendChild(a);
-
-    /* Pour chaque élément, créez une nouvelle DIV qui contiendra la liste d'options :*/
-    b = document.createElement("DIV");
-    b.setAttribute("class", "select-items select-hide");
-    for (j = 1; j < ll; j++) {
-    /* Pour chaque option de l'élément select d'origine,
-     créez une nouvelle DIV qui fera office d'élément d'option : */
-    c = document.createElement("DIV");
-    c.innerHTML = selElmnt.options[j].innerHTML;
-    c.addEventListener("click", function(e) {
-        /* Lorsqu'un élément est cliqué, mettez à jour la zone de sélection d'origine,
-         et l'élément sélectionné : */
-        var y, i, k, s, h, sl, yl;
-        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-        sl = s.length;
-        h = this.parentNode.previousSibling;
-        for (i = 0; i < sl; i++) {
-            if (s.options[i].innerHTML == this.innerHTML) {
-            s.selectedIndex = i;
-            h.innerHTML = this.innerHTML;
-            y = this.parentNode.getElementsByClassName("same-as-selected");
-            yl = y.length;
-            for (k = 0; k < yl; k++) {
-                y[k].removeAttribute("class");
+        // Chargement des images via Ajax dans la lightbox :
+        $.ajax({
+            url: photos_ajax_js.ajax_url,
+            type: 'post',
+            dataType: 'json',
+            data: {
+                action: 'full_image_lightbox'
+            },
+            success: function(response) {
+                imagesData = response.images;
             }
-            this.setAttribute("class", "same-as-selected");
-            break;
+        });
+
+    }
+
+    // _______________________________________________________________
+    // FONCTION POUR CHARGER PLUS DE PHOTOS :
+
+    let pull_page = 2;
+
+    // Fonction pour effectuer la requête AJAX pour charger plus de photos et filtrer les photos
+    function getPhotosAndFilter(categoryValue, formatValue, dateValue) {
+        $.ajax({
+            url: photos_ajax_js.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'custom_api_get_photos', // Action à exécuter côté serveur
+                page: pull_page, // Numéro de la page à récupérer
+                category: categoryValue, // Valeur de la catégorie à filtrer
+                format: formatValue, // Valeur du format à filtrer
+                date: dateValue // Valeur de la date à filtrer
+            },
+            success: function(response) {
+                console.log(response);
+                
+                // Si la réponse est vide, afficher un message
+                if (!response || response.length === 0) {
+                    $('#photos-list').html('<h3 class="success-message">Aucune photo trouvée !</h3>');
+                    $('#photos-loader').hide();
+                    return; // Sortir de la fonction si la réponse est vide
+                }
+
+                // Si la réponse est vide, cacher le bouton de chargement
+                if (response.length <= 8) {
+                    $('#photos-loader').hide();
+                }
+
+                // Boucle à travers chaque photo dans la réponse
+                if (Array.isArray(response)) {
+                    response.forEach(function(photo) {
+                        // Créer un élément HTML pour la photo
+                        var photoElement = '<article class="center-container"><div class="portfolio-container"><div class="portfolio-item"><div class="post-content post-category"><img src="' + photo.featured_img_src + '" alt="' + photo.title + '"><div id="full-screen"><img class="screen-link" src="' + photos_ajax_js.permalink + '/wp-content/themes/motaphoto/assets/images/screen.png"></div><a href="' + getPostUrl(photo.id) + '"><div id="info-single"><h3>' + photo.title + '</h3><h3>' + photo.categories + '</h3></div></a></div></div></div></article>';
+
+                        // Ajouter l'élément HTML pour la photo au conteneur
+                        $('#photos-list').append(photoElement);
+                    });
+
+                    // Fonction pour récupérer l'URL de la publication en fonction de son identifiant
+                    function getPostUrl(postId) {
+                        // Construire l'URL de la publication en utilisant l'identifiant de la publication
+                        return photos_ajax_js.permalink + '/?p=' + postId;
+                    }
+
+                    // Appelle la fonction d'affichage de la lighbox des photos en +
+                    initializeLightbox();
+
+                    // Appelle la fonction des infos au survol des photos en +
+                    classMouseover();
+                }
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.error('Error:', errorThrown); // Gérer les erreurs éventuelles
             }
-        }
-        h.click();
+        });
+    }
+
+    // Fonction pour charger les images filtrées.
+    function loadFilterImage() {
+        $('#category, #format, #date').on('change', function(e) {
+            e.preventDefault();
+
+            // Réinitialise pull_page à 1 lorsqu'un filtre est appliqué
+            pull_page = 1;
+
+            // Vider le conteneur des photos existantes avant de charger de nouvelles photos
+            $('#photos-list').empty();
+
+            // Récupère les valeurs des sélecteurs
+            var categoryValue = $('#category option:selected').val();
+            var formatValue = $('#format option:selected').val();
+            var dateValue = $('#date').val();
+
+            // Appelle la fonction pour charger les images filtrées
+            getPhotosAndFilter(categoryValue, formatValue, dateValue);
+
+            // Appelle la fonction d'affichage de la lighbox des photos filtrées
+            initializeLightbox();
+
+            // Appelle la fonction des infos au survol des photos filtrées
+            classMouseover();
+        });
+    }
+
+    // Bouton "Charger plus"
+    $('#photos-loader').on('click', function(event) {
+        event.preventDefault();
+        // Appelle la fonction pour charger plus de photos
+        getPhotosAndFilter(null, null, null);
+        pull_page++; // Incrémenter le numéro de la page pour la prochaine requête
     });
-    b.appendChild(c);
-    }
-    x[i].appendChild(b);
-    a.addEventListener("mouseover", function(e) {
-    /* Lorsque vous survolez la case de sélection, fermez toutes les autres cases de sélection,
-     et ouvrez/fermez la boîte de sélection actuelle : */
-    e.stopPropagation();
-    closeAllSelect(this);
-    this.nextSibling.classList.toggle("select-hide");
-    this.classList.toggle("select-arrow-active");
-});
-}
 
-function closeAllSelect(elmnt) {
-/* Une fonction qui fermera toutes les cases de sélection du document,
-sauf la zone de sélection actuelle : */
-var x, y, i, xl, yl, arrNo = [];
-x = document.getElementsByClassName("select-items");
-y = document.getElementsByClassName("select-selected");
-xl = x.length;
-yl = y.length;
-for (i = 0; i < yl; i++) {
-    if (elmnt == y[i]) {
-    arrNo.push(i)
-    } else {
-        y[i].classList.remove("select-arrow-active");
-}
-}
-for (i = 0; i < xl; i++) {
-    if (arrNo.indexOf(i)) {
-    x[i].classList.add("select-hide");
-    }
-}
-}
 
-/* Si l'utilisateur clique n'importe où en dehors de la zone de sélection, ferme toutes les cases de sélection : */
-document.addEventListener("click", closeAllSelect);
+    // _______________________________________________________________
 
+    // Appelle la fonction pour charger une image aléatoire.
+    loadRandomImage();
+
+    // Appelle la fonction des infos au survol
+    classMouseover();
+
+    // Appelle la fonction pour charger les images filtrées lors du chargement de la page
+    loadFilterImage();
+
+    // Appelle la fonction pour initialiser la lightbox
+    initializeLightbox();
+
+    
 });
