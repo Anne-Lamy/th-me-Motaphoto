@@ -4,12 +4,12 @@ jQuery(document).ready(function($) {
     // FONCTION POUR CHARGER UNE IMAGE ALEATOIRE :
         
     function loadRandomImage() {
-        // Effectue une requête Ajax POST vers admin-ajax.php
+
         $.ajax({
             url: photos_ajax_js.ajax_url,
             type: 'POST',
             data: {
-                action: 'load_random_image' // Action à exécuter côté serveur
+                action: 'load_random_image'
             },
             success: function(response) {
                 // Met à jour le contenu de la div .first-img avec la réponse (l'image chargée).
@@ -22,18 +22,18 @@ jQuery(document).ready(function($) {
     // AFFICHAGE DE LA REF ET DE LA CATEGORIE AU SURVOL D'UNE PHOTO :
 
     function classMouseover() {
-    // Sélection de tous les éléments .post-content.
-    const thumbnails = document.querySelectorAll('.post-content');
 
-    // Sélectionne tous les elements de la boucle .post-content.
-    thumbnails.forEach(thumbnail => {
-        const info = thumbnail.querySelector('#info-single');
-        const screen = thumbnail.querySelector('#full-screen');
+        const thumbnails = document.querySelectorAll('.post-content');
 
-        thumbnail.addEventListener('mouseover', function() {
-            info.classList.add('fadeInTop');
-            screen.classList.add('fadeInTop');
-        });
+        // Sélectionne tous les elements de la boucle .post-content.
+        thumbnails.forEach(thumbnail => {
+            const info = thumbnail.querySelector('#info-single');
+            const screen = thumbnail.querySelector('#full-screen');
+
+            thumbnail.addEventListener('mouseover', function() {
+                info.classList.add('fadeInTop');
+                screen.classList.add('fadeInTop');
+            });
 
         thumbnail.addEventListener('mouseout', function() {
             info.classList.remove('fadeInTop');
@@ -46,25 +46,24 @@ jQuery(document).ready(function($) {
     // _______________________________________________________________
     // AFFICHAGE DE LA LIGHTBOX :
 
+    // Tableau pour stocker les données des images
+    var imagesData = [];
+    var currentIndex = 0;
+
     function initializeLightbox() {
 
-        var screenLink = $('.screen-link');
         var lightbox = $('#lightbox');
         var lightboxContainer = lightbox.find('.lightbox_container');
         var infoLightbox = lightbox.find('#info-lightbox');
 
-        // Tableau pour stocker les données des images
-        var imagesData = [];
-        var currentIndex = 0;
-
         // Ajoute un écouteur d'événement pour le clic sur l'image
-        screenLink.on('click', function(event) {
+        $('.screen-link').on('click', function(event) {
             event.preventDefault();
+            // Obtient l'index de l'image actuelle
+            currentIndex = $(this).closest('.portfolio-item').index('.portfolio-item');
+
             // Affiche la lightbox
             lightbox.show();
-
-            // Obtient l'index de l'image actuelle
-            currentIndex = $(this).index('.screen-link');
 
             // Affiche l'image actuelle avec ses informations dans la lightbox
             displayImageInLightbox(currentIndex);
@@ -127,7 +126,11 @@ jQuery(document).ready(function($) {
                 action: 'full_image_lightbox'
             },
             success: function(response) {
+                console.log("Réponse de la requête AJAX pour charger les images dans la lightbox :", response);
                 imagesData = response.images;
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.error('Erreur lors de la requête AJAX pour charger les images dans la lightbox:', errorThrown);
             }
         });
 
@@ -140,6 +143,7 @@ jQuery(document).ready(function($) {
 
     // Fonction pour effectuer la requête AJAX pour charger plus de photos et filtrer les photos
     function getPhotosAndFilter(categoryValue, formatValue, dateValue) {
+
         $.ajax({
             url: photos_ajax_js.ajax_url,
             type: 'POST',
@@ -151,8 +155,10 @@ jQuery(document).ready(function($) {
                 date: dateValue // Valeur de la date à filtrer
             },
             success: function(response) {
-                console.log(response);
+                console.log("Réponse de la requête AJAX pour charger et filtrer les photos :", response);
                 
+                imagesData = response;
+
                 // Si la réponse est vide, afficher un message
                 if (!response || response.length === 0) {
                     $('#photos-list').html('<h3 class="success-message">Aucune photo trouvée !</h3>');
@@ -189,13 +195,14 @@ jQuery(document).ready(function($) {
                 }
             },
             error: function(xhr, textStatus, errorThrown) {
-                console.error('Error:', errorThrown); // Gérer les erreurs éventuelles
+                console.error('Erreur lors de la requête AJAX pour charger et filtrer les photos:', errorThrown);
             }
         });
     }
 
     // Fonction pour charger les images filtrées.
     function loadFilterImage() {
+
         $('#category, #format, #date').on('change', function(e) {
             e.preventDefault();
 
@@ -213,11 +220,6 @@ jQuery(document).ready(function($) {
             // Appelle la fonction pour charger les images filtrées
             getPhotosAndFilter(categoryValue, formatValue, dateValue);
 
-            // Appelle la fonction d'affichage de la lighbox des photos filtrées
-            initializeLightbox();
-
-            // Appelle la fonction des infos au survol des photos filtrées
-            classMouseover();
         });
     }
 
