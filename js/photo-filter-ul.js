@@ -1,9 +1,5 @@
 jQuery(document).ready(function($) {
 
-    // Tableau pour stocker les données des images
-        var imagesData = [];
-        var currentIndex = 0;
-
     // _______________________________________________________________
     // FONCTION POUR CHARGER UNE IMAGE ALEATOIRE :
         
@@ -50,32 +46,32 @@ jQuery(document).ready(function($) {
     // _______________________________________________________________
     // AFFICHAGE DE LA LIGHTBOX :
 
-function initializeLightbox() {
+    function initializeLightbox() {
 
-    var screenLink = $('.screen-link');
-    var lightbox = $('#lightbox');
-    var lightboxContainer = lightbox.find('.lightbox_container');
-    var infoLightbox = lightbox.find('#info-lightbox');
+        var screenLink = $('.screen-link');
+        var lightbox = $('#lightbox');
+        var lightboxContainer = lightbox.find('.lightbox_container');
+        var infoLightbox = lightbox.find('#info-lightbox');
 
-    // Fonction pour afficher une image avec ses infos dans la lightbox
-    function displayImageInLightbox(index) {
-        var imageData = imagesData[index];
-        lightboxContainer.html('<img src="' + imageData.url + '">');
-        infoLightbox.html('<h3>' + imageData.reference + '</h3>' + '<h3>' + imageData.category + '</h3>');
-    }
+        // Tableau pour stocker les données des images
+        var imagesData = [];
+        var currentIndex = 0;
 
-    // Au clic sur l'image :
-    screenLink.on('click', function(event) {
-        event.preventDefault();
-        // Récupérer l'URL de l'image
-        var imageUrl = $(this).closest('.post-content').find('img').attr('src');
-        // Affiche la lightbox
-        lightbox.show();
-        // Afficher l'image dans la lightbox
-        lightboxContainer.html('<img src="' + imageUrl + '">');
-        
-        console.log("Valeur de currentIndex :", currentIndex);
+        // Ajoute un écouteur d'événement pour le clic sur l'image
+        screenLink.on('click', function(event) {
+            event.preventDefault();
+            // Affiche la lightbox
+            lightbox.show();
 
+            // Obtient l'index de l'image actuelle
+            currentIndex = $(this).index('.screen-link');
+
+            console.log("Valeur de currentIndex avant l'appel à displayImageInLightbox :", currentIndex);
+            
+            // Appelle displayImageInLightbox en passant l'index cliqué et currentIndex
+            displayImageInLightbox(currentIndex);
+
+            console.log("Valeur de currentIndex après l'appel à displayImageInLightbox :", currentIndex);
         });
 
         // Navigation dans la lightbox :
@@ -105,6 +101,12 @@ function initializeLightbox() {
             displayImageInLightbox(currentIndex);
         });
 
+        // Fonction pour afficher une image avec ses infos dans la lightbox
+        function displayImageInLightbox(currentIndex) {
+            var imageData = imagesData[currentIndex];
+            lightboxContainer.html('<img src="' + imageData.url + '">');
+            infoLightbox.html('<h3>' + imageData.reference + '</h3>' + '<h3>' + imageData.category + '</h3>');
+        }
 
         // Fermeture de la lightbox lorsque l'utilisateur clique sur (x) ou en dehors de la lightbox
         var closeButton = $('.lightbox_close');
@@ -130,14 +132,11 @@ function initializeLightbox() {
             },
             success: function(response) {
                 imagesData = response.images;
-                currentIndex = 0;
-                console.log(imagesData);
             }
         });
 
     }
 
-    
     // _______________________________________________________________
     // FONCTION POUR CHARGER PLUS DE PHOTOS :
 
@@ -172,13 +171,13 @@ function initializeLightbox() {
 
                 // Boucle à travers chaque photo dans la réponse
                 if (Array.isArray(response)) {
-                    response.forEach(function(photo, index) {
+                    response.forEach(function(photo) {
                         // Créer un élément HTML pour la photo
-                        var photoElement = '<article class="center-container"><div class="portfolio-container"><div class="portfolio-item"><div class="post-content post-category"><img src="' + photo.featured_img_src + '" alt="' + photo.title + '"><div id="full-screen"><img class="screen-link" src="' + photos_ajax_js.permalink + '/wp-content/themes/motaphoto/assets/images/screen.png" data-index="' + index + '"></div><a href="' + getPostUrl(photo.id) + '"><div id="info-single"><h3>' + photo.title + '</h3><h3>' + photo.categories + '</h3></div></a></div></div></div></article>';
+                        var photoElement = '<article class="center-container"><div class="portfolio-container"><div class="portfolio-item"><div class="post-content post-category"><img src="' + photo.featured_img_src + '" alt="' + photo.title + '"><div id="full-screen"><img class="screen-link" src="' + photos_ajax_js.permalink + '/wp-content/themes/motaphoto/assets/images/screen.png"></div><a href="' + getPostUrl(photo.id) + '"><div id="info-single"><h3>' + photo.title + '</h3><h3>' + photo.categories + '</h3></div></a></div></div></div></article>';
+
                         // Ajouter l'élément HTML pour la photo au conteneur
                         $('#photos-list').append(photoElement);
                     });
-
 
                     // Fonction pour récupérer l'URL de la publication en fonction de son identifiant
                     function getPostUrl(postId) {
@@ -199,28 +198,35 @@ function initializeLightbox() {
         });
     }
 
-    // Fonction pour charger les images filtrées.
+    // _______________________________________________________________
+    //  FONCTION POUR CHARGER LES IMAGES FILTREES :
+
     function loadFilterImage() {
-        $('#category, #format, #date').on('change', function(e) {
-            e.preventDefault();
+    var li = $('#category .select-selected, #format .select-selected, #date .select-selected');
 
-            console.log("Valeur de currentIndex :", currentIndex);
+    li.on('click', function(e) {
+        e.preventDefault();
 
-            // Réinitialise pull_page à 1 lorsqu'un filtre est appliqué
-            pull_page = 1;
+        // Réinitialise pull_page à 1 lorsqu'un filtre est appliqué
+        pull_page = 1;
 
-            // Vider le conteneur des photos existantes avant de charger de nouvelles photos
-            $('#photos-list').empty();
+        // Vide le conteneur des photos existantes avant de charger de nouvelles photos
+        $('#photos-list').empty();
 
-            // Récupère les valeurs des sélecteurs
-            var categoryValue = $('#category option:selected').val();
-            var formatValue = $('#format option:selected').val();
-            var dateValue = $('#date').val();
+        // Récupére les valeurs sélectionnées des filtres
+        var categoryValue = $('#category .select-selected').val();
+        var formatValue = $('#format .select-selected').val();
+        var dateValue = $('#date .select-selected').val();
 
-            // Appelle la fonction pour charger les images filtrées
-            getPhotosAndFilter(categoryValue, formatValue, dateValue);
-        });
-    }
+        console.log("Valeur de categories:", categoryValue);
+        console.log("Valeur de format:", formatValue);
+        console.log("Valeur de date:", dateValue);
+
+        // Appelle la fonction de la requête Ajax pour les images filtrées
+        getPhotosAndFilter(categoryValue, formatValue, dateValue);
+    });
+}
+
 
     // Bouton "Charger plus"
     $('#photos-loader').on('click', function(event) {
@@ -230,11 +236,12 @@ function initializeLightbox() {
         pull_page++; // Incrémenter le numéro de la page pour la prochaine requête
     });
 
+    // _______________________________________________________________
+
+
 
     // _______________________________________________________________
 
-// Fonction pour charger les images filtrées lors du chargement de la page
-$(document).ready(function($) {
     // Appelle la fonction pour charger une image aléatoire.
     loadRandomImage();
 
@@ -246,7 +253,6 @@ $(document).ready(function($) {
 
     // Appelle la fonction pour initialiser la lightbox
     initializeLightbox();
-});
 
     
 });

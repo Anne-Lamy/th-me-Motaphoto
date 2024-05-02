@@ -64,7 +64,7 @@ function initializeLightbox() {
         infoLightbox.html('<h3>' + imageData.reference + '</h3>' + '<h3>' + imageData.category + '</h3>');
     }
 
-    // Au clic sur l'image :
+    // Ajoute un écouteur d'événement pour le clic sur l'image
     screenLink.on('click', function(event) {
         event.preventDefault();
         // Récupérer l'URL de l'image
@@ -73,7 +73,9 @@ function initializeLightbox() {
         lightbox.show();
         // Afficher l'image dans la lightbox
         lightboxContainer.html('<img src="' + imageUrl + '">');
-        
+        // Réinitialiser currentIndex si nécessaire
+        currentIndex = $(this).data('index');
+
         console.log("Valeur de currentIndex :", currentIndex);
 
         });
@@ -130,14 +132,11 @@ function initializeLightbox() {
             },
             success: function(response) {
                 imagesData = response.images;
-                currentIndex = 0;
-                console.log(imagesData);
             }
         });
 
     }
 
-    
     // _______________________________________________________________
     // FONCTION POUR CHARGER PLUS DE PHOTOS :
 
@@ -208,6 +207,9 @@ function initializeLightbox() {
 
             // Réinitialise pull_page à 1 lorsqu'un filtre est appliqué
             pull_page = 1;
+
+            // Réinitialise currentIndex à 0 lorsqu'un filtre est appliqué
+            currentIndex = 0;
 
             // Vider le conteneur des photos existantes avant de charger de nouvelles photos
             $('#photos-list').empty();

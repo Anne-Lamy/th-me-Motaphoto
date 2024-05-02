@@ -1,0 +1,106 @@
+.custom-select {
+    background: transparent;
+    position: relative;
+    width: 250px;
+    margin: 0;
+    font-family: $font_desk_main;
+    font-size: 14px;
+    background: url('../assets/images/icon-open.svg')96% / 5% no-repeat;
+}
+
+.hidden-option {
+    z-index:1020;
+    color: #000000;
+    box-sizing: border-box;
+    border: 1px solid #B8BBC2;
+    border-radius: 8px 8px 8px 8px;
+    padding: 8px;
+    margin: 0;
+    width: 100%;
+    background-position: calc(100% - 40px) center;
+    cursor: pointer;
+
+    &:hover {
+        border-radius: 8px 8px 0 0;
+    }
+}
+
+.select-post,
+.select-post ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.select-post li {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 250px;
+    height: 35px;
+}
+
+.select-post ul li {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 250px;
+    height: 35px;
+    margin-left: -1px;
+}
+
+.select-post ul li:hover {
+    
+    &:hover {
+        background-color: $color_red_strong;
+        color: $color_grey_light;
+    }
+}
+
+.select-post ul li:last-child {
+    border-radius: 0 0 8px 8px;
+    &:hover {
+        background-color: $color_red_strong;
+        color: $color_grey_light;
+        }
+}
+
+.select-post ul {
+    position: absolute;
+    z-index: 1000;
+    max-height: 0;
+    width: 100%;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    -moz-transition: .8s all .3s;
+    -webkit-transition: .8s all .3s;
+    transition: .8s all .3s;
+    margin-top: 12px;
+}
+
+.select-post li:hover ul {
+    max-height: 15em;
+    width: 100%;
+}
+
+/* background des liens menus */
+.select-post li:last-child {
+    color: #000000;
+    box-sizing: border-box;
+    padding: 8px;
+    width: 100%;
+    background-position: calc(100% - 40px) center;
+    cursor: pointer;
+}
+
+/* Liens sous menus */
+.select-post li:last-child li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $color_grey_light;
+    color: $color_black_strong;
+}
+

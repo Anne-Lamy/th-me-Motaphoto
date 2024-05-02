@@ -10,7 +10,7 @@
                 <a href="<?php echo get_the_permalink(); ?>">
                 <div id="info-single">
                     <h3><?php echo get_the_title(); ?></h3>
-                    <h3><?php 
+                    <h3 class="info-category"><?php 
                         $categories = get_the_terms(get_the_ID(), 'categories');
                         if ($categories) {
                             foreach ($categories as $category) {
@@ -18,6 +18,7 @@
                             }
                         }
                     ?></h3>
+                    <h3 class="invisible"><?php echo get_post_meta(get_the_ID(), 'ref', true); ?></h3>
                 </div>
                 </a>
             </div>

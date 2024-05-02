@@ -1035,6 +1035,10 @@ input[type=submit]:hover {
   background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
 }
 
+.invisible {
+  display: none;
+}
+
 @media all and (max-width: 700px) {
   .photo-block {
     flex-direction: column;
