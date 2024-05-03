@@ -57,87 +57,101 @@ function initializeLightbox() {
     var lightboxContainer = lightbox.find('.lightbox_container');
     var infoLightbox = lightbox.find('#info-lightbox');
 
-    // Fonction pour afficher une image avec ses infos dans la lightbox
-    function displayImageInLightbox(index) {
-        var imageData = imagesData[index];
+    // Au clic sur l'image :
+    screenLink.on('click', function(event) {
+        event.preventDefault();
+        
+        // Récupération des données de l'image cliquée
+        var dataId = $(this).data('id');
+        var reference = $(this).data('reference');
+        var category = $(this).data('category');
+        
+        // Affiche la lightbox
+        lightbox.show();
+        
+        // Utilisation des valeurs récupérées
+        console.log(dataId);
+        console.log(reference);
+        console.log(category);
+        
+        // Recherche de l'index correspondant dans imagesData
+        var currentIndex = imagesData.findIndex(function(image) {
+            return image.id === dataId;
+        });
+        
+        console.log("Valeur de currentIndex :", currentIndex);
+        
+        // Afficher les informations dans la lightbox
+        showImageAtIndex(currentIndex);
+
+            // Navigation dans la lightbox :
+            var nextButton = $('.lightbox_next');
+            var prevButton = $('.lightbox_prev');
+            
+            nextButton.on('click', function(event) {
+                event.preventDefault();
+                currentIndex++;
+                    // Vérifie si nous avons atteint la fin du tableau.
+                    if (currentIndex >= imagesData.length) {
+                        currentIndex = 0; // Retour au début.
+                    }
+                showImageAtIndex(currentIndex);
+                console.log("Valeur aprés :", currentIndex);
+            });
+
+            prevButton.on('click', function(event) {
+                event.preventDefault();
+                currentIndex--;
+                    // Vérifie si nous sommes au début du tableau
+                    if (currentIndex < 0) {
+                        currentIndex = imagesData.length - 1; // Va à la fin
+                    }
+                showImageAtIndex(currentIndex);
+                console.log("Valeur avant :", currentIndex);
+            });
+    });
+
+    function showImageAtIndex(currentIndex) {
+    
+        // Mettre en œuvre le code pour afficher l'image correspondant à l'index donné
+        var imageData = imagesData[currentIndex];
         lightboxContainer.html('<img src="' + imageData.url + '">');
         infoLightbox.html('<h3>' + imageData.reference + '</h3>' + '<h3>' + imageData.category + '</h3>');
     }
 
-    // Au clic sur l'image :
-    screenLink.on('click', function(event) {
+
+    // Fermeture de la lightbox lorsque l'utilisateur clique sur (x) ou en dehors de la lightbox
+    var closeButton = $('.lightbox_close');
+
+    closeButton.on('click', function(event) {
         event.preventDefault();
-        // Récupérer l'URL de l'image
-        var imageUrl = $(this).closest('.post-content').find('img').attr('src');
-        // Affiche la lightbox
-        lightbox.show();
-        // Afficher l'image dans la lightbox
-        lightboxContainer.html('<img src="' + imageUrl + '">');
-        
-        console.log("Valeur de currentIndex :", currentIndex);
+        lightbox.hide();
+    });
 
-        });
-
-        // Navigation dans la lightbox :
-
-        var nextButton = $('.lightbox_next');
-        var prevButton = $('.lightbox_prev');
-
-        nextButton.on('click', function(event) {
-            event.preventDefault();
-            currentIndex++;
-            // Vérifie si nous avons atteint la fin du tableau.
-            if (currentIndex >= imagesData.length) {
-                currentIndex = 0; // Retour au début.
-            }
-            // Affiche l'image suivante dans la lightbox
-            displayImageInLightbox(currentIndex);
-        });
-
-        prevButton.on('click', function(event) {
-            event.preventDefault();
-            currentIndex--;
-            // Vérifie si nous sommes au début du tableau
-            if (currentIndex < 0) {
-                currentIndex = imagesData.length - 1; // Va à la fin
-            }
-            // Affiche l'image précédente dans la lightbox
-            displayImageInLightbox(currentIndex);
-        });
-
-
-        // Fermeture de la lightbox lorsque l'utilisateur clique sur (x) ou en dehors de la lightbox
-        var closeButton = $('.lightbox_close');
-
-        closeButton.on('click', function(event) {
-            event.preventDefault();
+    $(document).on('click', function(event) {
+        if ($(event.target).closest(lightbox).length === 0 && !$(event.target).hasClass('screen-link')) {
             lightbox.hide();
-        });
+        }
+    });
 
-        document.onclick = function(event) {
-            if (event.target == lightbox[0]) {
-                lightbox.hide();
-            }
-        };
+    // Chargement des images via Ajax dans la lightbox :
+    $.ajax({
+        url: photos_ajax_js.ajax_url,
+        type: 'post',
+        dataType: 'json',
+        data: {
+            action: 'full_image_lightbox'
+        },
+        success: function(response) {
+            console.log(response);
+            imagesData = response.images;
+            totalImages = imagesData.length;
+            // Afficher la première image lors du chargement initial
+            showImageAtIndex(currentIndex);
+        }
+    });
+}
 
-        // Chargement des images via Ajax dans la lightbox :
-        $.ajax({
-            url: photos_ajax_js.ajax_url,
-            type: 'post',
-            dataType: 'json',
-            data: {
-                action: 'full_image_lightbox'
-            },
-            success: function(response) {
-                imagesData = response.images;
-                currentIndex = 0;
-                console.log(imagesData);
-            }
-        });
-
-    }
-
-    
     // _______________________________________________________________
     // FONCTION POUR CHARGER PLUS DE PHOTOS :
 
@@ -170,14 +184,15 @@ function initializeLightbox() {
                     $('#photos-loader').hide();
                 }
 
-                // Boucle à travers chaque photo dans la réponse
                 if (Array.isArray(response)) {
-                    response.forEach(function(photo, index) {
-                        // Créer un élément HTML pour la photo
-                        var photoElement = '<article class="center-container"><div class="portfolio-container"><div class="portfolio-item"><div class="post-content post-category"><img src="' + photo.featured_img_src + '" alt="' + photo.title + '"><div id="full-screen"><img class="screen-link" src="' + photos_ajax_js.permalink + '/wp-content/themes/motaphoto/assets/images/screen.png" data-index="' + index + '"></div><a href="' + getPostUrl(photo.id) + '"><div id="info-single"><h3>' + photo.title + '</h3><h3>' + photo.categories + '</h3></div></a></div></div></div></article>';
-                        // Ajouter l'élément HTML pour la photo au conteneur
-                        $('#photos-list').append(photoElement);
-                    });
+                response.forEach(function(photo, index) {
+                    // Créer un élément HTML pour la photo
+                    var photoElement = '<article class="center-container"><div class="portfolio-container"><div class="portfolio-item"><div class="post-content post-category"><img src="' + photo.featured_img_src + '" alt="' + photo.title + '"><div id="full-screen"><img data-id="' + photo.id + '" data-reference="' + photo.reference + '" data-category="' + photo.categories + '" class="screen-link" src="' + photos_ajax_js.permalink + '/wp-content/themes/motaphoto/assets/images/screen.png" data-index="' + index + '"></div><a href="' + getPostUrl(photo.id) + '"><div id="info-single"><h3>' + photo.title + '</h3><h3>' + photo.categories + '</h3></div></a></div></div></div></article>';
+                    
+                    // Ajouter l'élément HTML pour la photo au conteneur
+                    $('#photos-list').append(photoElement);
+                });
+
 
 
                     // Fonction pour récupérer l'URL de la publication en fonction de son identifiant

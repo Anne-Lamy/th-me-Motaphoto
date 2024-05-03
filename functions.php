@@ -317,10 +317,12 @@ function full_image_lightbox() {
             $query->the_post();
             // Récupère l'URL de l'image, la référence et la catégorie.
             $images[] = array(
+                'id' => get_the_ID(),
                 'url' => get_the_post_thumbnail_url(),
                 'reference' => get_post_meta(get_the_ID(), 'ref', true),
                 'category' => get_the_terms(get_the_ID(), 'categories')[0]->name,
             );
+
 
         }
         // Réinitialise les données de la requête pour éviter les conflits
