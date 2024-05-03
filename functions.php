@@ -5,14 +5,15 @@ function enqueue_custom_scripts_styles() {
     wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
     // Style Sass du thème
     wp_enqueue_style('sass-style', get_template_directory_uri() . '/sass/style.css', array('parent-style'));
+    
+    // Ajout du script Chosen
+    wp_enqueue_script('chosen-script', get_template_directory_uri() . '/js/chosen.jquery.js', array('jquery'), null, true);
+    wp_enqueue_style('chosen-style', get_template_directory_uri() . '/sass/chosen.css');
+    
     // Script du menu responsive
     wp_enqueue_script('menu-script', get_template_directory_uri() . '/js/menu-responsive.js', array(), true);
     // Script de la modale
     wp_enqueue_script('modal-script', get_template_directory_uri() . '/js/contact-modal.js', array(), true);
-    // Script du l'affichage des photos
-    //wp_enqueue_script('photo-layout', get_template_directory_uri() . '/js/photo-layout.js', array('jquery'), true);
-    // Script de la lightbox
-    //wp_enqueue_script('lightbox-script', get_template_directory_uri() . '/js/lightbox.js', array('jquery'), true);
     // Script du filtre des photos.
     wp_enqueue_script('photo-filter', get_template_directory_uri() . '/js/photo-filter.js', array('jquery'), true);
 

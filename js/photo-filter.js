@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
 
+
+
     // Tableau pour stocker les données des images
         var imagesData = [];
         var currentIndex = 0;
@@ -250,6 +252,10 @@ function initializeLightbox() {
 
 // Fonction pour charger les images filtrées lors du chargement de la page
 $(document).ready(function($) {
+
+    // Initialisation de Chosen
+    $('.chosen-select').chosen();
+    
     // Appelle la fonction pour charger une image aléatoire.
     loadRandomImage();
 

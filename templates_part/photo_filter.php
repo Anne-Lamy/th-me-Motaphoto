@@ -5,9 +5,9 @@
             <div class="content-interaction ">
                 <div class="single-left-bottom mini">
                     <div class="custom-select">
-                    <select name="category" id="category" class="select-post">
+                    <select name="category" id="category" class="select-post chosen-select">
                         <option value=""  data-slug="" class="hidden-option">CATEGORIES</option>
-                        <option value=""  data-slug=""> </option>
+                        
                         <?php 
                         // Récupére toutes les catégories du type de post "photos"
                         $categories = get_terms( array( 'taxonomy' => 'categories'));
@@ -20,9 +20,9 @@
                     </select>
                     </div>
                     <div class="custom-select">
-                    <select name="format" id="format" class="select-post">
+                    <select name="format" id="format" class="select-post chosen-select">
                         <option value=""  data-slug="" class="hidden-option">FORMATS</option>
-                        <option value=""  data-slug=""> </option>
+                        
                         <?php 
                         // Récupére tous les formats du type de post "photos"
                         $formats = get_terms( array( 'taxonomy' => 'formats'));
@@ -37,9 +37,9 @@
                 </div>
                 <div class="single-right-bottom">
                     <div class="custom-select">
-                    <select type="date" name="date" id="date" class="select-post">
+                    <select type="date" name="date" id="date" class="select-post chosen-select">
                         <option value=""  data-slug="" class="hidden-option">TRIER PAR</option>
-                        <option value=""  data-slug=""> </option>
+                        
                         <?php
                         // Récupére toutes les dates de publication des posts sans doublons.
                         $args = array(
