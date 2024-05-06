@@ -2,15 +2,12 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // AFFICHAGE DE LA MODALE :
 
-    // Récupérer la modale
+    // Récupére la modale
     var modal = document.getElementById('contact-modal');
-    // Récupérer l'élément "Contact" du menu.
+    // Récupére l'élément "Contact" du menu.
     var contactLinks = document.querySelectorAll("#contact-link, #btnContact");
-    // Récupérer l'élément <span> qui ferme la modale
+    // Récupére l'élément <span> qui ferme la modale
     var span = document.getElementsByClassName("close")[0];
-
-    // Afficher la modale dès que la page se charge
-    // modal.style.display = "block";
 
     // Lorsque l'utilisateur clique sur les liens "Contact", la modale s'ouvre.
     contactLinks = Array.from(contactLinks); // Conversion en tableau.

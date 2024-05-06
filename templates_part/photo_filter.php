@@ -77,11 +77,11 @@
 
             // Récupération des publications
             $get_photos = new WP_Query(array( 
-                'post_type'     => 'photos',    // Type de publication à récupérer (dans ce cas, des photos)
+                'post_type'     => 'photos',    // Type de publication à récupérer (photos)
                 'status'        => 'published', // Filtre pour récupérer uniquement les publications publiées
                 'posts_per_page'=> 8,           // Limite le nombre de publications à 8 par page
                 'orderby'       => 'post_date', // Trie les publications par date de publication
-                'order'         => 'DESC',      // Trie les publications en ordre décroissant (du plus récent au plus ancien)
+                'order'         => 'DESC',      // Trie les publications du plus récent au plus ancien
                 'paged'         => $paged       // Pagination selon le numéro de page
             ));
 

@@ -44,7 +44,7 @@ function register_my_menus() {
 }
 add_action( 'init', 'register_my_menus' );
 
-// Ajouter un filtre pour ajouter un lien de contact au menu principal uniquement.
+// Filtre pour ajouter un lien de contact au menu principal uniquement.
 function add_custom_nav_menu_items($items, $args) {
     if ($args->theme_location == 'principal-menu') {
         // enregistrer un identifiant personnalisé pour le lien de contact.
@@ -65,7 +65,7 @@ function motaphoto_add_admin_pages()
     // Ajout de la page d'administration de Motaphoto.
     add_menu_page('Paramètre du thème Motaphoto', 'Motaphoto', 'manage_options', 'motaphoto_settings', 'motaphoto_theme_settings', 'dashicons-admin-settings', 60);
 }
-// On créer le contenu de notre page Metaphoto.
+// On créer le contenu de notre page Motaphoto.
 function motaphoto_theme_settings()
 {
     echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
@@ -304,7 +304,7 @@ function full_image_lightbox() {
 
     $args = array(
         'post_type' => 'photos',
-        'posts_per_page' => -1, // Récupérer toutes les images
+        'posts_per_page' => -1,
     );
 
     // Effectue la requête WP_Query avec les arguments définis
@@ -353,7 +353,7 @@ function traitement_formulaire_callback() {
     // Connexion à la base de données WordPress
     global $wpdb;
 
-    // Récupérer les adresses e-mail des utilisateurs
+    // Récupére les adresses e-mail des utilisateurs
     $users_emails = $wpdb->get_col("SELECT user_email FROM $wpdb->users");
 
     // Sujet de l'e-mail
@@ -368,12 +368,12 @@ function traitement_formulaire_callback() {
     // En-têtes de l'e-mail
     $headers = "From: $nom <$email>";
 
-    // Envoyer l'e-mail à chaque utilisateur
+    // Envoie l'e-mail à chaque utilisateur
     foreach ($users_emails as $user_email) {
         mail($user_email, $sujet, $contenu, $headers);
     }
 
-    // Rediriger l'utilisateur après le traitement du formulaire
+    // Redirige l'utilisateur après le traitement du formulaire
     wp_redirect(home_url());
     exit;
 }
