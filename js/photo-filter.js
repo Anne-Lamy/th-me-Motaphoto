@@ -65,24 +65,15 @@ function initializeLightbox() {
         
         // Récupération des données de l'image cliquée
         var dataId = $(this).data('id');
-        var reference = $(this).data('reference');
-        var category = $(this).data('category');
         
         // Affiche la lightbox
         lightbox.show();
-        
-        // Utilisation des valeurs récupérées
-        console.log(dataId);
-        console.log(reference);
-        console.log(category);
         
         // Recherche de l'index correspondant dans imagesData
         var currentIndex = imagesData.findIndex(function(image) {
             return image.id === dataId;
         });
-        
-        console.log("Valeur de currentIndex :", currentIndex);
-        
+                
         // Afficher les informations dans la lightbox
         showImageAtIndex(currentIndex);
 
@@ -145,7 +136,6 @@ function initializeLightbox() {
             action: 'full_image_lightbox'
         },
         success: function(response) {
-            console.log(response);
             imagesData = response.images;
             totalImages = imagesData.length;
             // Afficher la première image lors du chargement initial
@@ -220,8 +210,6 @@ function initializeLightbox() {
     function loadFilterImage() {
         $('#category, #format, #date').on('change', function(e) {
             e.preventDefault();
-
-            console.log("Valeur de currentIndex :", currentIndex);
 
             // Réinitialise pull_page à 1 lorsqu'un filtre est appliqué
             pull_page = 1;
