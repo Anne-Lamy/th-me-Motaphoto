@@ -341,6 +341,21 @@ add_action('wp_ajax_nopriv_full_image_lightbox', 'full_image_lightbox');
 
 
 // _______________________________________________________________
+// FONCTION POUR MODIFIER LE CHAMP REF DU FORMULAIRE :
+
+add_filter( 'shortcode_atts_wpcf7', 'custom_shortcode_atts_wpcf7_filter', 10, 3 );
+
+function custom_shortcode_atts_wpcf7_filter( $out, $pairs, $atts ) {
+    $my_attr = 'your-subject';
+
+    if ( isset( $atts[$my_attr] ) ) {
+        $out[$my_attr] = $atts[$my_attr];
+    }
+
+    return $out;
+}
+
+// _______________________________________________________________
 // RECEPTION DU MESSAGE DE CONFIRMATION DU FORMULAIRE :
 
 function traitement_formulaire_callback() {

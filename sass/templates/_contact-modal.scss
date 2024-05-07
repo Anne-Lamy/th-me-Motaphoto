@@ -24,7 +24,7 @@
     margin: auto;
     padding: 0;
     border: 5px solid $color_black_strong;
-    top: 100px;
+    top: 50px;
     width: 597px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     opacity: 0;
@@ -144,7 +144,7 @@ input[type="submit"]:hover {
     .modal-content {
         position: absolute;
         border: 5px solid $color_black_strong;
-        top: 80px;
+        top: 0;
         width: 97%;
         margin: 0;
         }

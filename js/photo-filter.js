@@ -1,7 +1,5 @@
 jQuery(document).ready(function($) {
 
-
-
     // Tableau pour stocker les données des images
         var imagesData = [];
         var currentIndex = 0;
@@ -145,7 +143,7 @@ function initializeLightbox() {
 }
 
     // _______________________________________________________________
-    // FONCTION POUR CHARGER PLUS DE PHOTOS :
+    // FONCTION POUR CHARGER PLUS DE PHOTOS FILTREES :
 
     let pull_page = 2;
 

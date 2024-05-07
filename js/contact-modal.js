@@ -26,12 +26,12 @@ document.addEventListener("DOMContentLoaded", function() {
         modal.style.display = "none";
         }, 3000);
 
-        // Envoyer un message lors de la validation.
+        /* Envoyer un message lors de la validation.
         var messageContainer = document.getElementById('message-container');
         
         messageContainer.innerHTML = ''; // Nettoyer le contenu précédent
         messageContainer.innerText = 'Votre message a bien été envoyé.';
-        messageContainer.classList.add('success-message');
+        messageContainer.classList.add('success-message'); */
     });
 
     // Lorsque l'utilisateur clique sur <span> (x), la modale disparait.
